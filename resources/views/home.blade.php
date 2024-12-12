@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +14,26 @@
         <div class="container mx-auto text-center">
             <h1 class="text-4xl font-bold">Workshop Guru 2024</h1>
             <p class="text-lg mt-2">Tingkatkan keterampilan mengajar Anda bersama para ahli!</p>
+=======
+<x-layout>
+    <section class="bg-gray-100 py-16 px-32">
+        <div class="container mx-auto flex flex-col lg:flex-row items-center lg:items-start lg:justify-between px-4">
+            <!-- Left Column: Title and Description -->
+            <div class="max-w-lg text-center lg:text-left">
+                <h1 class="text-4xl font-extrabold text-gray-800 mb-6">Empowering Teachers Through Workshops</h1>
+                <p class="text-lg text-gray-600 mb-6">
+                    Join our hands-on workshops designed to help teachers enhance their skills, stay updated with modern teaching techniques, and create a positive impact in their classrooms.
+                </p>
+                <a href="#workshops" class="inline-block px-6 py-3 bg-blue-600 text-white font-medium text-lg rounded-lg hover:bg-blue-700">
+                    Explore Workshops
+                </a>
+            </div>
+    
+            <!-- Right Column: Main Image -->
+            <div class="mt-8 lg:mt-0 lg:ml-12">
+                <img src="/images/teacher-workshop-hero.jpg" alt="Teacher Workshop" class="w-full max-w-md rounded-lg shadow-lg">
+            </div>
+>>>>>>> Stashed changes
         </div>
     </header>
 
