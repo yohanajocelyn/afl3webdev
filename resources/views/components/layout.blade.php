@@ -8,19 +8,14 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
         body {
-            font-family: 'Poppins'; font-size: 22px;
+            font-family: 'Poppins';
         }
     </style>
 </head>
 <body class="bg-gray-100">
 
 <!-- Header -->
-<header class="bg-blue-500 text-white py-6">
-    <div class="container mx-auto text-center">
-        <h1 class="text-4xl font-bold">Workshop Guru 2024</h1>
-        <p class="text-lg mt-2">Tingkatkan keterampilan mengajar Anda bersama para ahli!</p>
-    </div>
-</header>
+<x-navigation></x-navigation>
 
     {{ $slot }}
 
@@ -30,6 +25,6 @@
         <p class="text-sm">&copy; 2024 Workshop Guru. All Rights Reserved.</p>
     </div>
 </footer>
-
+081250205060
 </body>
 </html>
