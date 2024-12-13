@@ -22,19 +22,19 @@
 <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 
     transition-all duration-1000 ease-in-out 
     bg-white bg-opacity-100 
-    shadow-md 
     transform translate-y-0">
     <!-- Logo Section (Left) -->
     <div class="flex items-center">
-        <a href="{{ route('home') }}" class="flex items-center">
-            <img src="{{ asset('images/logo-bebras-cropped.png') }}" alt="Workshop Platform Logo" class="h-10 w-auto">
+        <a href="{{ route('home') }}" class="flex flex-row items-center space-x-4">
+            <img src="{{ asset('images/logo-uc.png') }}" alt="Logo UC" class="h-11 w-auto">
+            <img src="{{ asset('images/logo-bebras-cropped.png') }}" alt="Logo Bebras" class="h-10 w-auto">
         </a>
     </div>
 
     <!-- Menu Section (Center) -->
     <div class="flex space-x-6">
         <a href="{{ route('home') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">Home</a>
-        <a href="{{ route('workshops') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">Workshops</a>
+        <a href="{{ route('workshops') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">Pelatihan</a>
         <a href="{{ route('about') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">About Us</a>
     </div>
 
