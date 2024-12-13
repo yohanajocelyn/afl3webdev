@@ -58,12 +58,14 @@
         </div>
     </section>
 
+    <x-divider></x-divider>
+
     <!-- Main Content -->
-    <main class="py-12">
+    <main class="pt-8 pb-12">
         <div class="flex flex-col mx-auto px-4">
             <!-- About Section -->
             <section class="text-center mb-12">
-                <h2 class="text-2xl font-bold text-gray-800">Upcoming Events</h2>
+                <h2 class="text-2xl font-bold text-gray-800">Pelatihan</h2>
                 <p class="mt-4 text-gray-600">
                     Pelatihan ini dirancang untuk membantu para guru meningkatkan kemampuan mengajar melalui sesi interaktif, materi terkini, dan diskusi kelompok.
                 </p>
@@ -75,6 +77,15 @@
                         <x-card></x-card>
                     @endfor
                 </div>
+            </section>
+        </div>
+
+        <x-divider></x-divider>
+
+        <div>
+            <section class="text-center mb-12">
+                <h2 class="text-2xl font-bold text-gray-800">Upcoming Events</h2>
+                
             </section>
         </div>
     </main>
