@@ -11,5 +11,25 @@ Route::get('/home', function () {
 });
 
 Route::get('/loginregister', function () {
-    return view('log-reg');
+    return view('log-reg', [
+        "state" => "isLoggedOut"
+    ]);
 }); 
+
+Route::get('/workshop-detail', function () {
+    return view('workshop-detail', [
+        "state" => "workshop-details"
+    ]);
+});
+
+Route::get('/profile', function () {
+    return view('profile', [
+        "state" => "profile"
+    ]);
+});
+
+Route::get('/teacherslist', function () {
+    return view('teachers', [
+        "state" => "teacherslist"
+    ]);
+});
