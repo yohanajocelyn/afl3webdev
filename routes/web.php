@@ -1,14 +1,13 @@
 <?php
 
+use App\Http\Controllers\WorkshopController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
+Route::get('/home', [WorkshopController::class, 'getAll'])->name('home');
 
 Route::get('/workshops', function () {
     return view('workshops');
@@ -25,3 +24,5 @@ Route::get('/dashboard', function () {
 Route::get('/loginregister', function () {
     return view('log-reg');
 }); 
+
+Route::get('/workshop/{id}', [WorkshopController::class, 'getById']);

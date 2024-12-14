@@ -71,11 +71,16 @@
                 </p>
             </section>
 
-            <section class="mb-12">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    @for ($i = 0; $i<6; $i++)
-                        <x-card></x-card>
-                    @endfor
+            <section class="mb-12 mx-12">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-20">
+                    @foreach ($workshops as $workshop)
+                        <x-card :workshop="$workshop" />
+                    @endforeach
+                </div>
+
+                <!-- Pagination Controls -->
+                <div class="mt-6">
+                    {{ $workshops->links() }}
                 </div>
             </section>
         </div>

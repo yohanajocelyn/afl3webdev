@@ -1,7 +1,8 @@
 <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-md 
             transform transition duration-300 hover:scale-105 hover:shadow-xl 
             cursor-pointer group">
-    <a href="">
+    @props(['workshop'])
+    <a href="workshop/{{ $workshop['id'] }}">
         <!-- Promotional Image -->
         <div class="relative w-full pt-[56.25%]"> <!-- 16:9 Aspect Ratio -->
             <img 
@@ -16,14 +17,12 @@
             <!-- Workshop Title -->
             <h3 class="text-xl font-bold text-gray-900 mb-2 
                        group-hover:text-blue-600 transition duration-300">
-                {{-- {{ $workshop->title }} --}}
-                Placeholder Title
+                {{ $workshop->title }}
             </h3>
 
             <!-- Short Description -->
             <p class="text-gray-600 mb-4 line-clamp-3">
-                {{-- {{ $workshop->short_description }} --}}
-                Lorem ipsum
+                {{ $workshop->description }}
             </p>
 
             <!-- Price Information -->

@@ -26,4 +26,8 @@ class Workshop extends Model
     public static function allData() {
         return Workshop::all();
     }
+
+    public static function getById($id){
+        return self::find($id);
+    }
 }
