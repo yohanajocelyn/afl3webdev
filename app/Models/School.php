@@ -18,4 +18,9 @@ class School extends Model
     public static function allData() {
         return School::all();
     }
+
+    public static function dataWithId($id) {
+        $allSchools = static::allData();
+        return $allSchools -> firstWhere('id', $id);
+    }
 }

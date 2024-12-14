@@ -24,4 +24,9 @@ class Teacher extends Model
         return Teacher::all();
     }
 
+    public static function dataWithId($id){
+        $allTeachers = static::allData();
+        return $allTeachers -> firstWhere('id', $id);
+    }
+
 }
