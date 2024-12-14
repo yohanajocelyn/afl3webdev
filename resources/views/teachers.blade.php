@@ -20,28 +20,6 @@
                     @endforeach
                     
                 </li>
-                <li>
-                    <a href="#" class=" p-4 hover:bg-blue-50 flex justify-between items-center">
-                        <div>
-                            <p class="text-lg font-bold">Jane Smith</p>
-                            <p class="text-sm text-gray-600">Riverside Elementary</p>
-                        </div>
-                        <div class="text-blue-600 text-xl">
-                            &#8250;
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="p-4 hover:bg-blue-50 flex justify-between items-center">
-                        <div>
-                            <p class="text-lg font-bold">Emily Johnson</p>
-                            <p class="text-sm text-gray-600">Greenwood Academy</p>
-                        </div>
-                        <div class="text-blue-600 text-xl">
-                            &#8250;
-                        </div>
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
