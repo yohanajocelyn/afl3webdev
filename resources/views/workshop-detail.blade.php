@@ -25,6 +25,7 @@
         </div>
         {{-- bottom part (the tugas / meets) --}}
         {{-- i think bisa di-loop --}}
+        {{-- kl admin bisa lihat list of teachers joined --}}
         <div class="mb-20">
             <p class="font-semibold text-2xl pb-4">Meets</p>
             <div class="bg-white shadow-md p-2 rounded-md">
