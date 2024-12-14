@@ -15,12 +15,26 @@
             font-family: 'Poppins';
         }
     </style>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins';
+        }
+    </style>
 </head>
+    <body class="bg-gray-100 pt-[4.5rem]">
     <body class="bg-gray-100 pt-[4.5rem]">
 
     <!-- Header -->
     <x-navigation></x-navigation>
+    <!-- Header -->
+    <x-navigation></x-navigation>
 
+        {{ $slot }}
         {{ $slot }}
 
     <!-- Footer -->
@@ -149,4 +163,6 @@
     </script>
 
     </body>
+    </body>
 </html>
+
