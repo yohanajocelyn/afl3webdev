@@ -41,12 +41,14 @@
     <!-- Authentication Buttons (Right) -->
     <div class="flex space-x-4">
         @guest
-            <a href="" class="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 transition duration-300">
+            <button class="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 transition duration-300"
+            onclick="window.location.href = '/loginregister/?form=login'">
                 Log In
-            </a>
-            <a href="" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
+            </button>
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
+            onclick="window.location.href = '/loginregister/?form=register'">
                 Sign Up
-            </a>
+            </button>
         @else
         <div class="flex space-x-4">
             @auth
