@@ -73,13 +73,21 @@
 
             <section class="mb-12 mx-12">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-20">
-                    @foreach ($workshops as $workshop)
-                        <x-card :workshop="$workshop" />
-                    @endforeach
+                    @if($workshops->isEmpty())
+                        <div class="flex flex-col w-full h-40 items-center justify-center">
+                            <p class="text-gray-600 italic">
+                                Saat ini sedang tidak ada pelatihan.
+                            </p>
+                        </div>
+                    @else
+                        @foreach ($workshops as $workshop)
+                            <x-card :workshop="$workshop" />
+                        @endforeach
+                    @endif
                 </div>
 
                 <!-- Pagination Controls -->
-                <div class="mt-6">
+                <div class="mt-12">
                     {{ $workshops->links() }}
                 </div>
             </section>
