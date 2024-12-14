@@ -25,8 +25,8 @@ class RegistrationFactory extends Factory
             'paymentProof'=> $this->faker->file(),
             'isApproved'=> $this->faker->boolean(70),
             'courseStatus'=> $this->faker->randomElement(['assigned', 'finished']),
-            'teacher_id'=> Teacher::class,
-            'workshop_id'=> Workshop::class
+            'teacher_id'=> Teacher::factory(),
+            'workshop_id'=> Workshop::factory()
         ];
     }
 }
