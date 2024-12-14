@@ -48,10 +48,10 @@
             </div>
 
             <!-- Right Side - Image -->
-            <div class="w-full md:w-[40%] mt-10 md:mt-0 items-center">
+            <div class="w-full md:w-[40%] mt-10 md:mt-0">
                 <img 
-                    src="{{ asset('images/hero-image.jpg') }}" 
-                    alt="Stock Image" 
+                    src="{{ asset('images/placeholder-img.jpg') }}" 
+                    alt="stock photo" 
                     class="w-full h-auto rounded-xl shadow-2xl object-cover"
                 >
             </div>

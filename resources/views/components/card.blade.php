@@ -5,7 +5,7 @@
         <!-- Promotional Image -->
         <div class="relative w-full pt-[56.25%]"> <!-- 16:9 Aspect Ratio -->
             <img 
-                src="" 
+                src="{{ asset('images/placeholder-img.jpg') }}" 
                 alt="Lorem"
                 class="absolute top-0 left-0 w-full h-full object-cover"
             >
