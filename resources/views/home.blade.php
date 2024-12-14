@@ -85,13 +85,10 @@
         <div>
             <section class="text-center mb-12">
                 <h2 class="text-2xl font-bold text-gray-800">Upcoming Events</h2>
-                
             </section>
         </div>
     </main>
 </x-layout>
 
-    
-</x-layout>
 
     
