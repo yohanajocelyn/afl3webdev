@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,7 +31,8 @@ Route::get('/profile', function () {
 
 Route::get('/teacherslist', function () {
     return view('teachers', [
-        "state" => "teacherslist"
+        "state" => "teacherslist",
+        "teachers" => Teacher::all()
     ]);
 });
 
