@@ -33,3 +33,9 @@ Route::get('/teacherslist', function () {
         "state" => "teacherslist"
     ]);
 });
+
+Route::get('/workshop-upload', function () {
+    return view('workshop-upload', [
+        "state" => "workshop upload"
+    ]);
+});
