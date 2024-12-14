@@ -14,4 +14,8 @@ class Workshop extends Model
     public function registrations():HasMany {
         return $this->hasMany(Registration::class, 'workshop_id');
     }
+
+    public static function allData() {
+        return Workshop::all();
+    }
 }

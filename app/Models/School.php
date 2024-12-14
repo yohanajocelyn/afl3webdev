@@ -14,4 +14,8 @@ class School extends Model
     public function teachers():HasMany {
         return $this->hasMany(Teacher::class, 'school_id');
     }
+
+    public static function allData() {
+        return School::all();
+    }
 }

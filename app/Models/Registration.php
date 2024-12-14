@@ -19,4 +19,8 @@ class Registration extends Model
     public function workshop():BelongsTo {
         return $this->belongsTo(Workshop::class);
     }
+
+    public static function allData() {
+        return Registration::all();
+    }
 }

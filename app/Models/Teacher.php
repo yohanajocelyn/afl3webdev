@@ -19,4 +19,9 @@ class Teacher extends Model
     public function registrations():HasMany {
         return $this->hasMany(Registration::class, 'teacher_id');
     }
+
+    public static function allData() {
+        return Teacher::all();
+    }
+
 }
