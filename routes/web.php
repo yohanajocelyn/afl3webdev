@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\LoginRegisterController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\WorkshopController;
+use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,8 +24,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('/loginregister', function () {
-    return view('log-reg');
-}); 
+Route::get('/loginregister', [LoginRegisterController::class, 'logRegSchool']); 
+Route::post('/register', [TeacherController::class, 'register'])->name('register');
+Route::post('/login', [TeacherController::class, 'logRegSchool'])->name('login');
 
 Route::get('/workshop/{id}', [WorkshopController::class, 'getById']);

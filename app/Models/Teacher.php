@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use Gender;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Role;
 
 class Teacher extends Authenticatable
 {
     use HasFactory;
-    protected $fillable = ['name', 'gender', 'phone_number', 'pfpURL', 'email', 'password', 'role', 'nuptk', 'community', 'subjectTaught'];
+    protected $fillable = ['name', 'gender', 'phone_number', 'pfpURL', 'role', 'email', 'password', 'nuptk', 'community', 'subjectTaught', 'school_id'];
 
     public function school():BelongsTo {
         return $this->belongsTo(School::class);
