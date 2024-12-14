@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('workshop_id')->constrained(
+                table: 'workshops', 
+                indexName: 'workshop_has_assignments'
+            );
+            $table->string('title');
+            $table->date('date');
             $table->timestamps();
         });
     }

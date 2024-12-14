@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('presences', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('meet_id')->constrained(
+                table: 'meets',
+                indexName: 'meet_has_presences'
+            );  
+            $table->foreignId('registration_id')->constrained(
+                table: 'registrations',
+                indexName: 'registration_has_presences'
+            );
+            $table->boolean('isPresent');
+            $table->dateTime('dateTime');
             $table->timestamps();
         });
     }

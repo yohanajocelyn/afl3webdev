@@ -15,6 +15,14 @@ class Workshop extends Model
         return $this->hasMany(Registration::class, 'workshop_id');
     }
 
+    public function assignments():HasMany {
+        return $this->hasMany(Assignment::class, 'workshop_id');
+    }
+
+    public function meets():HasMany {
+        return $this->hasMany(Meet::class, 'workshop_id');
+    }
+
     public static function allData() {
         return Workshop::all();
     }
