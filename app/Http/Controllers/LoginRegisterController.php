@@ -19,18 +19,18 @@ class LoginRegisterController extends Controller
     public function register(Request $request){
         $validatedData = $request->validate([
             'profile_picture' => 'nullable|string',
-            'name' => 'required|string|max:255', // Required, must be a string with max length of 255
-            'school' => 'nullable|string|max:255', // Optional, max length of 255
+            'name' => 'required|string|max:255',
+            'school' => 'nullable|string|max:255',
             'newSchoolName' => 'required_without:school|nullable|string|max:255',
             'newSchoolAddress' => 'required_without:school|nullable|string|max:255',
             'newSchoolCity' => 'required_without:school|nullable|string|max:255',
-            'gender' => 'required|in:male,female', // Required, must be "male" or "female"
-            'email' => 'required|email|max:255', // Required, must be a valid email
-            'phone' => 'required|string|max:20', // Optional, max length of 20
-            'password' => 'required|string|min:8|max:255', // Required, must be at least 8 characters
-            'nuptk' => 'required|string|max:255', // Optional, max length of 255
-            'community' => 'required|string|max:255', // Optional, max length of 255
-            'subject' => 'required|string|max:255', // Optional, max length of 255
+            'gender' => 'required|in:male,female',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'password' => 'required|string|min:8|max:255',
+            'nuptk' => 'required|string|max:255',
+            'community' => 'required|string|max:255',
+            'subject' => 'required|string|max:255',
         ]);
 
         if (isset($validatedData['school'])) {

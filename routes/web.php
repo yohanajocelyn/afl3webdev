@@ -28,8 +28,8 @@ Route::get('/dashboard', function () {
 Route::get('/loginregister', [LoginRegisterController::class, 'logRegSchool']); 
 Route::post('/register', [LoginRegisterController::class, 'register'])->name('register');
 Route::post('/login', [LoginRegisterController::class, 'login'])->name('login');
-Route::post('/logout', [LoginRegisterController::class, 'logout'])->middleware('auth:teacher')->name('logout');;
+Route::post('/logout', [LoginRegisterController::class, 'logout'])->middleware('auth:teacher')->name('logout');
 
 Route::get('/workshop/{id}', [WorkshopController::class, 'getById']);
 
-Route::get('/teacherprofile', [TeacherController::class, 'getProfile']);
+Route::get('/teacherprofile', [TeacherController::class, 'getProfile'])->middleware('auth:teacher');

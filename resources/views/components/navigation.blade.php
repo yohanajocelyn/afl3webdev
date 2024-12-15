@@ -36,6 +36,30 @@
         <a href="{{ route('home') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">Home</a>
         <a href="{{ route('workshops') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">Pelatihan</a>
         <a href="{{ route('about') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">About Us</a>
+        @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
+            <div class="relative group">
+                <!-- Button -->
+                <button class="text-gray-800 hover:text-blue-600 transition duration-300 flex items-center">
+                    Admin
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+            
+                <!-- Dropdown -->
+                <div class="absolute top-4 hidden group-hover:block flex-col bg-white shadow-lg rounded-md mt-2 py-2 w-48 right-0 z-50">
+                    <a href="" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300">
+                        Add Workshop
+                    </a>
+                    <a href="" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300">
+                        Manage Workshops
+                    </a>
+                    <a href="" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300">
+                        Manage Users
+                    </a>
+                </div>
+            </div>
+        @endif
     </div>
 
     <!-- Authentication Buttons (Right) -->
