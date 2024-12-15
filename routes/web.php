@@ -26,8 +26,8 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/loginregister', [LoginRegisterController::class, 'logRegSchool']); 
-Route::post('/register', [TeacherController::class, 'register'])->name('register');
-Route::post('/login', [TeacherController::class, 'login'])->name('login');
-Route::post('/logout', [TeacherController::class, 'logout'])->middleware('auth:teacher')->name('logout');;
+Route::post('/register', [LoginRegisterController::class, 'register'])->name('register');
+Route::post('/login', [LoginRegisterController::class, 'login'])->name('login');
+Route::post('/logout', [LoginRegisterController::class, 'logout'])->middleware('auth:teacher')->name('logout');;
 
 Route::get('/workshop/{id}', [WorkshopController::class, 'getById']);
