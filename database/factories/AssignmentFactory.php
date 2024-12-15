@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Workshop;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class AssignmentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'workshop_id' => Workshop::query()->inRandomOrder()->first()->id,
+            'title' => $this->faker->word(),
+            'date' => $this->faker->date()
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Meet;
+use App\Models\Registration;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,10 @@ class PresenceFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'meet_id' => Meet::query()->inRandomOrder()->first()->id,
+            'registration_id' => Registration::query()->inRandomOrder()->first()->id,
+            'isPresent' => $this->faker->boolean(),
+            'dateTime' => $this->faker->dateTime($max = 'now', $timezone = null)
         ];
     }
 }

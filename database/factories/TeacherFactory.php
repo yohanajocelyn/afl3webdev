@@ -27,7 +27,7 @@ class TeacherFactory extends Factory
             'email' => $this->faker->email(),
             'password' => $this->faker->password(),
             'role' => 'user',
-            'nuptk' => $this->faker->number(),
+            'nuptk' => $this->faker->randomNumber(),
             'community' => $this->faker->userName(),
             'subjectTaught' => $this->faker->randomElement(['math', 'science', 'language','tech', 'civics', 'chinese']),
             'school_id'=> School::factory()

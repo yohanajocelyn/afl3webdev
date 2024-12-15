@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Workshop;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class MeetFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'date' => $this->faker->date(),
+            'location' => $this->faker->streetAddress(),
+            'workshop_id' => Workshop::query()->inRandomOrder()->first()->id,
         ];
     }
 }
