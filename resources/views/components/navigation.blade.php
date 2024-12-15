@@ -58,7 +58,7 @@
                         Log Out
                     </button>
                 </form>
-                <a href="" class="text-gray-800 hover:text-blue-600 transition duration-300">
+                <a href="/teacherprofile/?teacherId={{ $teacher['id'] }}" class="text-gray-800 hover:text-blue-600 transition duration-300">
                     <img src="" alt="Profile Picture">
                     <span>{{ auth()->user()->name }}</span>
                 </a>
