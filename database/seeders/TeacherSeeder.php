@@ -26,7 +26,7 @@ class TeacherSeeder extends Seeder
             'phone_number' => '12345678',
             'pfpUrl' => 'defaultImg',
             'role' => Role::Admin,
-            'email' => 'admin2@email.com',
+            'email' => 'admin@email.com',
             'password' => bcrypt('12345678'),
             'nuptk' => '12345678',
             'community' => 'AdminCommunity',

@@ -48,7 +48,7 @@
             
                 <!-- Dropdown -->
                 <div class="absolute top-4 hidden group-hover:block flex-col bg-white shadow-lg rounded-md mt-2 py-2 w-48 right-0 z-50">
-                    <a href="" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300">
+                    <a href="{{ route('workshop-upload') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300">
                         Add Workshop
                     </a>
                     <a href="" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300">

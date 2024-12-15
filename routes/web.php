@@ -33,3 +33,7 @@ Route::post('/logout', [LoginRegisterController::class, 'logout'])->middleware('
 Route::get('/workshop/{id}', [WorkshopController::class, 'getById']);
 
 Route::get('/teacherprofile', [TeacherController::class, 'getProfile'])->middleware('auth:teacher');
+
+Route::get('/workshop-upload', function () {
+    return view('workshop-upload');
+})->name('workshop-upload');
