@@ -74,6 +74,10 @@
                     <div class="flex flex-col">
                         <label for="email" class="text-sm font-medium text-gray-600">Email</label>
                         <input id="email" name="email" type="email" class="border rounded-md p-2 focus:outline-blue-400" placeholder="Enter your email" required />
+                        <!-- Display email error message -->
+                        @error('email')
+                            <div class="text-red-600 text-sm mt-2">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <!-- Phone Number -->
