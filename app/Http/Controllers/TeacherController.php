@@ -11,5 +11,10 @@ use PhpParser\Node\Stmt\TryCatch;
 
 class TeacherController extends Controller
 {
-    
+    public function getProfile(){
+        $id = request()->query('teacherId');
+            return view('teachersprofile', [
+            "teacher" => Teacher::dataWithId($id)
+        ]);
+    }
 }

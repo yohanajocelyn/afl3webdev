@@ -27,4 +27,8 @@ class Teacher extends Authenticatable
         return Teacher::all();
     }
 
+    public static function dataWithId($id){
+        return Teacher::find($id);
+    }
+
 }
