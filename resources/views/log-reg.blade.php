@@ -110,6 +110,7 @@
                 </form>
             @elseif(request('form') === 'login' || !request('form'))
                 <form method="POST" action="{{ route('login') }}" class="space-y-4">
+                    @csrf
                     <h2 class="text-xl font-semibold text-gray-700">Login</h2>
                     <div class="flex flex-col">
                         <label for="email" class="text-sm font-medium text-gray-600">Email</label>

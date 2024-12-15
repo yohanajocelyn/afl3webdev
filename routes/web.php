@@ -11,6 +11,7 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [WorkshopController::class, 'getAll'])->name('home');
+Route::post('/home', [WorkshopController::class, 'getAll'])->name('home');
 
 Route::get('/workshops', function () {
     return view('workshops');
@@ -26,6 +27,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/loginregister', [LoginRegisterController::class, 'logRegSchool']); 
 Route::post('/register', [TeacherController::class, 'register'])->name('register');
-Route::post('/login', [TeacherController::class, 'logRegSchool'])->name('login');
+Route::post('/login', [TeacherController::class, 'login'])->name('login');
+Route::post('/logout', [TeacherController::class, 'logout'])->middleware('auth:teacher')->name('logout');;
 
 Route::get('/workshop/{id}', [WorkshopController::class, 'getById']);

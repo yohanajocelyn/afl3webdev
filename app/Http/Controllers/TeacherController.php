@@ -16,9 +16,9 @@ class TeacherController extends Controller
             'profile_picture' => 'nullable|string',
             'name' => 'required|string|max:255', // Required, must be a string with max length of 255
             'school' => 'nullable|string|max:255', // Optional, max length of 255
-            'newSchoolName' => 'required_without:school|string|max:255', 
-            'newSchoolAddress' => 'required_without:school|string|max:255', 
-            'newSchoolCity' => 'required_without:school|string|max:255',
+            'newSchoolName' => 'required_without:school|nullable|string|max:255',
+            'newSchoolAddress' => 'required_without:school|nullable|string|max:255',
+            'newSchoolCity' => 'required_without:school|nullable|string|max:255',
             'gender' => 'required|in:male,female', // Required, must be "male" or "female"
             'email' => 'required|email|max:255', // Required, must be a valid email
             'phone' => 'required|string|max:20', // Optional, max length of 20
@@ -27,17 +27,6 @@ class TeacherController extends Controller
             'community' => 'required|string|max:255', // Optional, max length of 255
             'subject' => 'required|string|max:255', // Optional, max length of 255
         ]);
-
-        // $school = School::firstOrCreate(
-        //     ['name' => $validatedData['newSchoolName']],
-        //     ['name' => $validatedData['newSchoolName'], 
-        //     'address' => $validatedData['newSchoolAddress'], 
-        //     'city' => $validatedData['newSchoolCity']]
-        // );
-
-        // if($school == null){
-        //     $school = School::find($validatedData['newSchoolName']);
-        // }
 
         if (isset($validatedData['school'])) {
             $school = School::where('name', $validatedData['school'])->first();
@@ -68,16 +57,36 @@ class TeacherController extends Controller
             'school_id' => $school->id
         ]);
 
-        // Auth::login($teacher);
+        Auth::guard('teacher')->login($teacher);
 
-        return redirect()->route('home')->with('success', 'Account created successfully');
+        return redirect()->route('home');
     }
 
     public function login(Request $request){
-        
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        if (Auth::guard('teacher')->attempt($credentials, $request->boolean('remember'))) {
+            $request->session()->regenerate();
+
+            return redirect()->route('home');
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
     }
 
     public function logout(Request $request){
-        
+        {
+            Auth::guard('teacher')->logout();
+    
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+    
+            return redirect()->route('home');
+        }
     }
 }

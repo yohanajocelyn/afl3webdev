@@ -13,9 +13,14 @@ return [
     |
     */
 
-    'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+    'defaults' => 
+    // [
+    //     'guard' => env('AUTH_GUARD', 'web'),
+    //     'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+    // ],
+    [
+        'guard' => 'teacher',
+        'passwords' => 'teachers',
     ],
 
     /*
@@ -40,6 +45,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        //tambahan
+        'teacher' => [
+            'driver' => 'session',
+            'provider' => 'teachers', // Match the provider name
+        ],
     ],
 
     /*
@@ -63,6 +73,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+        //tambahan
+            'teachers' => [
+            'driver' => 'eloquent',
+            'model' => env('TEACHER_AUTH_MODEL',App\Models\Teacher::class), // Add this
         ],
 
         // 'users' => [

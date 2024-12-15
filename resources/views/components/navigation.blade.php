@@ -52,15 +52,15 @@
         @else
         <div class="flex space-x-4">
             @auth
-                <form method="POST" action="">
+                <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-300">
                         Log Out
                     </button>
                 </form>
-                <a href="{{ route('dashboard') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">
+                <a href="" class="text-gray-800 hover:text-blue-600 transition duration-300">
                     <img src="" alt="Profile Picture">
-                    <span>Username</span>
+                    <span>{{ auth()->user()->name }}</span>
                 </a>
             @endauth
         </div>
