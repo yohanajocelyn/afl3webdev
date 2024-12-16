@@ -25,12 +25,12 @@ class TeacherFactory extends Factory
             'phone_number' => $this->faker->phoneNumber(),
             'pfpURL' => $this->faker->url(),
             'email' => $this->faker->email(),
-            'password' => $this->faker->password(),
+            'password' => bcrypt($this->faker->password()),
             'role' => 'user',
-            'nuptk' => $this->faker->randomNumber(),
+            'nuptk' => $this->faker->numberBetween(1000000000, 9999999999),
             'community' => $this->faker->userName(),
-            'subjectTaught' => $this->faker->randomElement(['math', 'science', 'language','tech', 'civics', 'chinese']),
-            'school_id'=> School::factory()
+            'subjectTaught' => $this->faker->randomElement(['Math', 'Science', 'Language','Tech', 'Civics', 'Chinese']),
+            'school_id'=> School::query()->inRandomOrder()->first()->id
         ];
     }
 }

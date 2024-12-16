@@ -19,7 +19,7 @@ class AssignmentFactory extends Factory
     {
         return [
             'workshop_id' => Workshop::query()->inRandomOrder()->first()->id,
-            'title' => $this->faker->word(),
+            'title' => $this->faker->sentence(),
             'date' => $this->faker->date()
         ];
     }

@@ -16,8 +16,7 @@ class TeacherSeeder extends Seeder
     public function run(): void
     {
         // Teacher::factory()->count(100)->create();
-        Teacher::factory(100)->recycle(School::factory(100)->create())
-        ->create();
+        Teacher::factory(100)->create();
 
         // Teacher::create([
         //     'name' => 'Admin',

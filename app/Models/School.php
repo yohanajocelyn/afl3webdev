@@ -18,4 +18,8 @@ class School extends Model
     public static function allData() {
         return School::all();
     }
+
+    public static function dataWithid($id){
+        return School::find($id);
+    }
 }

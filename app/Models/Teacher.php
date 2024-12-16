@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Gender;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -32,7 +31,7 @@ class Teacher extends Authenticatable
     }
 
     public static function dataWithId($id){
-        return Teacher::find($id);
+        return self::find($id);
     }
 
 }
