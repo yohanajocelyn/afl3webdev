@@ -1,6 +1,6 @@
 <x-layout>
 
-    <section class="h-min-screen flex items-center justify-center flex-col mx-16">
+    <section class="h-min-screen flex items-center justify-center flex-col">
         <div class="container w-full bg-gray-100 mx-auto my-8">
             <h1 class="text-3xl font-bold mb-4">Upload Workshop</h1>
     
