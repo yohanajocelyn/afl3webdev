@@ -54,3 +54,9 @@ Route::get('/teacherslist', function () {
         ]);
     }
 })->name('teachers-list');
+
+Route::get('/schoolslist', function () {
+    return view('schools', [
+        "schools" => School::all()
+    ]);
+})->name('schools-list');

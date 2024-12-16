@@ -57,6 +57,9 @@
                     <a href="{{route('teachers-list')}}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300">
                         See Teachers
                     </a>
+                    <a href="{{route('schools-list')}}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300">
+                        See Schools
+                    </a>
                 </div>
             </div>
         @endif
@@ -82,7 +85,7 @@
                         Log Out
                     </button>
                 </form>
-                <a href="/teacherprofile/?teacherId={{ auth()->user()->id }}" class="text-gray-800 hover:text-blue-600 transition duration-300">
+                <a href="/teacherprofile/?teacherId={{ auth()->user()->id }}" class="text-gray-800 hover:text-blue-600 transition duration-300 flex flex-row">
                     <img src="" alt="Profile Picture">
                     <span>{{ auth()->user()->name }}</span>
                 </a>
