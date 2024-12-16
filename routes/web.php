@@ -68,7 +68,8 @@ Route::get('/teacherslist', function () {
     }else{
         return view('teachers', [
         "state" => "teachers list with school",
-        "teachers" => Teacher::dataWithSchoolId($id)
+        "teachers" => Teacher::dataWithSchoolId($id),
+        "school" => School::dataWithId($id)
         ]);
     }
 });

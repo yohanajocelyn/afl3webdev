@@ -29,7 +29,7 @@ class TeacherFactory extends Factory
             'role' => 'user',
             'nuptk' => $this->faker->numberBetween(1000000000, 999999999999),
             'community' => $this->faker->userName(),
-            'subjectTaught' => $this->faker->randomElement(['math', 'science', 'language','tech', 'civics', 'chinese']),
+            'subjectTaught' => $this->faker->randomElement(['Math', 'Science', 'Language','Tech', 'Civics', 'Chinese']),
             'school_id'=> School::factory()
         ];
     }

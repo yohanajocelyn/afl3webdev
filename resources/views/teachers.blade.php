@@ -2,6 +2,10 @@
     <x-slot:state>Teachers List</x-slot:state>
 
     <div class="bg-gray-100 container mx-auto m-8">
+        @if (request('schoolId'))
+            <p>{{ $school['name'] }}</p>
+            <p>{{ $school['address']}}, {{ $school['city'] }}</p>
+        @endif
         <h1 class="text-3xl font-bold mb-4">Teachers</h1>
 
         <div class="flex flex-col md:flex-row justify-between items-center mb-6">
