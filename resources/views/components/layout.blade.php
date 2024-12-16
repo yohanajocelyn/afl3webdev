@@ -21,7 +21,10 @@
     <!-- Header -->
     <x-navigation></x-navigation>
 
+    <main class="mx-16">
         {{ $slot }}
+    </main>
+        
 
     <!-- Footer -->
     <x-footer></x-footer>

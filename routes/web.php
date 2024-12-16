@@ -53,4 +53,4 @@ Route::get('/teacherslist', function () {
         "school" => School::dataWithId($id)
         ]);
     }
-});
+})->name('teachers-list');
