@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\WorkshopController;
+use App\Models\School;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,12 @@ Route::get('/workshops', function () {
     return view('workshops');
 })->name('workshops');
 
+Route::get('/workshop/{id}', [WorkshopController::class, 'getById']);
+
+Route::get('/workshop-upload', function () {
+    return view('workshop-upload');
+})->name('workshop-upload');
+
 Route::get('/about', function () {
     return view('about');
 })->name('about');
@@ -30,10 +37,20 @@ Route::post('/register', [LoginRegisterController::class, 'register'])->name('re
 Route::post('/login', [LoginRegisterController::class, 'login'])->name('login');
 Route::post('/logout', [LoginRegisterController::class, 'logout'])->middleware('auth:teacher')->name('logout');
 
-Route::get('/workshop/{id}', [WorkshopController::class, 'getById']);
-
 Route::get('/teacherprofile', [TeacherController::class, 'getProfile'])->middleware('auth:teacher');
 
-Route::get('/workshop-upload', function () {
-    return view('workshop-upload');
-})->name('workshop-upload');
+Route::get('/teacherslist', function () {
+    $id = request()->query('schoolId');
+    if($id==null){
+        return view('teachers', [
+            "state" => "teachers list",
+            "teachers" => Teacher::all()
+        ]);
+    }else{
+        return view('teachers', [
+        "state" => "teachers list with school",
+        "teachers" => Teacher::dataWithSchoolId($id),
+        "school" => School::dataWithId($id)
+        ]);
+    }
+});
