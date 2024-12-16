@@ -20,6 +20,14 @@ class Registration extends Model
         return $this->belongsTo(Workshop::class);
     }
 
+    public function submissions():HasMany {
+        return $this->hasMany(Submission::class, 'registration_id');
+    }
+
+    public function presences():HasMany {
+        return $this->hasMany(Presence::class, 'registration_id');
+    }
+
     public static function allData() {
         return Registration::all();
     }

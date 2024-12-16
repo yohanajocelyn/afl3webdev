@@ -22,10 +22,10 @@ class RegistrationFactory extends Factory
     {
         return [
             'regDate'=> $this->faker->date(),
-            'paymentProof'=> $this->faker->file(),
+            'paymentProof'=> $this->faker->word(), //ganti dulu
             'isApproved'=> $this->faker->boolean(70),
             'courseStatus'=> $this->faker->randomElement(['assigned', 'finished']),
-            'teacher_id'=> Teacher::factory(),
+            'teacher_id'=> Teacher::query()->inRandomOrder()->first()->id,
             'workshop_id'=> Workshop::factory()
         ];
     }

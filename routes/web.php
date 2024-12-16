@@ -1,6 +1,9 @@
 <?php
 
 use App\Models\School;
+use App\Http\Controllers\LoginRegisterController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\WorkshopController;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 
@@ -8,26 +11,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('home');
-});
-
-Route::get('/loginregister', function () {
-    return view('log-reg', [
-        "state" => "isLoggedOut"
-    ]);
-}); 
-
-Route::get('/workshop-detail', function () {
-    return view('workshop-detail', [
-        "state" => "workshop-details"
-    ]);
-});
+Route::get('/home', [WorkshopController::class, 'getAll'])->name('home');
+Route::post('/home', [WorkshopController::class, 'getAll'])->name('home');
 
 Route::get('/profile', function () {
-    return view('profile', [
-        "state" => "profile"
-    ]);
+    return view('profile');
 });
 
 // Route::get('/teacherslist', function () {
@@ -73,3 +61,27 @@ Route::get('/teacherslist', function () {
         ]);
     }
 });
+Route::get('/workshops', function () {
+    return view('workshops');
+})->name('workshops');
+
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
+Route::get('/loginregister', [LoginRegisterController::class, 'logRegSchool']); 
+Route::post('/register', [LoginRegisterController::class, 'register'])->name('register');
+Route::post('/login', [LoginRegisterController::class, 'login'])->name('login');
+Route::post('/logout', [LoginRegisterController::class, 'logout'])->middleware('auth:teacher')->name('logout');
+
+Route::get('/workshop/{id}', [WorkshopController::class, 'getById']);
+
+Route::get('/teacherprofile', [TeacherController::class, 'getProfile'])->middleware('auth:teacher');
+
+Route::get('/workshop-upload', function () {
+    return view('workshop-upload');
+})->name('workshop-upload');

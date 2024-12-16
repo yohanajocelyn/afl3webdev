@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('gender', ['male', 'female']);
+            $table->string('gender');
             $table->string('phone_number');
-            $table->string('pfpURL');
+            $table->string('pfpURL')->default('defaultImgUrl');
             $table->string('email');
             $table->string('password');
             $table->enum('role', ['admin', 'user']);

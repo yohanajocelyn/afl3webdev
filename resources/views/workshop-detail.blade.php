@@ -1,5 +1,4 @@
 <x-layout>
-    <x-slot:state>{{ $state }}</x-slot:state>
     <section class="bg-gray-100 flex flex-col md:px-40">
         <div class="flex flex-col items-center px-auto py-10 md:flex-row md:pt-20 md:pb-16">
             {{-- Image --}}
@@ -8,11 +7,8 @@
             </div>
             {{-- details --}}
             <div class="flex flex-col ps-16 py-3 w-full h-[450px]">
-                <p class="font-bold text-5xl">Workshop Title</p>
-                <p class="text-gray-600 py-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-                    eligendi labore exercitationem
-                    nihil nisi ullam praesentium, laborum, autem laudantium dolorem dicta nemo quisquam assumenda
-                    possimus culpa fuga tenetur eveniet at.</p>
+                <p class="font-bold text-5xl">{{ $workshop->title }}</p>
+                <p class="text-gray-600 py-4">{{$workshop->description}}</p>
                 <p>Tempat</p>
                 <p>Tanggal dan Waktu</p>
                 {{-- Register Button --}}

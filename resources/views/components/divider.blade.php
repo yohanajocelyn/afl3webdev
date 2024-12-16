@@ -1,0 +1,1 @@
+<div class="border-t-2 border-dotted border-gray-300 my-4"></div>
