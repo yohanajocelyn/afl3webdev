@@ -12,11 +12,22 @@
                 <p>Tempat</p>
                 <p>Tanggal dan Waktu</p>
                 {{-- Register Button --}}
-                <div class="mt-auto flex justify-end">
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded-md">
-                        Register
-                    </button>
-                </div>
+                @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
+                    <div class="mt-auto flex justify-end">
+                        <a href="registrations/{{ $workshop->id }}">
+                            <button class="bg-green-500 text-white px-4 py-2 rounded-md">
+                                Registration
+                            </button>
+                        </a>
+                    </div>
+                @else
+                    <div class="mt-auto flex justify-end">
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md">
+                            Register
+                        </button>
+                    </div>
+                @endif
+                
             </div>
         </div>
         {{-- bottom part (the tugas / meets) --}}

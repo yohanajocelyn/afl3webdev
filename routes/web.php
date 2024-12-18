@@ -5,6 +5,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\WorkshopController;
 use App\Models\School;
 use App\Models\Teacher;
+use App\Models\Workshop;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -46,3 +47,10 @@ Route::get('/schoolslist', function () {
         "schools" => School::all()
     ]);
 })->name('schools-list');
+
+Route::get('/workshop/registrations/{id}', function ($id) {
+    return view('registrations', [
+        'title' => 'Registrations',
+        'workshop' => Workshop::getById($id)
+    ]);
+});
