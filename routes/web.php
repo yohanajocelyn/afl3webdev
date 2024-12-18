@@ -16,7 +16,7 @@ Route::post('/home', [WorkshopController::class, 'getAll'])->name('home');
 
 Route::get('/profile', function () {
     return view('profile');
-});
+})->name('profile');
 
 // Route::get('/teacherslist', function () {
 //     return view('teachers', [
@@ -27,24 +27,9 @@ Route::get('/profile', function () {
 
 Route::get('/schoolslist', function () {
     return view('schools', [
-        "state" => "School List",
         "schools" => School::all()
     ]);
-});
-
-Route::get('/workshop-upload', function () {
-    return view('workshop-upload', [
-        "state" => "workshop upload"
-    ]);
-});
-
-Route::get('/teacherprofile', function () {
-    $id = request()->query('teacherId');
-        return view('teachersprofile', [
-        "state" => "teacher's profile",
-        "teacher" => Teacher::dataWithId($id)
-    ]);
-});
+})->name('view-schools');
 
 Route::get('/teacherslist', function () {
     $id = request()->query('schoolId');
@@ -60,10 +45,23 @@ Route::get('/teacherslist', function () {
         "school" => School::dataWithId($id)
         ]);
     }
-});
+})->name('view-teachers');
+
+// workshop
+
 Route::get('/workshops', function () {
     return view('workshops');
 })->name('workshops');
+
+Route::get('/workshop/{id}', [WorkshopController::class, 'getById'])->name('workshop-detail');
+
+Route::get('/workshop-upload', function () {
+    return view('workshop-upload');
+})->name('workshop-upload');
+
+Route::post('/upload', [WorkshopController::class, 'createWorkshop'])->name('upload');
+
+Route::post('/register/{id}', [WorkshopController::class, 'registerWorkshop'])->name('register');
 
 Route::get('/about', function () {
     return view('about');
@@ -73,15 +71,19 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('/loginregister', [LoginRegisterController::class, 'logRegSchool']); 
+Route::get('/loginregister', [LoginRegisterController::class, 'logRegSchool'])->name('loginregister'); 
 Route::post('/register', [LoginRegisterController::class, 'register'])->name('register');
 Route::post('/login', [LoginRegisterController::class, 'login'])->name('login');
 Route::post('/logout', [LoginRegisterController::class, 'logout'])->middleware('auth:teacher')->name('logout');
 
-Route::get('/workshop/{id}', [WorkshopController::class, 'getById']);
+// Route::get('/loginregister');
+
+
 
 Route::get('/teacherprofile', [TeacherController::class, 'getProfile'])->middleware('auth:teacher');
 
-Route::get('/workshop-upload', function () {
-    return view('workshop-upload');
-})->name('workshop-upload');
+// Route::get('/registrations', function() {
+//     return view('registrations');
+// });
+
+Route::get('/registrations', [WorkshopController::class, 'showRegistered'])->name('registrations');

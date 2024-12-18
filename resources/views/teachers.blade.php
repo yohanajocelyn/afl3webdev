@@ -1,5 +1,4 @@
 <x-layout>
-    <x-slot:state>Teachers List</x-slot:state>
 
     <div class="bg-gray-100 container mx-auto m-8">
         @if (request('schoolId'))

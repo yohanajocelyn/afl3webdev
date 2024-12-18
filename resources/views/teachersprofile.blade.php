@@ -38,7 +38,7 @@
                         <div class="flex flex-col sm:flex-row sm:space-x-6">
                             <div class="flex-1">
                                 <label class="block text-sm font-medium text-gray-700">School</label>
-                                <p class="mt-1 text-gray-900">{{ $teacher['school']['name'] }}</p>
+                                <a href="/teacherslist?schoolId={{ $teacher['school']['id'] }}" class="mt-1 text-gray-900">{{ $teacher['school']['name'] }}</a>
                             </div>
                             <div class="flex-1">
                                 <label class="block text-sm font-medium text-gray-700">Subject Taught</label>
