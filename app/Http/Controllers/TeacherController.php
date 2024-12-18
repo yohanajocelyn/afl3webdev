@@ -17,4 +17,20 @@ class TeacherController extends Controller
             "teacher" => Teacher::dataWithId($id)
         ]);
     }
+
+    public function teachersListView () {
+        $id = request()->query('schoolId');
+        if($id==null){
+            return view('teachers', [
+                "state" => "teachers list",
+                "teachers" => Teacher::all()
+            ]);
+        }else{
+            return view('teachers', [
+            "state" => "teachers list with school",
+            "teachers" => Teacher::dataWithSchoolId($id),
+            "school" => School::dataWithId($id)
+            ]);
+        }
+    }
 }

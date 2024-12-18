@@ -39,21 +39,7 @@ Route::post('/logout', [LoginRegisterController::class, 'logout'])->middleware('
 
 Route::get('/teacherprofile', [TeacherController::class, 'getProfile'])->middleware('auth:teacher');
 
-Route::get('/teacherslist', function () {
-    $id = request()->query('schoolId');
-    if($id==null){
-        return view('teachers', [
-            "state" => "teachers list",
-            "teachers" => Teacher::all()
-        ]);
-    }else{
-        return view('teachers', [
-        "state" => "teachers list with school",
-        "teachers" => Teacher::dataWithSchoolId($id),
-        "school" => School::dataWithId($id)
-        ]);
-    }
-})->name('teachers-list');
+Route::get('/teacherslist', [TeacherController::class, 'teachersListView'])->name('teachers-list');
 
 Route::get('/schoolslist', function () {
     return view('schools', [
