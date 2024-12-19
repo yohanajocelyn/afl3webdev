@@ -19,7 +19,7 @@
                 {{-- Register Button --}}
                 <div class="mt-auto flex justify-center md:justify-end">
                     @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                        <a href="registrations/{{ $workshop->id }}">
+                        <a href="registrations/?workshopId={{ $workshop->id }}">
                             <button class="bg-green-500 text-white px-4 py-2 rounded-md">
                                 Registration
                             </button>
