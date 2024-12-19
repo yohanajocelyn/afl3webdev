@@ -12,6 +12,10 @@ class Registration extends Model
     use HasFactory;
     protected $fillable = ['regDate', 'paymentProof', 'isApproved', 'courseStatus'];
 
+    protected $casts = [
+        'regDate' => 'date'
+    ];
+
     public function teacher():BelongsTo {
         return $this->belongsTo(Teacher::class);
     }

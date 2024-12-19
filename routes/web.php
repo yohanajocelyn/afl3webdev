@@ -48,9 +48,4 @@ Route::get('/schoolslist', function () {
     ]);
 })->name('schools-list');
 
-Route::get('/workshop/registrations/{id}', function ($id) {
-    return view('registrations', [
-        'title' => 'Registrations',
-        'workshop' => Workshop::getById($id)
-    ]);
-});
+Route::get('/registrations', [WorkshopController::class, 'showRegistration'])->name('registrations');
