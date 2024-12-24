@@ -1,4 +1,4 @@
-<footer class="container mx-auto px-4 pt-8 pb-4">
+<footer class="mx-auto pt-8 pb-4">
     <div class="bg-white rounded-xl shadow-2xl p-8 border border-gray-100">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Logo and Brand Section -->

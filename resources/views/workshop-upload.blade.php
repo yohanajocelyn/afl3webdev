@@ -1,6 +1,6 @@
 <x-layout>
 
-    <section class="h-min-screen flex items-center justify-center flex-col mx-16">
+    <section class="h-min-screen flex items-center justify-center flex-col">
         <div class="container w-full bg-gray-100 mx-auto my-8">
             <h1 class="text-3xl font-bold mb-4">Upload Workshop</h1>
     
@@ -33,7 +33,7 @@
     
                 {{-- Price --}}
                 <div class="mb-4">
-                    <label for="price" class="block text-sm font-bold mb-2">Price ($)</label>
+                    <label for="price" class="block text-sm font-bold mb-2">Price (Rp)</label>
                     <input type="number" name="price" id="price" class="w-full p-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200" placeholder="Enter workshop price" step="0.01" required>
                 </div>
 

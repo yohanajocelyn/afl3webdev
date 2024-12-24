@@ -1,7 +1,5 @@
 <x-layout>
-    <x-slot:state>School List</x-slot:state>
-
-    <div class="bg-gray-100 container mx-auto m-8">
+    <div class="bg-gray-100 my-8">
         <h1 class="text-3xl font-bold mb-4">Schools</h1>
         <div class="flex flex-col md:flex-row justify-between items-center mb-6">
             <!-- Sort by dropdown -->

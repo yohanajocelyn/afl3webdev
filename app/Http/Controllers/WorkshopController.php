@@ -65,10 +65,19 @@ class WorkshopController extends Controller
         ]);
 
         //assignment from workshop creation
-        for ($i = 1; $i <= $validatedData['assignment_count']; $i++) {
+        for ($i = 1; $i <= $validatedData['assignment_count']+2; $i++) {
+            $title = '';
+            if($i === 1){
+                $title = 'pre-test';
+            }else if($i === 2){
+                $title = 'post-test';
+            }else{
+                $title = 'Assignment '. ($i - 2);
+            }
+
             Assignment::create([
                 'workshop_id' => $workshop->id,
-                'title' => "Assignment $i",
+                'title' => $title,
                 'date' => $validatedData['assignment_due_date'],
             ]);
         }
@@ -88,7 +97,7 @@ class WorkshopController extends Controller
     //     ]);
     // }
 
-    public function showRegistered(){
+    public function showRegistration(){
         $id = request()->query('workshopId');
         if($id){
             $registrations = Registration::with(['teacher', 'workshop'])

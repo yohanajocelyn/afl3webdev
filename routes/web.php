@@ -86,4 +86,4 @@ Route::get('/teacherprofile', [TeacherController::class, 'getProfile'])->middlew
 //     return view('registrations');
 // });
 
-Route::get('/registrations', [WorkshopController::class, 'showRegistered'])->name('registrations');
+Route::get('/registrations', [WorkshopController::class, 'showRegistration'])->name('registrations');

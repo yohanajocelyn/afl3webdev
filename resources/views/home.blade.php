@@ -21,7 +21,7 @@
 
     {{-- hero section --}}
     <section>
-        <div class="container mx-auto px-4 py-16 flex flex-col md:flex-row items-center">
+        <div class="container mx-auto py-16 flex flex-col md:flex-row items-center">
             <!-- Left Side - Text Content -->
             <div class="w-full md:w-[60%] md:pr-12 text-left">
                 <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">

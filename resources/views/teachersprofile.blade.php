@@ -1,7 +1,7 @@
 <x-layout>
     <section class="bg-gray-100 min-h-screen flex flex-col items-center py-10">
         {{-- box --}}
-        <div class="bg-white shadow-lg rounded-lg p-8 w-3/4 space-y-10">
+        <div class="bg-white shadow-lg rounded-lg p-8 w-full space-y-10">
             {{-- profile --}}
             <div class="flex flex-row items-center space-x-10">
                 <div class="flex flex-col items-center space-y-4">

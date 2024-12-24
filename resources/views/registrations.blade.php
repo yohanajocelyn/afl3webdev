@@ -1,9 +1,8 @@
 <x-layout>
-    <div class="bg-gray-100 container mx-auto m-8">
+    <div class="bg-gray-100 my-8">
         @if (request('workshopId'))
-            <p>{{ $registrations['workshop']['title'] }}</p>
-            <p>{{ $registrations['workshop']['description'] }}</p>
-            <p>{{ $registrations['workshop']['startDate'] }}</p>
+            <p>{{ $registrations->first()['workshop']['title'] }}</p>
+            <p>{{ $registrations->first()['workshop']['startDate']->format('F j, Y') }}</p>
         @endif
 
         <h1 class="text-3xl font-bold mb-4">Registrations</h1>
@@ -28,7 +27,7 @@
                             <div class="mt-4 md:mt-0 md:ml-4 flex flex-col items-end space-y-2">
                                 <!-- Registration Date -->
                                 <p class="text-sm text-gray-600">
-                                    Registered on: {{ $registration['created_at']->format('F j, Y') }}
+                                    Registered on: {{ $registration['regDate']->format('F j, Y') }}
                                 </p>
 
                                 <!-- Links -->

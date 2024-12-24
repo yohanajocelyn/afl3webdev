@@ -11,6 +11,11 @@ class Workshop extends Model
     use HasFactory;
     protected $fillable = ['title', 'startDate', 'endDate', 'description', 'price', 'imageURL', 'isOpen'];
 
+    protected $casts = [
+        'startDate' => 'date',
+        'endDate' => 'date'
+    ];
+
     public function registrations():HasMany {
         return $this->hasMany(Registration::class, 'workshop_id');
     }
