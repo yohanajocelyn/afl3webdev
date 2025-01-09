@@ -21,20 +21,21 @@
                     @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
                         <a href="/registrations/?workshopId={{ $workshop->id }}">
                             <button class="bg-green-500 text-white px-4 py-2 rounded-md">
-                                Registration
+                                Registrations
                             </button>
                         </a>
                     @else
                         @if (auth()->user()->registrations()->where('workshop_id', $workshop->id)->exists())
-                            <button class="bg-gray-300 text-gray-600 px-4 py-2 rounded-md">
-                                Registered
-                            </button>
+                        <button class="bg-gray-300 text-gray-600 px-4 py-2 rounded-md">
+                            Registered
+                        </button>
                         @else
-                            <button class="bg-blue-500 text-white px-4 py-2 rounded-md" onclick="togglePopUp(true)">
-                                Register
-                            </button>
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md", onclick="togglePopUp(true)">
+                            Register
+                        </button>
                         @endif
                     @endif
+                
                 </div>
             </div>
         </div>
@@ -103,12 +104,10 @@
                     </div>
                 @else
                     @foreach ($workshop->meets as $meet)
-                    <a href="{{ route('mark-presence', ['meetId' => $meet->id]) }}">
                         <x-simple-card>
                             <x-slot:title>{{ $meet->location }}</x-slot:title>
                             <x-slot:date>{{ $meet->date }}</x-slot:date>
                         </x-simple-card>
-                    </a>
                     @endforeach
                 @endif
             </div>
@@ -128,10 +127,9 @@
                 @else
                     @foreach ($workshop->assignments as $assignment)
                         <x-simple-card>
-                            <x-slot:id>{{ $assignment->id }}</x-slot:id>
                             <x-slot:title>{{ $assignment->title }}</x-slot:title>
                             <x-slot:date>{{ $assignment->date }}</x-slot:title>
-                        </x-simple-card>
+                        </x-simple-card>                    
                     @endforeach
                 @endif
             </div>
@@ -170,14 +168,12 @@
                     popup.classList.add('hidden');
                 }
             }
-
             function toggleSection(section) {
-                // Hide both sections by default
                 document.getElementById('meetsSection').classList.add('hidden');
                 document.getElementById('assignmentsSection').classList.add('hidden');
                 document.getElementById('teachersSection').classList.add('hidden');
                 
-                // Reset button styles biar transparent n ada border
+                //Reset button styles biar transparent n ada border
                 document.getElementById('meetsButton').classList.remove('bg-blue-500', 'text-white');
                 document.getElementById('meetsButton').classList.add('border-2', 'border-blue-500', 'text-blue-500');
                 document.getElementById('assignmentsButton').classList.remove('bg-purple-500', 'text-white');

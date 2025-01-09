@@ -62,7 +62,7 @@ Route::get('/workshop-upload', function () {
 
 Route::post('/upload', [WorkshopController::class, 'createWorkshop'])->name('upload');
 
-Route::post('/register/{id}', [WorkshopController::class, 'registerWorkshop'])->name('register');
+Route::post('/registerToWorkshop', [WorkshopController::class, 'registerWorkshop'])->name('registerToWorkshop');
 
 Route::get('/about', function () {
     return view('about');
