@@ -16,10 +16,6 @@ class Registration extends Model
         'regDate' => 'date'
     ];
 
-    protected $casts = [
-        'regDate' => 'date'
-    ];
-
     public function teacher():BelongsTo {
         return $this->belongsTo(Teacher::class);
     }
