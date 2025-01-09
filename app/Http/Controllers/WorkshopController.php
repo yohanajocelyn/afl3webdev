@@ -17,10 +17,12 @@ class WorkshopController extends Controller
         ]);
     }
 
-    public function getById (Workshop $workshop) {
+    public function getById ($id) {
+
+        $workshop = Workshop::find($id);
 
         $registrations = Registration::with(['teacher', 'workshop'])
-        ->where('workshop_id', $workshop->id)
+        ->where('workshop_id', $id)
         ->get();
         
         return view('workshop-detail', [

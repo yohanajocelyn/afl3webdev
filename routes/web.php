@@ -53,7 +53,7 @@ Route::get('/workshops', function () {
     return view('workshops');
 })->name('workshops');
 
-Route::get('/workshop', [WorkshopController::class, 'getById'])->name('workshop-detail');
+Route::get('/workshop/{id}', [WorkshopController::class, 'getById'])->name('workshop-detail');
 
 Route::get('/workshop-upload', function () {
     return view('workshop-upload');
