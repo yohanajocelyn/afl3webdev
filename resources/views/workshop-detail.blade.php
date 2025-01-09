@@ -21,17 +21,48 @@
                     @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
                         <a href="/registrations/?workshopId={{ $workshop->id }}">
                             <button class="bg-green-500 text-white px-4 py-2 rounded-md">
-                                Registration
+                                Registrations
                             </button>
                         </a>
                     @else
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md">
+                        @if (auth()->user()->registrations()->where('workshop_id', $workshop->id)->exists())
+                        <button class="bg-gray-300 text-gray-600 px-4 py-2 rounded-md">
+                            Registered
+                        </button>
+                        @else
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md", onclick="togglePopUp(true)">
                             Register
                         </button>
+                        @endif
                     @endif
+                
                 </div>
             </div>
         </div>
+
+        {{-- registration popup --}}
+        <div id="registerPopUp" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+            <div class="bg-white rounded-lg p-6 shadow-lg w-[90%] max-w-md">
+                <h2 class="text-lg font-bold mb-4">Confirm Registration</h2>
+                @if ($workshop['price'] != 0)
+                    <p>upload file here</p>
+                @endif
+                <p class="text-gray-600 mb-6">Are you sure you want to register for this workshop?</p>
+                <div class="flex justify-end space-x-4">
+                    <button id="cancelButton" class="bg-gray-300 px-4 py-2 rounded-md" onclick="togglePopUp(false)">
+                        Cancel
+                    </button>
+                    <form action="{{ route('registerToWorkshop') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="workshopId" id="workshopId" value="{{ $workshop->id }}">
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">
+                            Confirm
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         {{-- bottom part (the tugas / meets) --}}
         <div class="flex justify-center md:justify-start space-x-4 md:space-x-6 mb-6 px-4 md:px-10">
             <button id="meetsButton"
@@ -86,7 +117,7 @@
         {{-- Assignments Section --}}
         <div id="assignmentsSection" class="hidden px-2 md:px-10">
             <h2 class="text-2xl font-bold mb-6 text-center md:text-left">Assignments</h2>
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-2">
                 @if ($workshop->assignments->isEmpty())
                     <div class="flex flex-col w-full h-40 items-center justify-center">
                         <p class="text-gray-600 italic">
@@ -95,13 +126,10 @@
                     </div>
                 @else
                     @foreach ($workshop->assignments as $assignment)
-                    <a href="">
                         <x-simple-card>
                             <x-slot:title>{{ $assignment->title }}</x-slot:title>
                             <x-slot:date>{{ $assignment->date }}</x-slot:title>
-                        </x-simple-card>
-                    </a>
-                        
+                        </x-simple-card>                    
                     @endforeach
                 @endif
             </div>
@@ -129,13 +157,23 @@
         </div>
 
         <script>
+            //for the registration popup
+            document.getElementById('registerPopUp').classList.add('hidden')
+
+            function togglePopUp(show) {
+                const popup = document.getElementById('registerPopUp');
+                if (show) {
+                    popup.classList.remove('hidden');
+                } else {
+                    popup.classList.add('hidden');
+                }
+            }
             function toggleSection(section) {
-                // Hide both sections by default
                 document.getElementById('meetsSection').classList.add('hidden');
                 document.getElementById('assignmentsSection').classList.add('hidden');
                 document.getElementById('teachersSection').classList.add('hidden');
                 
-                // Reset button styles biar transparent n ada border
+                //Reset button styles biar transparent n ada border
                 document.getElementById('meetsButton').classList.remove('bg-blue-500', 'text-white');
                 document.getElementById('meetsButton').classList.add('border-2', 'border-blue-500', 'text-blue-500');
                 document.getElementById('assignmentsButton').classList.remove('bg-purple-500', 'text-white');
