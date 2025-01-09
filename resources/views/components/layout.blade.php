@@ -23,14 +23,12 @@
     <!-- Header -->
     <x-navigation></x-navigation>
 
-        <div class=" px-4 md:px-24">
+        <div class="px-12">
             {{ $slot }}
         </div>
 
     <!-- Footer -->
-    <div class="px-12">
-        <x-footer></x-footer>
-    </div>
+    <x-footer></x-footer>
 
     {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {

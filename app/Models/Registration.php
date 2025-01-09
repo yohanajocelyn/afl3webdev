@@ -10,11 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Registration extends Model
 {
     use HasFactory;
-    protected $fillable = ['regDate', 'paymentProof', 'isApproved', 'courseStatus', 'teacher_id', 'workshop_id'];
-
-    protected $casts = [
-        'regDate' => 'date'
-    ];
+    protected $fillable = ['regDate', 'paymentProof', 'isApproved', 'courseStatus'];
 
     public function teacher():BelongsTo {
         return $this->belongsTo(Teacher::class);

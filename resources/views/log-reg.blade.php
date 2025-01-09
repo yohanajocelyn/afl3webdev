@@ -1,5 +1,5 @@
 <x-layout>
-    <section class="bg-gray-100 min-h-screen flex items-center justify-center flex-col">
+    <section class="bg-gray-100 h-min-screen flex items-center justify-center flex-col">
         {{-- <!-- Toggle Links -->
             <div class="flex justify-between mb-6">
                 <a href="?form=register" 
@@ -47,7 +47,7 @@
                                 Add
                             </button>
                         </div>
-                        <!-- hidden for adding new school -->
+                        <!-- Hidden input for adding a new school -->
                         <div id="newSchoolInput" class="flex flex-col hidden">
                             <input type="text" id="newSchoolName" name="newSchoolName" class="border rounded-md p-2 mt-2 focus:outline-blue-400" placeholder="Enter new school name" />
                             <input type="text" id="newSchoolAddress" name="newSchoolAddress" class="border rounded-md p-2 mt-2 focus:outline-blue-400" placeholder="Enter new school address" />
