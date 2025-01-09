@@ -50,6 +50,41 @@ Route::get('/teacherslist', function () {
 
 // workshop
 
+Route::get('/profile', function () {
+    return view('profile');
+})->name('profile');
+
+// Route::get('/teacherslist', function () {
+//     return view('teachers', [
+//         "state" => "teacherslist",
+//         "teachers" => Teacher::all()
+//     ]);
+// });
+
+Route::get('/schoolslist', function () {
+    return view('schools', [
+        "schools" => School::all()
+    ]);
+})->name('view-schools');
+
+Route::get('/teacherslist', function () {
+    $id = request()->query('schoolId');
+    if($id==null){
+        return view('teachers', [
+            "state" => "teachers list",
+            "teachers" => Teacher::all()
+        ]);
+    }else{
+        return view('teachers', [
+        "state" => "teachers list with school",
+        "teachers" => Teacher::dataWithSchoolId($id),
+        "school" => School::dataWithId($id)
+        ]);
+    }
+})->name('view-teachers');
+
+// workshop
+
 Route::get('/workshops', function () {
     return view('workshops');
 })->name('workshops');
@@ -62,7 +97,7 @@ Route::get('/workshop-upload', function () {
 
 Route::post('/upload', [WorkshopController::class, 'createWorkshop'])->name('upload');
 
-Route::post('/register/{id}', [WorkshopController::class, 'registerWorkshop'])->name('register');
+Route::post('/registerToWorkshop', [WorkshopController::class, 'registerWorkshop'])->name('registerToWorkshop');
 
 Route::get('/about', function () {
     return view('about');

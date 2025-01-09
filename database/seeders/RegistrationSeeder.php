@@ -16,6 +16,7 @@ class RegistrationSeeder extends Seeder
      */
     public function run(): void
     {
+        Registration::factory()->count(100)->create();
         Registration::factory()->count(100)
         ->recycle(Workshop::factory(100)->create())
         ->create();

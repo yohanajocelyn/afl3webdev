@@ -1,9 +1,8 @@
 <x-layout>
     <div class="bg-gray-100 my-8">
         @if (request('workshopId'))
-            <p>{{ $registrations->first()->workshop['title'] }}</p>
-            <p>{{ $registrations->first()->workshop['description'] }}</p>
-            <p>{{ $registrations->first()->workshop['startDate']->format('F j, Y') }}</p>
+            <p>{{ $registrations->first()['workshop']['title'] }}</p>
+            <p>{{ $registrations->first()['workshop']['startDate']->format('F j, Y') }}</p>
         @endif
 
         <h1 class="text-3xl font-bold mb-4">Registrations</h1>
@@ -34,7 +33,7 @@
                                 <!-- Links -->
                                 <div class="flex space-x-4">
                                     @if ($registration['workshop'])
-                                        <a href="{{ route('workshop-detail', $registration['workshop']) }}"
+                                        <a href="/workshop/{{ $registration['workshop']['id'] }}"
                                             class="text-blue-500 hover:underline text-sm">
                                             Show Workshop
                                         </a>

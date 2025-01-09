@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CourseStatus;
 use App\Models\Assignment;
+use App\Models\Meet;
+use App\Models\Presence;
 use App\Models\Registration;
 use App\Models\Teacher;
 use App\Models\Workshop;
@@ -19,8 +22,7 @@ class WorkshopController extends Controller
 
     public function getById ($id) {
 
-        $workshop = Workshop::find($id);
-
+        $workshop = Workshop::getById($id);
         $registrations = Registration::with(['teacher', 'workshop'])
         ->where('workshop_id', $id)
         ->get();
@@ -87,16 +89,46 @@ class WorkshopController extends Controller
         ->with('success', 'Workshop and its assignments created successfully');
     }
 
-    // public function registerWorkshop($id){
-    //     $registration = Registration::create([
-    //         'regDate' => ,  //current date/time
-    //         'paymentProof' => , 
-    //         'isApproved' => ,
-    //         'courseStatus' =>,
-    //         'teacher_id' => auth()->user()->id,
-    //         'workshop_id' => $id,
-    //     ]);
-    // }
+    public function registerWorkshop(Request $request){
+
+        $workshopId = $request->workshopId;
+        $workshop = Workshop::findOrFail($workshopId);
+        if($workshop['price'] == 0){
+            $paymentProof = 'null';
+            $isApproved = 1;
+        }else{
+            $paymentProof = ''; //nanti diganti sama handle image udh bayar
+            $isApproved = 0;
+        }
+
+        if (!auth('teacher')->check()) {
+            abort(403, 'You must be logged in to register.');
+        }
+
+        $teacherId = auth('teacher')->user()->id;
+
+        $registration = Registration::create([
+            'regDate' => now(),
+            'paymentProof' => $paymentProof, 
+            'isApproved' => $isApproved,
+            'courseStatus' => CourseStatus::Assigned,
+            'teacher_id' => $teacherId,
+            'workshop_id' => $workshopId,
+        ]);
+
+        $meets = Meet::where('workshop_id', $workshopId)->get();
+        foreach($meets as $meet){
+            Presence::create([
+                'meet_id' => $meet['id'],
+                'registration_id' => $registration['id'],
+                'isPresent' => false,
+                'dateTime' => now() 
+            ]);
+        }
+
+        return redirect(url()->previous());
+
+    }
 
     public function showRegistration(){
         $id = request()->query('workshopId');

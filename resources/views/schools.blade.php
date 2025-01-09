@@ -1,6 +1,6 @@
 <x-layout>
-    <div class="bg-gray-100">
-        <h1 class="text-3xl font-bold mb-4 pt-8">Schools</h1>
+    <div class="bg-gray-100 my-8">
+        <h1 class="text-3xl font-bold mb-4">Schools</h1>
         <div class="flex flex-col md:flex-row justify-between items-center mb-6">
             <!-- Sort by dropdown -->
             <div class="flex-1 sm:mr-4 mb-4 sm:mb-0">
