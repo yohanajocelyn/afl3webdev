@@ -8,7 +8,6 @@ use App\Http\Controllers\WorkshopController;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 
-<<<<<<< Updated upstream
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -50,10 +49,6 @@ Route::get('/teacherslist', function () {
 })->name('view-teachers');
 
 // workshop
-=======
-Route::get('/home', [WorkshopController::class, 'getAll'])->name('home');
-Route::post('/home', [WorkshopController::class, 'getAll'])->name('home');
->>>>>>> Stashed changes
 
 Route::get('/profile', function () {
     return view('profile');
