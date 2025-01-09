@@ -23,7 +23,7 @@
     <!-- Header -->
     <x-navigation></x-navigation>
 
-        <div class="px-12">
+        <div class=" px-4 md:px-24">
             {{ $slot }}
         </div>
 
