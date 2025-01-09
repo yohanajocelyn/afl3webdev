@@ -46,13 +46,6 @@ class LoginRegisterController extends Controller
             );
         }
 
-        //Handle image upload - getting the image's path
-        // if ($request->hasFile('profile_picture')) {
-            
-        // } else {
-        //     $path = 'defaultProfilePicture';
-        // }
-
         $existingTeacher = Teacher::where('email', $validatedData['email'])->first();
 
         if ($existingTeacher) {
