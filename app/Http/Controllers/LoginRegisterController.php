@@ -18,7 +18,7 @@ class LoginRegisterController extends Controller
 
     public function register(Request $request){
         $validatedData = $request->validate([
-            'profile_picture' => 'nullable|string',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'name' => 'required|string|max:255',
             'school' => 'nullable|string|max:255',
             'newSchoolName' => 'required_without:school|nullable|string|max:255',
@@ -46,7 +46,10 @@ class LoginRegisterController extends Controller
             );
         }
 
-        $profilePicture = $validatedData['profile_picture'] ?? 'default-profile-picture-url.jpg';
+        //Handle image upload - getting the image's path
+        if ($request->hasFile('profile_picture')) {
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+        }
 
         $existingTeacher = Teacher::where('email', $validatedData['email'])->first();
 
@@ -55,7 +58,7 @@ class LoginRegisterController extends Controller
         }
 
         $teacher = Teacher::create([
-            'pfpUrl' => $profilePicture,
+            'pfpUrl' => $path,
             'name' => $validatedData['name'],
             'gender' => $validatedData['gender'],
             'email' => $validatedData['email'],

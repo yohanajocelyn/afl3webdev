@@ -86,7 +86,7 @@
                     </button>
                 </form>
                 <a href="/teacherprofile/?teacherId={{ auth()->user()->id }}" class="text-gray-800 hover:text-blue-600 transition duration-300 flex flex-row">
-                    <img src="" alt="Profile Picture">
+                    <img src="{{ Storage::url(auth()->user()->pfpUrl) }}" alt="Profile Picture" class="w-8 h-8 rounded-full">
                     <span>{{ auth()->user()->name }}</span>
                 </a>
             @endauth

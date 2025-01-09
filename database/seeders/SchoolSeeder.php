@@ -13,11 +13,11 @@ class SchoolSeeder extends Seeder
      */
     public function run(): void
     {
-        // School::factory()->count(10)->create();
-        School::create([
-            'name' => 'SMP Gemilang Prestasi',
-            'address' => 'Jl. Anggrek No. 9',
-            'city' => 'Malang',
-        ]);
+        School::factory()->count(10)->create();
+        // School::create([
+        //     'name' => 'SMP Gemilang Prestasi',
+        //     'address' => 'Jl. Anggrek No. 9',
+        //     'city' => 'Malang',
+        // ]);
     }
 }
