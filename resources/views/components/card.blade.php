@@ -2,7 +2,7 @@
             transform transition duration-300 hover:scale-105 hover:shadow-xl 
             cursor-pointer group">
     @props(['workshop'])
-    <a href="workshop/{{ $workshop['id'] }}">
+    <a href="{{ route('workshop-detail', $workshop) }}">
         <!-- Promotional Image -->
         <div class="relative w-full pt-[56.25%]"> <!-- 16:9 Aspect Ratio -->
             <img 

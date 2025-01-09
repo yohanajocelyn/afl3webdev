@@ -54,10 +54,10 @@
                     <a href="" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300">
                         Manage Workshops
                     </a>
-                    <a href="{{route('teachers-list')}}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300">
+                    <a href="{{route('view-teachers')}}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300">
                         See Teachers
                     </a>
-                    <a href="{{route('schools-list')}}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300">
+                    <a href="{{route('view-schools')}}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300">
                         See Schools
                     </a>
                 </div>

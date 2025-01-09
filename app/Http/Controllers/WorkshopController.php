@@ -17,11 +17,10 @@ class WorkshopController extends Controller
         ]);
     }
 
-    public function getById ($id) {
+    public function getById (Workshop $workshop) {
 
-        $workshop = Workshop::getById($id);
         $registrations = Registration::with(['teacher', 'workshop'])
-        ->where('workshop_id', $id)
+        ->where('workshop_id', $workshop->id)
         ->get();
         
         return view('workshop-detail', [
@@ -97,7 +96,7 @@ class WorkshopController extends Controller
     //     ]);
     // }
 
-    public function showRegistration(){
+    public function showRegistered(){
         $id = request()->query('workshopId');
         if($id){
             $registrations = Registration::with(['teacher', 'workshop'])
