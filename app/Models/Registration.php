@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Registration extends Model
 {
     use HasFactory;
-    protected $fillable = ['regDate', 'paymentProof', 'isApproved', 'courseStatus'];
+    protected $fillable = ['regDate', 'paymentProof', 'isApproved', 'courseStatus', 'teacher_id', 'workshop_id'];
 
     protected $casts = [
         'regDate' => 'date'
