@@ -1,7 +1,7 @@
 <x-layout>
     <div class="bg-gray-100 my-8">
-            <!-- Search bar on the right for large screens, on top for small screens -->
-            <h1>Mark Presences for Teachers Registered to {{ $workshop->title }}</h1>
+
+        <h1 class="text-3xl font-bold mb-6">Mark Presences for Teachers Registered to {{ $workshop->title }}</h1>
         <div class="flex w-auto">
             <input type="text" placeholder="Search teachers..." class="border p-2 rounded-md w-full sm:w-64 focus:outline-blue-400" />
             <button class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">

@@ -32,7 +32,7 @@
                         <span class="text-green-600">Free</span>
                     @else
                         <span>
-                        Rp.{{ number_format($workshop->price, 2) }}
+                        Rp. {{ number_format($workshop->price, 2) }}
                         </span>
                     @endif
                 </div>

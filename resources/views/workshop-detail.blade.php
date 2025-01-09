@@ -103,7 +103,6 @@
                             <x-slot:title>{{ $assignment->title }}</x-slot:title>
                             <x-slot:date>{{ $assignment->date }}</x-slot:title>
                         </x-simple-card>
-                        
                     @endforeach
                 @endif
             </div>
