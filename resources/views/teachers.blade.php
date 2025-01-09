@@ -1,5 +1,4 @@
 <x-layout>
-
     <div class="bg-gray-100 my-8">
         @if (request('schoolId'))
             <p>{{ $school['name'] }}</p>

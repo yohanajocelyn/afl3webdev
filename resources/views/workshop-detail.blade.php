@@ -117,7 +117,7 @@
         {{-- Assignments Section --}}
         <div id="assignmentsSection" class="hidden px-2 md:px-10">
             <h2 class="text-2xl font-bold mb-6 text-center md:text-left">Assignments</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-2">
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 @if ($workshop->assignments->isEmpty())
                     <div class="flex flex-col w-full h-40 items-center justify-center">
                         <p class="text-gray-600 italic">
@@ -147,10 +147,10 @@
                     </div>
                 @else
                     @foreach ($registrations as $registration)
-                    <x-simple-card>
-                        <x-slot:title>{{  $registration->teacher->name }}</x-slot:title>
-                        <x-slot:date>{{  $registration->regDate->format('F j, Y') }}</x-slot:date>
-                    </x-simple-card>
+                    <x-teacher-card :teacher="$registration->teacher" :registration="$registration" />
+                        {{-- <x-slot:title>{{  $registration->teacher->name }}</x-slot:title>
+                        <x-slot:date>{{  $registration->regDate->format('F j, Y') }}</x-slot:date> --}}
+                    {{-- </x-teacher-card> --}}
                     @endforeach
                 @endif
             </div>

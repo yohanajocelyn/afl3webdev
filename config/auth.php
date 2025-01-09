@@ -75,9 +75,9 @@ return [
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
         //tambahan
-            'teachers' => [
+        'teachers' => [
             'driver' => 'eloquent',
-            'model' => env('TEACHER_AUTH_MODEL',App\Models\Teacher::class), // Add this
+            'model' => env('TEACHER_AUTH_MODEL', App\Models\Teacher::class), // Add this
         ],
 
         // 'users' => [

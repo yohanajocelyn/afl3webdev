@@ -31,8 +31,7 @@ class Teacher extends Authenticatable
     }
 
     public static function dataWithId($id){
-        $allTeachers = static::allData();
-        return $allTeachers -> firstWhere('id', $id);
+        return self::find($id);
     }
 
     public static function dataWithSchoolId($id){
@@ -40,5 +39,4 @@ class Teacher extends Authenticatable
         return $teachersFromSchool -> where('school_id', $id);
         return Teacher::find($id);
     }
-
 }

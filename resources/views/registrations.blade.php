@@ -33,7 +33,7 @@
                                 <!-- Links -->
                                 <div class="flex space-x-4">
                                     @if ($registration['workshop'])
-                                        <a href="/workshop/{{ $registration['workshop']['id'] }}"
+                                        <a href="{{ route('workshop-detail', $registration['workshop']) }}"
                                             class="text-blue-500 hover:underline text-sm">
                                             Show Workshop
                                         </a>

@@ -2,7 +2,7 @@
             transform transition duration-300 hover:scale-105 hover:shadow-xl 
             cursor-pointer group">
     @props(['workshop'])
-    <a href="workshop/{{ $workshop['id'] }}">
+    <a href="{{ route('workshop-detail', $workshop) }}">
         <!-- Promotional Image -->
         <div class="relative w-full pt-[56.25%]"> <!-- 16:9 Aspect Ratio -->
             <img 
@@ -28,12 +28,11 @@
             <!-- Price Information -->
             <div class="flex justify-between items-center">
                 <div class="text-gray-900 font-semibold text-lg">
-                    @if(true)
+                    @if( $workshop->price == 0 )
                         <span class="text-green-600">Free</span>
                     @else
                         <span>
-                            {{-- ${{ number_format($workshop->price, 2) }} --}}
-                            $200
+                        Rp. {{ number_format($workshop->price, 2) }}
                         </span>
                     @endif
                 </div>
