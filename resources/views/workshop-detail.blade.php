@@ -73,10 +73,13 @@
                     </div>
                 @else
                     @foreach ($workshop->meets as $meet)
+                    <a href="{{ route('mark-presence', ['meetId' => $meet->id]) }}">
                         <x-simple-card>
+                            <x-slot:id>{{ $meet->id }}</x-slot:id>
                             <x-slot:title>{{ $meet->location }}</x-slot:title>
                             <x-slot:date>{{ $meet->date }}</x-slot:date>
                         </x-simple-card>
+                    </a>
                     @endforeach
                 @endif
             </div>
@@ -96,6 +99,7 @@
                 @else
                     @foreach ($workshop->assignments as $assignment)
                         <x-simple-card>
+                            <x-slot:id>{{ $assignment->id }}</x-slot:id>
                             <x-slot:title>{{ $assignment->title }}</x-slot:title>
                             <x-slot:date>{{ $assignment->date }}</x-slot:title>
                         </x-simple-card>
@@ -117,10 +121,10 @@
                     </div>
                 @else
                     @foreach ($registrations as $registration)
-                    <x-simple-card>
-                        <x-slot:title>{{  $registration->teacher->name }}</x-slot:title>
-                        <x-slot:date>{{  $registration->regDate->format('F j, Y') }}</x-slot:date>
-                    </x-simple-card>
+                    <x-teacher-card :teacher="$registration->teacher" :registration="$registration" />
+                        {{-- <x-slot:title>{{  $registration->teacher->name }}</x-slot:title>
+                        <x-slot:date>{{  $registration->regDate->format('F j, Y') }}</x-slot:date> --}}
+                    {{-- </x-teacher-card> --}}
                     @endforeach
                 @endif
             </div>

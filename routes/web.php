@@ -2,6 +2,7 @@
 
 use App\Models\School;
 use App\Http\Controllers\LoginRegisterController;
+use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\WorkshopController;
 use App\Models\Teacher;
@@ -80,4 +81,9 @@ Route::post('/logout', [LoginRegisterController::class, 'logout'])->middleware('
 
 Route::get('/teacherprofile', [TeacherController::class, 'getProfile'])->middleware('auth:teacher');
 
-Route::get('/registrations', [WorkshopController::class, 'showRegistered'])->name('registrations');
+Route::get('/registrations', [WorkshopController::class, 'showRegistration'])->name('registrations');
+
+Route::get('/mark-presence', [PresenceController::class, 'show'])->name('mark-presence');
+
+Route::post('/mark-present/{presenceId}', [PresenceController::class, 'update'])->name('mark-present');
+

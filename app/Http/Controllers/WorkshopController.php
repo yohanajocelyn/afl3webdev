@@ -98,7 +98,7 @@ class WorkshopController extends Controller
     //     ]);
     // }
 
-    public function showRegistered(){
+    public function showRegistration(){
         $id = request()->query('workshopId');
         if($id){
             $registrations = Registration::with(['teacher', 'workshop'])
