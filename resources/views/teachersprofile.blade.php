@@ -6,7 +6,7 @@
             <div class="flex flex-row items-center space-x-10">
                 <div class="flex flex-col items-center space-y-4">
                     <div class="w-48 h-48 bg-gray-300 rounded-full overflow-hidden">
-                        <img src="path-to-profile-picture.jpg" alt="Profile Picture" class="object-cover w-full h-full">
+                        <img src="{{ asset($teacher['pfpURL']) }}" alt="Profile Picture" class="object-cover w-full h-full">
                     </div>
                 </div>
 

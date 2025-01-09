@@ -47,9 +47,11 @@ class LoginRegisterController extends Controller
         }
 
         //Handle image upload - getting the image's path
-        if ($request->hasFile('profile_picture')) {
-            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
-        }
+        // if ($request->hasFile('profile_picture')) {
+            
+        // } else {
+        //     $path = 'defaultProfilePicture';
+        // }
 
         $existingTeacher = Teacher::where('email', $validatedData['email'])->first();
 
@@ -57,8 +59,11 @@ class LoginRegisterController extends Controller
             return back()->withErrors(['email' => 'The email is already taken.'])->withInput();
         }
 
+        $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+        $path = 'storage/' . $path;
+
         $teacher = Teacher::create([
-            'pfpUrl' => $path,
+            'pfpURL' => $path,
             'name' => $validatedData['name'],
             'gender' => $validatedData['gender'],
             'email' => $validatedData['email'],
