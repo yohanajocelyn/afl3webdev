@@ -25,13 +25,43 @@
                             </button>
                         </a>
                     @else
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md">
-                            Register
-                        </button>
+                        @if (auth()->user()->registrations()->where('workshop_id', $workshop->id)->exists())
+                            <button class="bg-gray-300 text-gray-600 px-4 py-2 rounded-md">
+                                Registered
+                            </button>
+                        @else
+                            <button class="bg-blue-500 text-white px-4 py-2 rounded-md" onclick="togglePopUp(true)">
+                                Register
+                            </button>
+                        @endif
                     @endif
                 </div>
             </div>
         </div>
+
+        {{-- registration popup --}}
+        <div id="registerPopUp" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+            <div class="bg-white rounded-lg p-6 shadow-lg w-[90%] max-w-md">
+                <h2 class="text-lg font-bold mb-4">Confirm Registration</h2>
+                @if ($workshop['price'] != 0)
+                    <p>upload file here</p>
+                @endif
+                <p class="text-gray-600 mb-6">Are you sure you want to register for this workshop?</p>
+                <div class="flex justify-end space-x-4">
+                    <button id="cancelButton" class="bg-gray-300 px-4 py-2 rounded-md" onclick="togglePopUp(false)">
+                        Cancel
+                    </button>
+                    <form action="{{ route('registerToWorkshop') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="workshopId" id="workshopId" value="{{ $workshop->id }}">
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">
+                            Confirm
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         {{-- bottom part (the tugas / meets) --}}
         <div class="flex justify-center md:justify-start space-x-4 md:space-x-6 mb-6 px-4 md:px-10">
             <button id="meetsButton"
@@ -75,7 +105,6 @@
                     @foreach ($workshop->meets as $meet)
                     <a href="{{ route('mark-presence', ['meetId' => $meet->id]) }}">
                         <x-simple-card>
-                            <x-slot:id>{{ $meet->id }}</x-slot:id>
                             <x-slot:title>{{ $meet->location }}</x-slot:title>
                             <x-slot:date>{{ $meet->date }}</x-slot:date>
                         </x-simple-card>
@@ -130,6 +159,18 @@
         </div>
 
         <script>
+            //for the registration popup
+            document.getElementById('registerPopUp').classList.add('hidden')
+
+            function togglePopUp(show) {
+                const popup = document.getElementById('registerPopUp');
+                if (show) {
+                    popup.classList.remove('hidden');
+                } else {
+                    popup.classList.add('hidden');
+                }
+            }
+
             function toggleSection(section) {
                 // Hide both sections by default
                 document.getElementById('meetsSection').classList.add('hidden');
