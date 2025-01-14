@@ -147,4 +147,28 @@ class WorkshopController extends Controller
     public function teacherRegistered(){
         $teachers = Registration::with(['teacher', 'workshop'])->get();
     }
+
+    public function createMeet(Request $request){
+        $validatedData = $request->validate([
+            'date' => 'required|date',
+            'location' => 'required|string'
+        ]);
+
+        $workshopId = $request['workshopId'];
+
+        $existingMeet = Meet::findOrFail([
+            'workshop_id' => $workshopId,
+            'date' => $validatedData['date']
+        ]);
+
+        if($existingMeet){
+            return back()->withErrors(['title' => 'This Meet Exists already'])->withInput();
+        }
+
+        Meet::create([
+            'date' => $validatedData['date'],
+            'location' => $validatedData['location'],
+            'workshop_id' => $workshopId
+        ]);
+    }
 }

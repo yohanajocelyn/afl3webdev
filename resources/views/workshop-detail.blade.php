@@ -76,10 +76,10 @@
                 Assignments
             </button>
             @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                <button id="teachersButton"
+                <button id="pesertaButton"
                     class="border-2 border-green-500 text-green-500 px-4 py-2 rounded-full hover:bg-green-600 hover:text-white"
-                    onclick="toggleSection('teachers')">
-                    Teachers
+                    onclick="toggleSection('peserta')">
+                    Peserta
                 </button>
             @endif
         </div>
@@ -137,9 +137,9 @@
             </div>
         </div>
 
-        {{-- Teachers Section --}}
-        <div id="teachersSection" class="hidden px-4 md:px-10">
-            <h2 class="text-2xl font-bold mb-6 text-center md:text-left">Teachers</h2>
+        {{-- Peserta Section --}}
+        <div id="pesertaSection" class="hidden px-4 md:px-10">
+            <h2 class="text-2xl font-bold mb-6 text-center md:text-left">Peserta</h2>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 @if ($registrations->isEmpty())
                     <div class="flex flex-col w-full h-40 items-center justify-center">
@@ -173,7 +173,7 @@
             function toggleSection(section) {
                 document.getElementById('meetsSection').classList.add('hidden');
                 document.getElementById('assignmentsSection').classList.add('hidden');
-                document.getElementById('teachersSection').classList.add('hidden');
+                document.getElementById('pesertaSection').classList.add('hidden');
                 
                 //Reset button styles biar transparent n ada border
                 document.getElementById('meetsButton').classList.remove('bg-blue-500', 'text-white');
@@ -181,8 +181,8 @@
                 document.getElementById('assignmentsButton').classList.remove('bg-purple-500', 'text-white');
                 document.getElementById('assignmentsButton').classList.add('border-2', 'border-purple-500', 'text-purple-500');
                 @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                document.getElementById('teachersButton').classList.remove('bg-green-500', 'text-white');
-                document.getElementById('teachersButton').classList.add('border-2', 'border-green-500', 'text-green-500');
+                document.getElementById('pesertaButton').classList.remove('bg-green-500', 'text-white');
+                document.getElementById('pesertaButton').classList.add('border-2', 'border-green-500', 'text-green-500');
                 @endif
     
                 // Show the selected section
@@ -194,10 +194,10 @@
                     document.getElementById('assignmentsSection').classList.remove('hidden');
                     document.getElementById('assignmentsButton').classList.add('bg-purple-500', 'text-white');
                     document.getElementById('assignmentsButton').classList.remove('border-2', 'border-purple-500', 'text-purple-500');
-                } else if (section === 'teachers') {
-                    document.getElementById('teachersSection').classList.remove('hidden');
-                    document.getElementById('teachersButton').classList.add('bg-green-500', 'text-white');
-                    document.getElementById('teachersButton').classList.remove('border-2', 'border-green-500',
+                } else if (section === 'peserta') {
+                    document.getElementById('pesertaSection').classList.remove('hidden');
+                    document.getElementById('pesertaButton').classList.add('bg-green-500', 'text-white');
+                    document.getElementById('pesertaButton').classList.remove('border-2', 'border-green-500',
                     'text-green-500');
                 }
             }
