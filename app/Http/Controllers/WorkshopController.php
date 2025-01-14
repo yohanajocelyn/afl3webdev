@@ -147,4 +147,16 @@ class WorkshopController extends Controller
     public function teacherRegistered(){
         $teachers = Registration::with(['teacher', 'workshop'])->get();
     }
+
+    public function showProgress(Request $request){
+        $id = $request->query('workshopId');
+
+        $workshop = Workshop::with([
+            'registrations.teacher',
+            'registrations.submissions',
+            'assignments'
+        ])->findOrFail($id);
+    
+        return view('workshop-progress', compact('workshop'));
+    }
 }

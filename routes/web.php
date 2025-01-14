@@ -87,3 +87,5 @@ Route::get('/mark-presence', [PresenceController::class, 'show'])->name('mark-pr
 
 Route::post('/mark-present/{presenceId}', [PresenceController::class, 'update'])->name('mark-present');
 
+Route::get('/workshop-progress', [WorkshopController::class, 'showProgress'])->name('workshop-progress');
+

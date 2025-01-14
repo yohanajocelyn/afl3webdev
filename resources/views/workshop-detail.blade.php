@@ -13,6 +13,13 @@
                 <div class="text-center pb-4 md:text-left flex flex-col md:flex-row">
                     <p class="">Tanggal Pelaksanaan: </p>
                     <p class="md:px-2">{{ $workshop['startDate']->format('F j, Y') }} - {{ $workshop['endDate']->format('F j, Y') }}</p>
+                    <a href="
+                        @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
+                            {{ route('workshop-progress', ['workshopId' => $workshop->id]) }}
+                        @endif
+                    ">
+                    Lihat Progress
+                    </a>
                 </div>
                 <p class="text-center md:text-left">Registration Fee:</p>
                 <p class="text-center md:text-left pb-4">Rp {{ number_format($workshop['price'], 0, ',', '.') }}</p>
@@ -25,14 +32,14 @@
                             </button>
                         </a>
                     @else
-                        @if (auth()->user()->registrations()->where('workshop_id', $workshop->id)->exists())
-                        <button class="bg-gray-300 text-gray-600 px-4 py-2 rounded-md">
-                            Registered
-                        </button>
+                        @if (auth()->check() && auth()->user()->registrations()->where('workshop_id', $workshop->id)->exists())
+                            <button class="bg-gray-300 text-gray-600 px-4 py-2 rounded-md">
+                                Registered
+                            </button>
                         @else
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md", onclick="togglePopUp(true)">
-                            Register
-                        </button>
+                            <button class="bg-blue-500 text-white px-4 py-2 rounded-md", onclick="togglePopUp(true)">
+                                Register
+                            </button>
                         @endif
                     @endif
                 
@@ -68,18 +75,18 @@
             <button id="meetsButton"
                 class="border-2 border-blue-500 text-blue-500 px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white"
                 onclick="toggleSection('meets')">
-                Meets
+                Pertemuan
             </button>
             <button id="assignmentsButton"
                 class="border-2 border-purple-500 text-purple-500 px-4 py-2 rounded-full hover:bg-purple-600 hover:text-white"
                 onclick="toggleSection('assignments')">
-                Assignments
+                Tugas
             </button>
             @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
                 <button id="teachersButton"
                     class="border-2 border-green-500 text-green-500 px-4 py-2 rounded-full hover:bg-green-600 hover:text-white"
                     onclick="toggleSection('teachers')">
-                    Teachers
+                    Peserta
                 </button>
             @endif
         </div>
@@ -88,10 +95,10 @@
         {{-- Meets Section --}}
         <div id="meetsSection" class="hidden px-4 md:px-10">
             <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-center md:text-left">Meets</h2>
+                <h2 class="text-2xl font-bold text-center md:text-left">Pertemuan</h2>
                 @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
                     <a href="">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md">Add Meet</button>
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md">Tambahkan Pertemuan</button>
                     </a>
                 @endif
             </div>
@@ -104,12 +111,16 @@
                     </div>
                 @else
                     @foreach ($workshop->meets as $meet)
-                    <a href="{{ route('mark-presence', ['meetId' => $meet->id]) }}">
-                            <x-simple-card>
-                                <x-slot:title>{{ $meet->location }}</x-slot:title>
-                                <x-slot:date>{{ $meet->date }}</x-slot:date>
-                            </x-simple-card>
-                        </a>
+                    <a href="
+                    @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
+                        {{ route('mark-presence', ['meetId' => $meet->id]) }}
+                    @endif
+                    ">
+                        <x-simple-card>
+                            <x-slot:title>{{ $meet->location }}</x-slot:title>
+                            <x-slot:date>{{ $meet->date }}</x-slot:date>
+                        </x-simple-card>
+                    </a>
                     @endforeach
                 @endif
             </div>
@@ -118,12 +129,12 @@
 
         {{-- Assignments Section --}}
         <div id="assignmentsSection" class="hidden px-2 md:px-10">
-            <h2 class="text-2xl font-bold mb-6 text-center md:text-left">Assignments</h2>
+            <h2 class="text-2xl font-bold mb-6 text-center md:text-left">Tugas</h2>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 @if ($workshop->assignments->isEmpty())
                     <div class="flex flex-col w-full h-40 items-center justify-center">
                         <p class="text-gray-600 italic">
-                            Saat ini belum ada data pertemuan.
+                            Saat ini belum tugas.
                         </p>
                     </div>
                 @else
@@ -139,12 +150,12 @@
 
         {{-- Teachers Section --}}
         <div id="teachersSection" class="hidden px-4 md:px-10">
-            <h2 class="text-2xl font-bold mb-6 text-center md:text-left">Teachers</h2>
+            <h2 class="text-2xl font-bold mb-6 text-center md:text-left">Peserta</h2>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 @if ($registrations->isEmpty())
                     <div class="flex flex-col w-full h-40 items-center justify-center">
                         <p class="text-gray-600 italic">
-                            Saat ini belum ada data guru.
+                            Saat ini belum ada data peserta.
                         </p>
                     </div>
                 @else
