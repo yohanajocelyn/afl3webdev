@@ -104,11 +104,13 @@
                     </div>
                 @else
                     @foreach ($workshop->meets as $meet)
+                    <a href="{{ route('mark-presence', ['meetId' => $meet->id]) }}">
                         <x-simple-card>
                             <x-slot:title>{{ $meet->location }}</x-slot:title>
                             <x-slot:date>{{ $meet->date }}</x-slot:date>
                         </x-simple-card>
-                    @endforeach
+                    </a>
+                @endforeach
                 @endif
             </div>
         </div>
