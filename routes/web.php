@@ -96,3 +96,4 @@ Route::post('/mark-all-present/{meetId}', [PresenceController::class, 'markAllPr
 
 Route::post('/setApprove/{registrationId}', [RegistrationController::class, 'update'])->name('set-approve');
 
+Route::put('/open-workshop', [WorkshopController::class, 'openWorkshop'])->name('open-workshop');

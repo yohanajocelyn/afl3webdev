@@ -54,10 +54,11 @@ class WorkshopController extends Controller
             'price' => 'required|integer',
             'assignment_count' => 'required|integer|min:1',
             'assignment_due_date' => 'required|date|after_or_equal:end_date',
-            'workshop_image' => 'nullable|string',
+            'workshop_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $workshopImage = $validatedData['workshop_image'] ?? 'default-image-url.jpg';
+        $workshopImage = $request->file('workshop_image')->store('workshop_banners', 'public');
+        $workshopImage = 'storage/' . $workshopImage;
 
         $existingWorkshop = Workshop::where('title', $validatedData['title'])
         ->where('startDate', $validatedData['start_date'])
@@ -94,6 +95,7 @@ class WorkshopController extends Controller
                 'workshop_id' => $workshop->id,
                 'title' => $title,
                 'date' => $validatedData['assignment_due_date'],
+                'description' => ""
             ]);
         }
 
@@ -217,5 +219,17 @@ class WorkshopController extends Controller
         ])->findOrFail($id);
     
         return view('workshop-progress', compact('workshop'));
+    }
+
+    public function openWorkshop(Request $request)
+    {
+        $workshopId = $request->workshopId;
+        $workshop = Workshop::findOrFail($workshopId);
+
+        $workshop->update([
+            'isOpen' => !$workshop->isOpen,
+        ]);
+
+        return redirect()->back();
     }
 }
