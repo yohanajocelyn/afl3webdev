@@ -71,7 +71,7 @@ class LoginRegisterController extends Controller
 
         Auth::guard('teacher')->login($teacher);
 
-        return redirect()->route('home');
+        return redirect($request['pageBefore']);
     }
 
     public function login(Request $request){
@@ -83,7 +83,7 @@ class LoginRegisterController extends Controller
         if (Auth::guard('teacher')->attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->route('home');
+            return redirect($request['pageBefore']);
         }
 
         return back()->withErrors([

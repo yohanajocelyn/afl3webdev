@@ -166,11 +166,27 @@ class WorkshopController extends Controller
             return back()->withErrors(['title' => 'This Meet Exists already'])->withInput();
         }
 
-        Meet::create([
+        $meet = Meet::create([
             'date' => $validatedData['date'],
             'location' => $validatedData['location'],
             'workshop_id' => $workshopId
         ]);
+
+        $registeredUsers = Registration::getAll([
+            'workshop_id' => $workshopId
+        ]);
+
+        if($registeredUsers != null){
+            foreach($registeredUsers as $registered){
+                Presence::create([
+                    'meet_id' => $meet['id'],
+                    'registration_id' => $registered['id'],
+                    'isPresent' => false,
+                    'dateTime' => now() 
+                ]);
+            }
+        }
+        return redirect(url()->previous());
     }
     
     public function showProgress(Request $request){
