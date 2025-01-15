@@ -38,10 +38,10 @@
                 
                 <!-- Call to Action Buttons -->
                 <div class="flex space-x-4">
-                    <a href="{{ route('workshops') }}" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 shadow-md">
+                    <a href="#workshops" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 shadow-md">
                         Lihat Pelatihan
                     </a>
-                    <a href="" class="px-6 py-3 bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200 transition duration-300 shadow-md">
+                    <a href="{{ route('loginregister') }}" class="px-6 py-3 bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200 transition duration-300 shadow-md">
                         Sign Up
                     </a>
                 </div>
@@ -64,7 +64,7 @@
     <main class="pt-8 pb-12">
         <div class="flex flex-col mx-auto px-4">
             <!-- About Section -->
-            <section class="text-center mb-12">
+            <section id="workshops" class="text-center mb-12">
                 <h2 class="text-2xl font-bold text-gray-800">Pelatihan</h2>
                 <p class="mt-4 text-gray-600">
                     Pelatihan ini dirancang untuk membantu para guru meningkatkan kemampuan mengajar melalui sesi interaktif, materi terkini, dan diskusi kelompok.

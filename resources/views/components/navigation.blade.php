@@ -25,10 +25,14 @@
     transform translate-y-0">
     <!-- Logo Section (Left) -->
     <div class="flex items-center">
-        <a href="{{ route('home') }}" class="flex flex-row items-center space-x-4">
-            <img src="{{ asset('images/logo-uc.png') }}" alt="Logo UC" class="h-11 w-auto">
-            <img src="{{ asset('images/logo-bebras-cropped.png') }}" alt="Logo Bebras" class="h-10 w-auto">
-        </a>
+        <div class="flex flex-row items-center space-x-4">
+            <a href="https://ciputra.ac.id">
+                <img src="{{ asset('images/logo-uc.png') }}" alt="Logo UC" class="h-11 w-auto">
+            </a>
+            <a href="https://bebras.uc.ac.id">
+                <img src="{{ asset('images/logo-bebras-cropped.png') }}" alt="Logo Bebras" class="h-10 w-auto">
+            </a>
+        </div>
     </div>
 
     <!-- Menu Section (Center) -->
