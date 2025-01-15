@@ -25,17 +25,22 @@
                             </button>
                         </a>
                     @else
-                        @if (auth()->check() && auth()->user()->registrations()->where('workshop_id', $workshop->id)->exists())
-                            <button class="bg-gray-300 text-gray-600 px-4 py-2 rounded-md">
-                                Registered
-                            </button>
+                        @if (auth()->check())
+                            @if (auth()->user()->registrations()->where('workshop_id', $workshop->id)->exists())
+                                <button class="bg-gray-300 text-gray-600 px-4 py-2 rounded-md">
+                                    Registered
+                                </button>
+                            @else
+                                <button class="bg-blue-500 text-white px-4 py-2 rounded-md", onclick="togglePopUp(true)">
+                                    Register
+                                </button>
+                            @endif
                         @else
-                            <button class="bg-blue-500 text-white px-4 py-2 rounded-md", onclick="togglePopUp(true)">
+                            <button class="bg-blue-500 text-white px-4 py-2 rounded-md", onclick="window.location.href = '/loginregister'">
                                 Register
                             </button>
                         @endif
                     @endif
-                
                 </div>
             </div>
         </div>

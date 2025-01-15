@@ -109,7 +109,7 @@
                         <label for="subject" class="text-sm font-medium text-gray-600">Subject Taught</label>
                         <input id="subject" name="subject" type="text" class="border rounded-md p-2 focus:outline-blue-400" placeholder="Enter the subject you teach" />
                     </div>
-
+                        <input id="pageBefore" name="pageBefore" type="hidden" value="{{ $register }}">
                     <button type="submit" class="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600">Register</button>
                 </form>
             @elseif(request('form') === 'login' || !request('form'))
@@ -124,6 +124,8 @@
                         <label for="password" class="text-sm font-medium text-gray-600">Password</label>
                         <input id="password" name="password" type="password" class="border rounded-md p-2 focus:outline-blue-400" placeholder="Enter your password" required />
                     </div>
+
+                    <input id="pageBefore" name="pageBefore" type="hidden" value="{{ url()->previous() }}">
                     <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">Login</button>
                 </form>
             @endif
