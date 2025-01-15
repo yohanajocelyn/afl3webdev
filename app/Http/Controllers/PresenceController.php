@@ -104,4 +104,39 @@ class PresenceController extends Controller
     {
         //
     }
+
+    public function markAllPresent($meetId){
+        $meet = Meet::find($meetId);
+
+        if (!$meet) {
+            return response()->json(['success' => false, 'message' => 'Meet not found'], 404);
+        }
+
+        $presences = Presence::where('meet_id', $meet->id)->get();
+
+        if (!$presences) {
+            return response()->json(['success' => false, 'message' => 'No presences found'], 404);
+        }
+
+        $allPresent = $presences->every(function ($presence) {
+            return $presence->isPresent;
+        });
+
+        if (!$allPresent) {
+            foreach ($presences as $presence) {
+                $presence->isPresent = true;
+                $presence->save();
+            }
+        }else{
+            foreach ($presences as $presence) {
+                $presence->isPresent = false;
+                $presence->save();
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'isPresent' => !$allPresent
+        ]);
+    }
 }
