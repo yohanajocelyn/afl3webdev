@@ -136,7 +136,7 @@
                 @if ($workshop->assignments->isEmpty())
                     <div class="flex flex-col w-full h-40 items-center justify-center">
                         <p class="text-gray-600 italic">
-                            Saat ini belum tugas.
+                            Saat ini belum ada tugas.
                         </p>
                     </div>
                 @else
