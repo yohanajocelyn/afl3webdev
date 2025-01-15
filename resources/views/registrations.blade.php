@@ -25,13 +25,6 @@
                             </div>
 
                             <div class="flex flex-row">
-                                @if ($registration['workshop']['price'] != 0)
-                                    <a href="{{ asset($registration['paymentProof']) }}" target="_blank" class="flex flex-row items-center space-x-2">
-                                        <button>
-                                            Show Payment Proof
-                                        </button>
-                                    </a>
-                                @endif
                                 <div class="mt-4 md:mt-0 md:ml-4 flex flex-col items-end space-y-2">
                                     <!-- Registration Date -->
                                     <p class="text-sm text-gray-600">
@@ -52,6 +45,13 @@
                                         </a>
                                     </div>
                                 </div>
+                                @if ($registration['workshop']['price'] != 0)
+                                    <a href="{{ asset($registration['paymentProof']) }}" target="_blank" class="flex flex-row items-center space-x-2 ml-6">
+                                        <span class="material-symbols-outlined">
+                                            image
+                                        </span>
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     @endforeach

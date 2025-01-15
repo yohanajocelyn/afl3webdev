@@ -14,7 +14,7 @@
         <ul class="divide-y divide-gray-300">
             <li>
                 @if (count($teachers) == 0)
-                    <p>no teachers</p>
+                    <p>No teachers</p>
                 @endif
                 @foreach ($registrations as $registration)
                 @php
