@@ -12,6 +12,7 @@ use App\Models\Workshop;
 use DateTime;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class WorkshopController extends Controller
 {
@@ -92,6 +93,8 @@ class WorkshopController extends Controller
             }else{
                 $title = 'Assignment '. ($i - 2);
             }
+
+            Log::info('Creating Assignment:', ['title' => $title, 'workshop_id' => $workshop->id]);
 
             Assignment::create([
                 'workshop_id' => $workshop->id,
