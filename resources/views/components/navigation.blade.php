@@ -92,7 +92,7 @@
                         Log Out
                     </button>
                 </form>
-                <a href="/teacherprofile/?teacherId={{ auth()->user()->id }}" class="text-gray-800 hover:text-blue-600 transition duration-300 flex flex-row justify-center">
+                <a href="/teacherprofile/?teacherId={{ auth()->user()->id }}" class="text-gray-800 hover:text-blue-600 transition duration-300 flex flex-row justify-center items-center">
                     <img src="{{ asset(auth()->guard('teacher')->user()->pfpURL) }}" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2">
                     <span>{{ auth()->user()->name }}</span>
                 </a>
