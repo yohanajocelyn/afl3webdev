@@ -2,18 +2,18 @@
             transform transition duration-300 hover:scale-105 hover:shadow-xl 
             cursor-pointer group">
     @props(['workshop'])
-    <a href="{{ route('workshop-detail', $workshop) }}">
+    <a href="{{ route('workshop-detail', $workshop) }}" class="h-full flex flex-col">
         <!-- Promotional Image -->
         <div class="relative w-full pt-[56.25%]"> <!-- 16:9 Aspect Ratio -->
             <img 
-                src="{{ asset($workshop->imageURL) }}" 
-                alt="workshop-banner"
+                src="{{ asset('images/placeholder-img.jpg') }}" 
+                alt="Lorem"
                 class="absolute top-0 left-0 w-full h-full object-cover"
             >
         </div>
 
         <!-- Card Content -->
-        <div class="flex flex-col p-5 justify-between">
+        <div class="flex flex-col p-5 flex-grow">
             <!-- Workshop Title -->
             <h3 class="text-xl font-bold text-gray-900 mb-2 
                        group-hover:text-blue-600 transition duration-300">
@@ -26,7 +26,7 @@
             </p>
 
             <!-- Price Information -->
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center mt-auto">
                 <div class="text-gray-900 font-semibold text-lg">
                     @if( $workshop->price == 0 )
                         <span class="text-green-600">Free</span>
