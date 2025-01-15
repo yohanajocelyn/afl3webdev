@@ -97,7 +97,8 @@ class WorkshopController extends Controller
             $paymentProof = 'null';
             $isApproved = 1;
         }else{
-            $paymentProof = ''; //nanti diganti sama handle image udh bayar
+            $paymentProof = $request->file('registrationProof')->store('registration_proofs', 'public');
+            $paymentProof = 'storage/' . $paymentProof;
             $isApproved = 0;
         }
 

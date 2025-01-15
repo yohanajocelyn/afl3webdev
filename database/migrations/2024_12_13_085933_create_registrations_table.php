@@ -25,6 +25,7 @@ return new class extends Migration
                 table: 'workshops',
                 indexName:'workshop_registered_id'
             );
+            // $table->string('certificateUrl')->default("");
             $table->timestamps();
         });
     }
