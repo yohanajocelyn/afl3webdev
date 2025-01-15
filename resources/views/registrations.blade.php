@@ -24,24 +24,33 @@
                                 </p>
                             </div>
 
-                            <div class="mt-4 md:mt-0 md:ml-4 flex flex-col items-end space-y-2">
-                                <!-- Registration Date -->
-                                <p class="text-sm text-gray-600">
-                                    Registered on: {{ $registration['regDate']->format('F j, Y') }}
-                                </p>
-
-                                <!-- Links -->
-                                <div class="flex space-x-4">
-                                    @if ($registration['workshop'])
-                                        <a href="{{ route('workshop-detail', $registration['workshop']) }}"
-                                            class="text-blue-500 hover:underline text-sm">
-                                            Show Workshop
-                                        </a>
-                                    @endif
-                                    <a href="/teacherprofile?teacherId={{ $registration['teacher']['id'] }}"
-                                        class="text-blue-500 hover:underline text-sm">
-                                        Show Profile
+                            <div class="flex flex-row">
+                                @if ($registration['workshop']['price'] != 0)
+                                    <a href="{{ asset($registration['paymentProof']) }}" target="_blank" class="flex flex-row items-center space-x-2">
+                                        <button>
+                                            Show Payment Proof
+                                        </button>
                                     </a>
+                                @endif
+                                <div class="mt-4 md:mt-0 md:ml-4 flex flex-col items-end space-y-2">
+                                    <!-- Registration Date -->
+                                    <p class="text-sm text-gray-600">
+                                        Registered on: {{ $registration['regDate']->format('F j, Y') }}
+                                    </p>
+
+                                    <!-- Links -->
+                                    <div class="flex space-x-4">
+                                        @if ($registration['workshop'])
+                                            <a href="{{ route('workshop-detail', $registration['workshop']) }}"
+                                                class="text-blue-500 hover:underline text-sm">
+                                                Show Workshop
+                                            </a>
+                                        @endif
+                                        <a href="/teacherprofile?teacherId={{ $registration['teacher']['id'] }}"
+                                            class="text-blue-500 hover:underline text-sm">
+                                            Show Profile
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
