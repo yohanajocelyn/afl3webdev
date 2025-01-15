@@ -13,13 +13,6 @@
                 <div class="text-center pb-4 md:text-left flex flex-col md:flex-row">
                     <p class="">Tanggal Pelaksanaan: </p>
                     <p class="md:px-2">{{ $workshop['startDate']->format('F j, Y') }} - {{ $workshop['endDate']->format('F j, Y') }}</p>
-                    <a href="
-                        @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                            {{ route('workshop-progress', ['workshopId' => $workshop->id]) }}
-                        @endif
-                    ">
-                    Lihat Progress
-                    </a>
                 </div>
                 <p class="text-center md:text-left">Registration Fee:</p>
                 <p class="text-center md:text-left pb-4">Rp {{ number_format($workshop['price'], 0, ',', '.') }}</p>
@@ -85,11 +78,18 @@
                 Tugas
             </button>
             @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                <button id="pesertaButton"
-                    class="border-2 border-green-500 text-green-500 px-4 py-2 rounded-full hover:bg-green-600 hover:text-white"
-                    onclick="toggleSection('peserta')">
-                    Peserta
-                </button>
+                
+                <a href="
+                    @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
+                        {{ route('workshop-progress', ['workshopId' => $workshop->id]) }}
+                    @endif
+                ">
+                    <button id="pesertaButton"
+                        class="border-2 border-green-500 text-green-500 px-4 py-2 rounded-full hover:bg-green-600 hover:text-white"
+                        onclick="">
+                        Peserta
+                    </button>
+                </a>
             @endif
         </div>
 
@@ -151,7 +151,7 @@
         </div>
 
         {{-- Peserta Section --}}
-        <div id="pesertaSection" class="hidden px-4 md:px-10">
+        {{-- <div id="pesertaSection" class="hidden px-4 md:px-10">
             <h2 class="text-2xl font-bold mb-6 text-center md:text-left">Peserta</h2>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 @if ($registrations->isEmpty())
@@ -162,14 +162,14 @@
                     </div>
                 @else
                     @foreach ($registrations as $registration)
-                    <x-teacher-card :teacher="$registration->teacher" :registration="$registration" />
+                    <x-teacher-card :teacher="$registration->teacher" :registration="$registration" /> --}}
                         {{-- <x-slot:title>{{  $registration->teacher->name }}</x-slot:title>
                         <x-slot:date>{{  $registration->regDate->format('F j, Y') }}</x-slot:date> --}}
                     {{-- </x-teacher-card> --}}
-                    @endforeach
+                    {{-- @endforeach
                 @endif
             </div>
-        </div>
+        </div> --}}
 
         <script>
             //for the registration popup
@@ -186,7 +186,7 @@
             function toggleSection(section) {
                 document.getElementById('meetsSection').classList.add('hidden');
                 document.getElementById('assignmentsSection').classList.add('hidden');
-                document.getElementById('pesertaSection').classList.add('hidden');
+                // document.getElementById('pesertaSection').classList.add('hidden');
                 
                 //Reset button styles biar transparent n ada border
                 document.getElementById('meetsButton').classList.remove('bg-blue-500', 'text-white');
@@ -194,8 +194,8 @@
                 document.getElementById('assignmentsButton').classList.remove('bg-purple-500', 'text-white');
                 document.getElementById('assignmentsButton').classList.add('border-2', 'border-purple-500', 'text-purple-500');
                 @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                document.getElementById('pesertaButton').classList.remove('bg-green-500', 'text-white');
-                document.getElementById('pesertaButton').classList.add('border-2', 'border-green-500', 'text-green-500');
+                // document.getElementById('pesertaButton').classList.remove('bg-green-500', 'text-white');
+                // document.getElementById('pesertaButton').classList.add('border-2', 'border-green-500', 'text-green-500');
                 @endif
     
                 // Show the selected section
@@ -207,12 +207,13 @@
                     document.getElementById('assignmentsSection').classList.remove('hidden');
                     document.getElementById('assignmentsButton').classList.add('bg-purple-500', 'text-white');
                     document.getElementById('assignmentsButton').classList.remove('border-2', 'border-purple-500', 'text-purple-500');
-                } else if (section === 'peserta') {
-                    document.getElementById('pesertaSection').classList.remove('hidden');
-                    document.getElementById('pesertaButton').classList.add('bg-green-500', 'text-white');
-                    document.getElementById('pesertaButton').classList.remove('border-2', 'border-green-500',
-                    'text-green-500');
-                }
+                } 
+                // else if (section === 'peserta') {
+                //     document.getElementById('pesertaSection').classList.remove('hidden');
+                //     document.getElementById('pesertaButton').classList.add('bg-green-500', 'text-white');
+                //     document.getElementById('pesertaButton').classList.remove('border-2', 'border-green-500',
+                //     'text-green-500');
+                // }
             }
     
             //workshops section by default
