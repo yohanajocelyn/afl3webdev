@@ -14,7 +14,7 @@
                     <p class="">Tanggal Pelaksanaan: </p>
                     <p class="md:px-2">{{ $workshop['startDate']->format('F j, Y') }} - {{ $workshop['endDate']->format('F j, Y') }}</p>
                 </div>
-                <p class="text-center md:text-left">Registration Fee:</p>
+                <p class="text-center md:text-left">Biaya Pendaftaran:</p>
                 <p class="text-center md:text-left pb-4">Rp {{ number_format($workshop['price'], 0, ',', '.') }}</p>
                 {{-- Register Button --}}
                 <div class="mt-auto flex justify-center md:justify-start space-x-4">
