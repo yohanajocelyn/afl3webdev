@@ -39,7 +39,7 @@
 
                 {{-- Assignment Amount --}}
                 <div class="mb-4">
-                    <label for="assignment" class="block text-sm font-bold mb-2">Assignment Amount</label>
+                    <label for="assignment_count" class="block text-sm font-bold mb-2">Assignment Amount</label>
                     <input type="number" name="assignment_count" id="assignment_count" class="w-full p-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200" placeholder="Assignment Amount" min="1" required>
                 </div>
 
@@ -51,7 +51,7 @@
     
                 {{-- Image --}}
                 <div class="mb-4">
-                    <label for="file" class="block text-sm font-bold mb-2">Upload Image</label>
+                    <label for="workshop_image" class="block text-sm font-bold mb-2">Upload Image</label>
                     <input type="file" name="workshop_image" id="workshop_image" class="w-full p-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200">
                 </div>
     
