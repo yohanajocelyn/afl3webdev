@@ -169,12 +169,14 @@ class WorkshopController extends Controller
         $workshopId = $request->input('workshopId');
     
         $validatedData = $request->validate([
+            'title' => 'required|string',
             'date' => 'required|date',
-            'location' => 'required|string'
+            'description' => 'required|string'
         ]);
     
         $existingMeet = Meet::where([
             'workshop_id' => $workshopId,
+            'title' => $validatedData['title'],
             'date' => $validatedData['date']
         ])->first();
     
@@ -183,8 +185,9 @@ class WorkshopController extends Controller
         }
     
             $meet = Meet::create([
+                'title' => $validatedData['title'],
                 'date' => $validatedData['date'],
-                'location' => $validatedData['location'],
+                'description' => $validatedData['description'],
                 'workshop_id' => $workshopId
             ]);
     

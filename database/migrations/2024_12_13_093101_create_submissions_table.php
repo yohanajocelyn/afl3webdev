@@ -29,6 +29,7 @@ return new class extends Migration
             $table->boolean('isOnsite');
             $table->string('note')->nullable();
             $table->string('url');
+            $table->boolean('isApproved');
             $table->timestamps();
         });
     }

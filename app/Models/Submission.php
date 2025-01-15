@@ -20,7 +20,8 @@ class Submission extends Model
         'duration',
         'isOnsite',
         'note',
-        'url'
+        'url',
+        'isApproved'
     ];
 
     public function assignment():BelongsTo {

@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('meets', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->date('date');
-            $table->string('location');
+            $table->string('description');
             $table->foreignId('workshop_id')->constrained(
                 table: 'workshops',
                 indexName: 'workshop_meet'

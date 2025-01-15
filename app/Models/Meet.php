@@ -11,8 +11,9 @@ class Meet extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'title',
         'date',
-        'location',
+        'description',
         'workshop_id',
     ];
 

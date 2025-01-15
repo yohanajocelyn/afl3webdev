@@ -14,7 +14,8 @@ class Assignment extends Model
     protected $fillable = [
         'workshop_id',
         'title',
-        'date'
+        'date',
+        'description'
     ];
 
     public function workshop():BelongsTo {

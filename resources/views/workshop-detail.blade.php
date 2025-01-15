@@ -131,19 +131,23 @@
             </div>
         </div>
 
-        <!-- Add Meeting Popup -->
+        <!-- meeting popup -->
         <div id="addMeetingPopUp" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
             <div class="bg-white rounded-lg p-6 shadow-lg w-[90%] max-w-md">
                 <h2 class="text-lg font-bold mb-4">Tambah Pertemuan</h2>
                 <form action="{{ route('create-meet') }}" method="POST">
                     @csrf
                     <div class="mb-4">
+                        <label for="title" class="block text-gray-700 font-bold mb-2">Judul:</label>
+                        <input type="text" id="title" name="title" class="border rounded-lg px-3 py-2 w-full" placeholder="Masukkan judul" required>
+                    </div>
+                    <div class="mb-4">
                         <label for="date" class="block text-gray-700 font-bold mb-2">Tanggal:</label>
                         <input type="date" id="date" name="date" class="border rounded-lg px-3 py-2 w-full" required>
                     </div>
                     <div class="mb-4">
-                        <label for="location" class="block text-gray-700 font-bold mb-2">Lokasi:</label>
-                        <input type="text" id="location" name="location" class="border rounded-lg px-3 py-2 w-full" placeholder="Masukkan lokasi" required>
+                        <label for="description" class="block text-gray-700 font-bold mb-2">Deskripsi:</label>
+                        <input type="text" id="description" name="description" class="border rounded-lg px-3 py-2 w-full" placeholder="Masukkan deskripsi" required>
                     </div>
                     <input id="workshopId" name="workshopId" type="hidden" value="{{ $workshop->id }}">
                     <div class="flex justify-end space-x-4">

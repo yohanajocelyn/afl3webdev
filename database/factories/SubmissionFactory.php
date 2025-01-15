@@ -28,7 +28,8 @@ class SubmissionFactory extends Factory
             'duration' => $this->faker->numberBetween(60, 120),
             'isOnsite' => $this->faker->boolean(),
             'note' => $this->faker->word(),
-            'url' => $this->faker->word()
+            'url' => $this->faker->word(),
+            'isApproved' => $this->faker->boolean()
         ];
     }
 }

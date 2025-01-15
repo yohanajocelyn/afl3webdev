@@ -18,8 +18,9 @@ class MeetFactory extends Factory
     public function definition(): array
     {
         return [
+            'title' => $this->faker->name(),
             'date' => $this->faker->date(),
-            'location' => $this->faker->streetAddress(),
+            'description' => $this->faker->streetAddress(),
             'workshop_id' => Workshop::query()->inRandomOrder()->first()->id,
         ];
     }
