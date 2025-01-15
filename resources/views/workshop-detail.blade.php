@@ -2,8 +2,8 @@
     <section class="bg-gray-100 flex flex-col">
         <div class="flex flex-col items-center px-4 py-10 md:flex-row md:px-10 md:pt-20 md:pb-16">
             {{-- Image --}}
-            <div class="">
-                <img src="" alt="workshop-image" class=" w-[400px] h-[450px] object-cover rounded-md bg-blue-100">
+            <div class="self-start">
+                <img src="{{ asset($workshop->imageURL) }}" alt="workshop-image" class="max-w-[450px] max-h-[450px] w-full h-full object-scale-down rounded-md bg-blue-100">
             </div>
             {{-- details --}}
             <div class="flex flex-col ps-0 md:ps-16 py-3 w-full h-auto md:h-[450px] mt-6 md:mt-0">

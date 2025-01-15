@@ -51,7 +51,7 @@
                 <h4 class="text-xl font-bold text-gray-900 mb-4">Quick Links</h4>
                 <div class="space-y-2">
                     <a href="{{ route('home') }}" class="block text-gray-600 hover:text-blue-600 transition">Home</a>
-                    <a href="{{ route('workshops') }}" class="block text-gray-600 hover:text-blue-600 transition">Workshops</a>
+                    <a href="{{ route('home') }}#workshops" class="block text-gray-600 hover:text-blue-600 transition">Workshops</a>
                     <a href="{{ route('about') }}" class="block text-gray-600 hover:text-blue-600 transition">About Us</a>
                 </div>
             </div>

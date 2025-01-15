@@ -109,7 +109,7 @@
                         <label for="subject" class="text-sm font-medium text-gray-600">Materi Yang Diajarkan</label>
                         <input id="subject" name="subject" type="text" class="border rounded-md p-2 focus:outline-blue-400" placeholder="Masukkan materi yang diajarkan" />
                     </div>
-                        <input id="pageBefore" name="pageBefore" type="hidden" value="{{ url()->previous()}}">
+                    <input id="pageBefore" name="pageBefore" type="hidden" value="{{ url()->previous() }}">
                     <button type="submit" class="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600">Register</button>
                 </form>
             @elseif(request('form') === 'login' || !request('form'))

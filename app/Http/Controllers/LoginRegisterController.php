@@ -52,8 +52,10 @@ class LoginRegisterController extends Controller
             return back()->withErrors(['email' => 'The email is already taken.'])->withInput();
         }
 
-        $path = $request->file('profile_picture')->store('profile_pictures', 'public');
-        $path = 'storage/' . $path;
+        if($validatedData['profile_picture'] != null){
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $path = 'storage/' . $path;
+        }
 
         $teacher = Teacher::create([
             'pfpURL' => $path,
