@@ -57,8 +57,10 @@ class WorkshopController extends Controller
             'workshop_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $workshopImage = $request->file('workshop_image')->store('workshop_banners', 'public');
-        $workshopImage = 'storage/' . $workshopImage;
+        if($validatedData['workshop_image'] != null){
+            $workshopImage = $request->file('workshop_image')->store('workshop_banners', 'public');
+            $workshopImage = 'storage/' . $workshopImage;
+        }
 
         $existingWorkshop = Workshop::where('title', $validatedData['title'])
         ->where('startDate', $validatedData['start_date'])
@@ -95,6 +97,7 @@ class WorkshopController extends Controller
                 'workshop_id' => $workshop->id,
                 'title' => $title,
                 'date' => $validatedData['assignment_due_date'],
+                'description' => ""
             ]);
         }
 
