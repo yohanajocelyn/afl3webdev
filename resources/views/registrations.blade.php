@@ -53,11 +53,11 @@
                                     </a>
                                     <button 
                                     id="approve-btn-{{ $registration->teacher->id }}" 
-                                    class="approve-btn flex flex-row items-center space-x-2 ml-4 {{ $registration->isApproved ? 'text-red-500' : 'text-green-500' }}"
+                                    class="approve-btn flex flex-row items-center space-x-2 ml-4 {{ $registration->isApproved ? 'text-green-500' : 'text-red-500' }}"
                                     data-registration-id ={{ $registration->id }}
                                     >
                                         <span class="material-symbols-outlined">
-                                            {{ $registration->isApproved ? 'cancel' : 'check' }}
+                                            {{ $registration->isApproved ? 'check' : 'cancel' }}
                                         </span>
                                     </button>
                                 @endif
@@ -88,10 +88,10 @@
                     if (data.success) {
                         // Update button color and text based on the updated registration status
                         this.classList.remove('text-green-500', 'text-red-500');
-                        this.classList.add(data.isApproved ? 'text-red-500' : 'text-green-500');
+                        this.classList.add(data.isApproved ? 'text-green-500' : 'text-red-500');
                 
                         // Update the button text based on the registration status
-                        this.querySelector('.material-symbols-outlined').textContent = data.isApproved ? 'cancel' : 'check';
+                        this.querySelector('.material-symbols-outlined').textContent = data.isApproved ? 'check' : 'cancel';
                     } else {
                         alert('Failed to approve registration.');
                     }
