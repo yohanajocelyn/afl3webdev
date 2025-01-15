@@ -58,7 +58,8 @@ class WorkshopController extends Controller
             'workshop_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        if($validatedData['workshop_image'] != null){
+        $workshopImage = 'default.jpg';
+        if($request->hasFile('workshop_image')){
             $workshopImage = $request->file('workshop_image')->store('workshop_banners', 'public');
             $workshopImage = 'storage/' . $workshopImage;
         }
