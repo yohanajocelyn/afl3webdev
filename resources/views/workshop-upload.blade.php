@@ -25,7 +25,7 @@
                     <input type="date" name="start_date" id="start_date" class="w-full p-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200" required>
                 </div>
     
-                {{-- End date --}}
+                {{-- End Date --}}
                 <div class="mb-4">
                     <label for="end_date" class="block text-sm font-bold mb-2">End Date</label>
                     <input type="date" name="end_date" id="end_date" class="w-full p-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200" required>
@@ -33,13 +33,25 @@
     
                 {{-- Price --}}
                 <div class="mb-4">
-                    <label for="price" class="block text-sm font-bold mb-2">Price ($)</label>
+                    <label for="price" class="block text-sm font-bold mb-2">Price (Rp)</label>
                     <input type="number" name="price" id="price" class="w-full p-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200" placeholder="Enter workshop price" step="0.01" required>
                 </div>
-    
-                {{-- file --}}
+
+                {{-- Assignment Amount --}}
                 <div class="mb-4">
-                    <label for="workshop_image" class="block text-sm font-bold mb-2">Upload File</label>
+                    <label for="assignment" class="block text-sm font-bold mb-2">Assignment Amount</label>
+                    <input type="number" name="assignment_count" id="assignment_count" class="w-full p-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200" placeholder="Assignment Amount" min="1" required>
+                </div>
+
+                {{-- Assignment Due Date --}}
+                <div class="mb-4">
+                    <label for="assignment_due_date" class="block text-sm font-bold mb-2">Assignment Due Date</label>
+                    <input type="date" name="assignment_due_date" id="assignment_due_date" class="w-full p-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200" required>
+                </div>
+    
+                {{-- Image --}}
+                <div class="mb-4">
+                    <label for="file" class="block text-sm font-bold mb-2">Upload Image</label>
                     <input type="file" name="workshop_image" id="workshop_image" class="w-full p-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200">
                 </div>
     
