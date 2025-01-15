@@ -21,7 +21,7 @@
                     @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
                         <a href="/registrations/?workshopId={{ $workshop->id }}">
                             <button class="bg-green-500 text-white px-4 py-2 rounded-md">
-                                Registrations
+                                Peserta Terdaftar
                             </button>
                         </a>
                     @else

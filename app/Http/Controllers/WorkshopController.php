@@ -152,8 +152,12 @@ class WorkshopController extends Controller
         }else{
             $registrations = Registration::with(['teacher', 'workshop'])->get();
         }
+
+        $workshop = Workshop::where('id', $id)->first();
+
         return view('registrations', [
-            "registrations" => $registrations
+            "registrations" => $registrations,
+            'workshop' => $workshop
         ]);
     }
 

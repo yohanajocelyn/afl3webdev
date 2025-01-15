@@ -1,8 +1,8 @@
 <x-layout>
     <div class="bg-gray-100 my-8">
         @if (request('workshopId'))
-            <p>{{ $registrations->first()['workshop']['title'] }}</p>
-            <p>{{ $registrations->first()['workshop']['startDate']->format('F j, Y') }}</p>
+            <p>{{ $workshop['title'] }}</p>
+            <p>{{ $workshop['startDate']->format('F j, Y') }}</p>
         @endif
 
         <h1 class="text-3xl font-bold mb-4">Registrations</h1>
