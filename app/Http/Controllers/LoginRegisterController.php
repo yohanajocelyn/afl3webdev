@@ -52,7 +52,7 @@ class LoginRegisterController extends Controller
             return back()->withErrors(['email' => 'The email is already taken.'])->withInput();
         }
 
-        if($validatedData['profile_picture'] != null){
+        if($request->hasFile('profile_picture')){
             $path = $request->file('profile_picture')->store('profile_pictures', 'public');
             $path = 'storage/' . $path;
         }

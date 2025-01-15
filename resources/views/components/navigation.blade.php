@@ -38,8 +38,8 @@
     <!-- Menu Section (Center) -->
     <div class="flex space-x-6">
         <a href="{{ route('home') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">Home</a>
-        <a href="{{ route('workshops') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">Pelatihan</a>
-        <a href="{{ route('about') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">About Us</a>
+        <a href="{{ route('home') }}#workshops" class="text-gray-800 hover:text-blue-600 transition duration-300">Pelatihan</a>
+        <a href="" class="text-gray-800 hover:text-blue-600 transition duration-300">About Us</a>
         @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
             <div class="relative group">
                 <!-- Button -->
