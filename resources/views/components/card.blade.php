@@ -29,7 +29,7 @@
             <div class="flex justify-between items-center mt-auto">
                 <div class="text-gray-900 font-semibold text-lg">
                     @if( $workshop->price == 0 )
-                        <span class="text-green-600">Free</span>
+                        <span class="text-green-600">Gratis</span>
                     @else
                         <span>
                         Rp. {{ number_format($workshop->price, 2) }}
