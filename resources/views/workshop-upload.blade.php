@@ -4,7 +4,7 @@
         <div class="container w-full bg-gray-100 mx-auto my-8">
             <h1 class="text-3xl font-bold mb-4">Upload Workshop</h1>
     
-            <form action="#" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-lg">
+            <form action="{{ route('upload') }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-lg">
             @csrf
     
                 {{-- Workshop Title --}}
@@ -39,8 +39,8 @@
     
                 {{-- file --}}
                 <div class="mb-4">
-                    <label for="file" class="block text-sm font-bold mb-2">Upload File</label>
-                    <input type="file" name="file" id="file" class="w-full p-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200">
+                    <label for="workshop_image" class="block text-sm font-bold mb-2">Upload File</label>
+                    <input type="file" name="workshop_image" id="workshop_image" class="w-full p-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200">
                 </div>
     
                 {{-- Submit --}}
