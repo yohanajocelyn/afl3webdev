@@ -97,7 +97,8 @@ class WorkshopController extends Controller
             $paymentProof = 'null';
             $isApproved = 1;
         }else{
-            $paymentProof = ''; //nanti diganti sama handle image udh bayar
+            $paymentProof = $request->file('registrationProof')->store('registration_proofs', 'public');
+            $paymentProof = 'storage/' . $paymentProof;
             $isApproved = 0;
         }
 
@@ -170,5 +171,17 @@ class WorkshopController extends Controller
             'location' => $validatedData['location'],
             'workshop_id' => $workshopId
         ]);
+    }
+    
+    public function showProgress(Request $request){
+        $id = $request->query('workshopId');
+
+        $workshop = Workshop::with([
+            'registrations.teacher',
+            'registrations.submissions',
+            'assignments'
+        ])->findOrFail($id);
+    
+        return view('workshop-progress', compact('workshop'));
     }
 }
