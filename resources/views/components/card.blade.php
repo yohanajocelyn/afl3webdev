@@ -13,7 +13,7 @@
         </div>
 
         <!-- Card Content -->
-        <div class="p-5">
+        <div class="flex flex-col p-5 justify-between">
             <!-- Workshop Title -->
             <h3 class="text-xl font-bold text-gray-900 mb-2 
                        group-hover:text-blue-600 transition duration-300">

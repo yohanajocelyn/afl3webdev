@@ -47,10 +47,19 @@
                                 </div>
                                 @if ($registration['workshop']['price'] != 0)
                                     <a href="{{ asset($registration['paymentProof']) }}" target="_blank" class="flex flex-row items-center space-x-2 ml-6">
-                                        <span class="material-symbols-outlined">
+                                        <span class="material-symbols-outlined text-blue-500">
                                             image
                                         </span>
                                     </a>
+                                    <button 
+                                    id="approve-btn-{{ $registration->teacher->id }}" 
+                                    class="approve-btn flex flex-row items-center space-x-2 ml-4 {{ $registration->isApproved ? 'text-red-500' : 'text-green-500' }}"
+                                    data-registration-id ={{ $registration->id }}
+                                    >
+                                        <span class="material-symbols-outlined">
+                                            {{ $registration->isApproved ? 'cancel' : 'check' }}
+                                        </span>
+                                    </button>
                                 @endif
                             </div>
                         </div>
@@ -59,4 +68,40 @@
             @endif
         </div>
     </div>
+
+    <script>
+        document.querySelectorAll('.approve-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const registrationId = this.dataset.registrationId;
+                const url = `/setApprove/${registrationId}`;
+    
+                // Send AJAX request to update registration
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update button color and text based on the updated registration status
+                        this.classList.remove('text-green-500', 'text-red-500');
+                        this.classList.add(data.isApproved ? 'text-red-500' : 'text-green-500');
+                
+                        // Update the button text based on the registration status
+                        this.querySelector('.material-symbols-outlined').textContent = data.isApproved ? 'cancel' : 'check';
+                    } else {
+                        alert('Failed to approve registration.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
+            });
+        });
+    </script>
+
 </x-layout>

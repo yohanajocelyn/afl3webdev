@@ -3,6 +3,7 @@
 use App\Models\School;
 use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\PresenceController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\WorkshopController;
 use App\Models\Teacher;
@@ -92,4 +93,6 @@ Route::get('/workshop-progress', [WorkshopController::class, 'showProgress'])->n
 Route::post('/add-meet', [WorkshopController::class, 'createMeet'])->name('create-meet');
 
 Route::post('/mark-all-present/{meetId}', [PresenceController::class, 'markAllPresent'])->name('mark-all-present');
+
+Route::post('/setApprove/{registrationId}', [RegistrationController::class, 'update'])->name('set-approve');
 
