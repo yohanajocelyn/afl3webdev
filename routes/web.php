@@ -90,3 +90,6 @@ Route::post('/mark-present/{presenceId}', [PresenceController::class, 'update'])
 Route::get('/workshop-progress', [WorkshopController::class, 'showProgress'])->name('workshop-progress');
 
 Route::post('/add-meet', [WorkshopController::class, 'createMeet'])->name('create-meet');
+
+Route::post('/mark-all-present/{meetId}', [PresenceController::class, 'markAllPresent'])->name('mark-all-present');
+

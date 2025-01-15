@@ -9,6 +9,11 @@
             <button class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
                 Search
             </button>
+            <button id="mark-all-btn" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                data-meet-id="{{ $meet->id }}"
+            >
+                Mark Present for All
+            </button>
         </div>
     </div>
 
@@ -76,6 +81,34 @@
                     alert('An error occurred. Please try again.');
                 });
             });
+        });
+
+        document.querySelector('#mark-all-btn').addEventListener('click', function () {
+            const presenceBtns = document.querySelectorAll('.validate-btn');
+            const meetId = this.dataset.meetId;
+            const url = `/mark-all-present/${meetId}`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    presenceBtns.forEach(btn => {
+                        btn.classList.remove('bg-blue-500', 'bg-green-500');
+                        btn.classList.remove('hover:bg-blue-600', 'hover:bg-green-600');
+                        btn.classList.add(data.isPresent ? 'bg-green-500' : 'bg-blue-500');
+                        btn.classList.add(data.isPresent ? 'hover:bg-green-600' : 'hover:bg-blue-600');
+                        btn.querySelector('p').textContent = data.isPresent ? 'Present' : 'Not Present';
+                    });
+                } else {
+                    alert('Failed to mark all presences.');
+                }
+            })
         });
     </script>
 
