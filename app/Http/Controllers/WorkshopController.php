@@ -11,12 +11,24 @@ use App\Models\Teacher;
 use App\Models\Workshop;
 use DateTime;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class WorkshopController extends Controller
 {
-    public function getAll () {
+    public function getAll() {
+        $workshops = Workshop::paginate(6);
+    
+        $workshops->getCollection()->transform(function ($workshop) {
+            $startDate = Carbon::parse($workshop->startDate);
+            $endDate = Carbon::parse($workshop->endDate);
+    
+            $workshop->duration = $startDate->diffInDays($endDate) + 1; 
+    
+            return $workshop;
+        });
+    
         return view('home', [
-            'workshops' => Workshop::paginate(6)
+            'workshops' => $workshops
         ]);
     }
 
@@ -149,44 +161,43 @@ class WorkshopController extends Controller
         $teachers = Registration::with(['teacher', 'workshop'])->get();
     }
 
-    public function createMeet(Request $request){
+    public function createMeet(Request $request) {
+        $workshopId = $request->input('workshopId');
+    
         $validatedData = $request->validate([
             'date' => 'required|date',
             'location' => 'required|string'
         ]);
-
-        $workshopId = $request['workshopId'];
-
-        $existingMeet = Meet::findOrFail([
+    
+        $existingMeet = Meet::where([
             'workshop_id' => $workshopId,
             'date' => $validatedData['date']
-        ]);
-
-        if($existingMeet){
-            return back()->withErrors(['title' => 'This Meet Exists already'])->withInput();
+        ])->first();
+    
+        if ($existingMeet) {
+            return back()->withErrors(['title' => 'This Meet already exists for the selected date'])->withInput();
         }
-
-        $meet = Meet::create([
-            'date' => $validatedData['date'],
-            'location' => $validatedData['location'],
-            'workshop_id' => $workshopId
-        ]);
-
-        $registeredUsers = Registration::getAll([
-            'workshop_id' => $workshopId
-        ]);
-
-        if($registeredUsers != null){
-            foreach($registeredUsers as $registered){
-                Presence::create([
-                    'meet_id' => $meet['id'],
-                    'registration_id' => $registered['id'],
-                    'isPresent' => false,
-                    'dateTime' => now() 
-                ]);
+    
+            $meet = Meet::create([
+                'date' => $validatedData['date'],
+                'location' => $validatedData['location'],
+                'workshop_id' => $workshopId
+            ]);
+    
+            $registeredUsers = Registration::where('workshop_id', $workshopId)->get();
+    
+            if ($registeredUsers->isNotEmpty()) {
+                foreach ($registeredUsers as $registered) {
+                    Presence::create([
+                        'meet_id' => $meet->id,
+                        'registration_id' => $registered->id,
+                        'isPresent' => false,
+                        'dateTime' => now()
+                    ]);
+                }
             }
-        }
-        return redirect(url()->previous());
+    
+            return redirect(url()->previous())->with('success', 'Meet created successfully!');
     }
     
     public function showProgress(Request $request){

@@ -40,8 +40,7 @@
                 <!-- Additional Info Badge -->
                 <div class="text-sm text-gray-500 flex items-center space-x-2">
                     <span>
-                        {{-- {{ $workshop->duration }} --}} 2
-                        Hours
+                        {{ $workshop->duration }} hari
                     </span>
                 </div>
             </div>

@@ -1,8 +1,10 @@
 <x-layout>
     <div class="bg-gray-100 my-8">
 
-        <h1 class="text-3xl font-bold mb-6">Mark Presences for Teachers Registered to {{ $workshop->title }}</h1>
-        <div class="flex w-auto">
+        <h1 class="text-3xl font-bold mb-6">
+            Absensi untuk Peserta <span class="text-blue-500">{{ $workshop->title }}</span>
+        </h1>
+                <div class="flex w-auto">
             <input type="text" placeholder="Search teachers..." class="border p-2 rounded-md w-full sm:w-64 focus:outline-blue-400" />
             <button class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
                 Search

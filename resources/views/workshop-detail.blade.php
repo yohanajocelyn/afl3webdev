@@ -104,9 +104,7 @@
             <div class="flex flex-col md:flex-row justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-center md:text-left">Pertemuan</h2>
                 @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                    <a href="">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md">Tambahkan Pertemuan</button>
-                    </a>
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md", onclick="toggleAddMeetingPopUp(true)">Tambahkan Pertemuan</button>
                 @endif
             </div>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -133,6 +131,32 @@
             </div>
         </div>
 
+        <!-- Add Meeting Popup -->
+        <div id="addMeetingPopUp" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+            <div class="bg-white rounded-lg p-6 shadow-lg w-[90%] max-w-md">
+                <h2 class="text-lg font-bold mb-4">Tambah Pertemuan</h2>
+                <form action="{{ route('create-meet') }}" method="POST">
+                    @csrf
+                    <div class="mb-4">
+                        <label for="date" class="block text-gray-700 font-bold mb-2">Tanggal:</label>
+                        <input type="date" id="date" name="date" class="border rounded-lg px-3 py-2 w-full" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="location" class="block text-gray-700 font-bold mb-2">Lokasi:</label>
+                        <input type="text" id="location" name="location" class="border rounded-lg px-3 py-2 w-full" placeholder="Masukkan lokasi" required>
+                    </div>
+                    <input id="workshopId" name="workshopId" type="hidden" value="{{ $workshop->id }}">
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" class="bg-gray-300 px-4 py-2 rounded-md" onclick="toggleAddMeetingPopUp(false)">
+                            Batal
+                        </button>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">
+                            Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         {{-- Assignments Section --}}
         <div id="assignmentsSection" class="hidden px-2 md:px-10">
@@ -188,6 +212,17 @@
                     popup.classList.add('hidden');
                 }
             }
+            document.getElementById('addMeetingPopUp').classList.add('hidden')
+
+            function toggleAddMeetingPopUp(show) {
+                const popup = document.getElementById('addMeetingPopUp');
+                if (show) {
+                    popup.classList.remove('hidden');
+                } else {
+                    popup.classList.add('hidden');
+                }
+            }
+
             function toggleSection(section) {
                 document.getElementById('meetsSection').classList.add('hidden');
                 document.getElementById('assignmentsSection').classList.add('hidden');
