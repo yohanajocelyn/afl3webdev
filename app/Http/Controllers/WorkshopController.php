@@ -226,4 +226,16 @@ class WorkshopController extends Controller
     
         return view('workshop-progress', compact('workshop'));
     }
+
+    public function openWorkshop(Request $request)
+    {
+        $workshopId = $request->workshopId;
+        $workshop = Workshop::findOrFail($workshopId);
+
+        $workshop->update([
+            'isOpen' => !$workshop->isOpen,
+        ]);
+
+        return redirect()->back();
+    }
 }

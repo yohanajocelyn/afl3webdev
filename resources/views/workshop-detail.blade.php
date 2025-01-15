@@ -14,16 +14,36 @@
                     <p class="">Tanggal Pelaksanaan: </p>
                     <p class="md:px-2">{{ $workshop['startDate']->format('F j, Y') }} - {{ $workshop['endDate']->format('F j, Y') }}</p>
                 </div>
-                <p class="text-center md:text-left">Registration Fee:</p>
+                <p class="text-center md:text-left">Biaya Pendaftaran:</p>
                 <p class="text-center md:text-left pb-4">Rp {{ number_format($workshop['price'], 0, ',', '.') }}</p>
                 {{-- Register Button --}}
-                <div class="mt-auto flex justify-center md:justify-end">
+                <div class="mt-auto flex justify-center md:justify-start space-x-4">
                     @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
+                        <!-- Peserta Terdaftar Button -->
                         <a href="/registrations/?workshopId={{ $workshop->id }}">
                             <button class="bg-green-500 text-white px-4 py-2 rounded-md">
                                 Peserta Terdaftar
                             </button>
                         </a>
+                        <!--open workshop button -->
+                        <form action="{{ route('open-workshop') }}" method="POST">
+                            @method('PUT')
+                            @csrf
+                            <input id="workshopId" name="workshopId" type="hidden" value="{{ $workshop['id'] }}">
+                            <button type="submit" class="
+                                @if ($workshop['isOpen'])
+                                    bg-red-500
+                                @else
+                                    bg-yellow-500
+                                @endif
+                             text-white px-4 py-2 rounded-md">
+                                @if ($workshop['isOpen'])
+                                    Tutup Workshop
+                                @else
+                                    Buka Workshop
+                                @endif
+                            </button>
+                        </form>
                     @else
                         @if (auth()->check())
                             @if (auth()->user()->registrations()->where('workshop_id', $workshop->id)->exists())
@@ -31,17 +51,17 @@
                                     Registered
                                 </button>
                             @else
-                                <button class="bg-blue-500 text-white px-4 py-2 rounded-md", onclick="togglePopUp(true)">
+                                <button class="bg-blue-500 text-white px-4 py-2 rounded-md" onclick="togglePopUp(true)">
                                     Register
                                 </button>
                             @endif
                         @else
-                            <button class="bg-blue-500 text-white px-4 py-2 rounded-md", onclick="window.location.href = '/loginregister'">
+                            <button class="bg-blue-500 text-white px-4 py-2 rounded-md" onclick="window.location.href = '/loginregister'">
                                 Register
                             </button>
                         @endif
                     @endif
-                </div>
+                </div>                
             </div>
         </div>
 
@@ -71,7 +91,7 @@
         </div>
 
         {{-- bottom part (the tugas / meets) --}}
-        <div class="flex justify-center md:justify-start space-x-4 md:space-x-6 mb-6 px-4 md:px-10">
+        <div class="flex justify-center md:justify-start space-x-4 md:space-x-6 md:mt-10 mb-6 px-4 md:px-10">
             <button id="meetsButton"
                 class="border-2 border-blue-500 text-blue-500 px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white"
                 onclick="toggleSection('meets')">
@@ -122,7 +142,7 @@
                     @endif
                     ">
                         <x-simple-card>
-                            <x-slot:title>{{ $meet->location }}</x-slot:title>
+                            <x-slot:title>{{ $meet->title }}</x-slot:title>
                             <x-slot:date>{{ $meet->date }}</x-slot:date>
                         </x-simple-card>
                     </a>
