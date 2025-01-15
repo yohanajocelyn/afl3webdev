@@ -13,11 +13,35 @@ class SchoolSeeder extends Seeder
      */
     public function run(): void
     {
-        School::factory()->count(10)->create();
+        // School::factory()->count(10)->create();
         // School::create([
         //     'name' => 'SMP Gemilang Prestasi',
         //     'address' => 'Jl. Anggrek No. 9',
         //     'city' => 'Malang',
+        // ]);
+
+        // School::create([
+        //     'name' => 'SD Negeri Harapan Jaya',
+        //     'address' => 'Jl. Merdeka No. 10',
+        //     'city' => 'Jakarta',
+        // ]);
+
+        // School::create([
+        //     'name' => 'SMP Pertiwi Bangsa',
+        //     'address' => 'Jl. Sudirman No. 45',
+        //     'city' => 'Bandung',
+        // ]);
+
+        // School::create([
+        //     'name' => 'SMA Cendekia Nusantara',
+        //     'address' => 'Jl. Mawar Indah No. 8',
+        //     'city' => 'Surabaya',
+        // ]);
+        
+        // School::create([
+        //     'name' => 'SD Tunas Harapan',
+        //     'address' => 'Jl. Kemuning No. 21',
+        //     'city' => 'Yogyakarta',
         // ]);
     }
 }
