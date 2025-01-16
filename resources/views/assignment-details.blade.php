@@ -4,7 +4,7 @@
         <h1 class="text-3xl font-bold mb-4">{{ $assignment['title'] }}</h1>
 
         {{-- Date --}}
-        <p class="text-gray-700 mb-6">deadline: {{ $assignment['date'] }}</p>
+        <p class="text-gray-700 mb-6">Deadline: {{ $assignment['date'] }}</p>
 
         {{-- Description --}}
         <p class="text-gray-700 mb-6">{{ $assignment['description'] }}</p>
@@ -20,11 +20,11 @@
                     </button>
                 </div>
 
-                {{-- Modal --}}
+                {{-- Edit Modal --}}
                 <div 
                     id="editAssignmentModal" 
                     class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
-                    <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
+                    <div class="bg-white rounded-lg shadow-lg w-2/3 p-6">
                         <h2 class="text-2xl font-bold mb-4">Edit Assignment</h2>
 
                         <form action="{{ route('edit-assignment') }}" method="POST">
@@ -41,7 +41,7 @@
                                     required>
                             </div>
                             <div class="mb-4">
-                                <label for="title" class="block text-gray-700 font-bold mb-2">Date:</label>
+                                <label for="date" class="block text-gray-700 font-bold mb-2">Date:</label>
                                 <input 
                                     type="date" 
                                     id="date" 
@@ -62,7 +62,7 @@
                             <div class="flex justify-end">
                                 <button 
                                     type="button" 
-                                    id="closeModalButton" 
+                                    id="closeEditModalButton" 
                                     class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2">
                                     Cancel
                                 </button>
@@ -75,28 +75,67 @@
                         </form>
                     </div>
                 </div>
-
-                <script>
-                    document.getElementById('editAssignmentButton').addEventListener('click', function() {
-                        document.getElementById('editAssignmentModal').classList.remove('hidden');
-                    });
-
-                    document.getElementById('closeModalButton').addEventListener('click', function() {
-                        document.getElementById('editAssignmentModal').classList.add('hidden');
-                    });
-                </script>
             @else
                 {{-- User View --}}
-                <h3 class="text-lg font-bold mb-4">Submit Your Work</h3>
-                <form action="{{ route('submit-assignment', ['id' => $assignment->id]) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="mb-4">
-                        <label for="file" class="block text-gray-700 font-bold mb-2">Upload File:</label>
-                        <input type="file" id="file" name="file" class="border rounded-lg px-3 py-2 w-full" required>
+                <div class="flex justify-end">
+                    <button 
+                        id="submitWorkButton" 
+                        class="bg-green-500 text-white px-4 py-2 rounded-md">
+                        Submit Work
+                    </button>
+                </div>
+
+                {{-- Submit Popup --}}
+                <div 
+                    id="submitWorkModal" 
+                    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+                    <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
+                        <h2 class="text-2xl font-bold mb-4">Kumpulkan Hasil Anda</h2>
+
+                        {{-- <form action="{{ route('submit-assignment', ['id' => $assignment['id']]) }}" method="POST"> --}}
+                            <form action="" method="POST">
+                            @csrf
+                            <div class="mb-4">
+                                <label for="submissionText" class="block text-gray-700 font-bold mb-2">Link Google Drive:</label>
+                                <input id="submissionLink" name="submissionLink" class="border rounded-lg px-3 py-2 w-full" required type="text">
+                            </div>
+                            <div class="flex justify-end">
+                                <button 
+                                    type="button" 
+                                    id="closeSubmitModalButton" 
+                                    class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2">
+                                    Cancel
+                                </button>
+                                <button 
+                                    type="submit" 
+                                    class="bg-green-500 text-white px-4 py-2 rounded-md">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md">Submit</button>
-                </form>
+                </div>
             @endif
         </div>
     </div>
+
+    <script>
+        // Edit Modal Logic
+        document.getElementById('editAssignmentButton')?.addEventListener('click', function() {
+            document.getElementById('editAssignmentModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeEditModalButton')?.addEventListener('click', function() {
+            document.getElementById('editAssignmentModal').classList.add('hidden');
+        });
+
+        // Submit Modal Logic
+        document.getElementById('submitWorkButton')?.addEventListener('click', function() {
+            document.getElementById('submitWorkModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeSubmitModalButton')?.addEventListener('click', function() {
+            document.getElementById('submitWorkModal').classList.add('hidden');
+        });
+    </script>
 </x-layout>
