@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssignmentController;
 use App\Models\School;
 use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\PresenceController;
@@ -97,3 +98,6 @@ Route::post('/mark-all-present/{meetId}', [PresenceController::class, 'markAllPr
 Route::post('/setApprove/{registrationId}', [RegistrationController::class, 'update'])->name('set-approve');
 
 Route::put('/open-workshop', [WorkshopController::class, 'openWorkshop'])->name('open-workshop');
+
+Route::get('/assignment-detail', [AssignmentController::class, 'assignmentDetail'])->name('assignment-detail');
+Route::put('/edit-assignment', [AssignmentController::class, 'editAssignment'])->name('edit-assignment');
