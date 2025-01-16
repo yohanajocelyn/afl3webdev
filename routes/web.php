@@ -101,3 +101,5 @@ Route::put('/open-workshop', [WorkshopController::class, 'openWorkshop'])->name(
 
 Route::get('/assignment-detail', [AssignmentController::class, 'assignmentDetail'])->name('assignment-detail');
 Route::put('/edit-assignment', [AssignmentController::class, 'editAssignment'])->name('edit-assignment');
+
+Route::post('approveSubmission/{submissionId}', [SubmissionController::class, 'update'])->name('approveSubmission');

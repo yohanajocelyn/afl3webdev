@@ -121,7 +121,7 @@
                     <button id="pesertaButton"
                         class="border-2 border-green-500 text-green-500 px-4 py-2 rounded-full hover:bg-green-600 hover:text-white"
                         onclick="">
-                        Peserta
+                        Status Tugas
                     </button>
                 </a>
             @endif
