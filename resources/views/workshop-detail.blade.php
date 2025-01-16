@@ -15,7 +15,12 @@
                     <p class="md:px-2">{{ $workshop['startDate']->format('F j, Y') }} - {{ $workshop['endDate']->format('F j, Y') }}</p>
                 </div>
                 <p class="text-center md:text-left">Biaya Pendaftaran:</p>
-                <p class="text-center md:text-left pb-4">Rp {{ number_format($workshop['price'], 0, ',', '.') }}</p>
+                <p class="text-center md:text-left pb-4">
+                    @if ($workshop['price'] == 0)
+                        Gratis
+                    @else
+                        Rp {{ number_format($workshop['price'], 0, ',', '.') }}</p>  
+                    @endif
                 {{-- Register Button --}}
                 <div class="mt-auto flex justify-center md:justify-start space-x-4">
                     @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
@@ -198,10 +203,12 @@
                     </div>
                 @else
                     @foreach ($workshop->assignments as $assignment)
+                    <a href="/assignment-detail/?assignmentId={{ $assignment->id }}">
                         <x-simple-card>
                             <x-slot:title>{{ $assignment->title }}</x-slot:title>
                             <x-slot:date>{{ $assignment->date }}</x-slot:title>
-                        </x-simple-card>                    
+                        </x-simple-card>      
+                    </a>       
                     @endforeach
                 @endif
             </div>
