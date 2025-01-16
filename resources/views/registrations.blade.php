@@ -1,11 +1,11 @@
 <x-layout>
     <div class="bg-gray-100 my-8">
         @if (request('workshopId'))
-            <p>{{ $workshop['title'] }}</p>
+            <h1 class="text-3xl font-bold mb-2">{{ $workshop['title'] }}</h1>
             <p>{{ $workshop['startDate']->format('F j, Y') }}</p>
         @endif
 
-        <h1 class="text-3xl font-bold mb-4">Registrations</h1>
+        <h1 class="text-3xl font-bold my-4">Registrations</h1>
 
         <div class="p-6 bg-white rounded-lg shadow-lg">
             @if (count($registrations) == 0)
