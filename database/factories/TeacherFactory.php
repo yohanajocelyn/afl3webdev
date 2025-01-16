@@ -25,7 +25,7 @@ class TeacherFactory extends Factory
             'phone_number' => $this->faker->phoneNumber(),
             'pfpURL' => $this->faker->url(),
             'email' => $this->faker->email(),
-            'password' => bcrypt($this->faker->password()),
+            'password' => bcrypt('password'),
             'role' => 'user',
             'nuptk' => $this->faker->numberBetween(1000000000, 9999999999),
             'community' => $this->faker->userName(),
