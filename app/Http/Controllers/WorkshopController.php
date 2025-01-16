@@ -137,15 +137,15 @@ class WorkshopController extends Controller
             'workshop_id' => $workshopId,
         ]);
 
-        $meets = Meet::where('workshop_id', $workshopId)->get();
-        foreach($meets as $meet){
-            Presence::create([
-                'meet_id' => $meet['id'],
-                'registration_id' => $registration['id'],
-                'isPresent' => false,
-                'dateTime' => now() 
-            ]);
-        }
+        // $meets = Meet::where('workshop_id', $workshopId)->get();
+        // foreach($meets as $meet){
+        //     Presence::create([
+        //         'meet_id' => $meet['id'],
+        //         'registration_id' => $registration['id'],
+        //         'isPresent' => false,
+        //         'dateTime' => now() 
+        //     ]);
+        // }
 
         return redirect(url()->previous());
 
@@ -199,7 +199,9 @@ class WorkshopController extends Controller
                 'workshop_id' => $workshopId
             ]);
     
-            $registeredUsers = Registration::where('workshop_id', $workshopId)->get();
+            $registeredUsers = Registration::where('workshop_id', $workshopId)
+            ->where('isApproved', true)
+            ->get();
     
             if ($registeredUsers->isNotEmpty()) {
                 foreach ($registeredUsers as $registered) {

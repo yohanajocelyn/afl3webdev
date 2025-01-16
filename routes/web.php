@@ -104,3 +104,4 @@ Route::get('/assignment-detail', [AssignmentController::class, 'assignmentDetail
 Route::put('/edit-assignment', [AssignmentController::class, 'editAssignment'])->name('edit-assignment');
 
 Route::get('/submissions', [SubmissionController::class, 'showSubmissions'])->name('submissions');
+Route::post('approveSubmission/{submissionId}', [SubmissionController::class, 'update'])->name('approveSubmission');

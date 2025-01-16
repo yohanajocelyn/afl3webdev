@@ -104,7 +104,11 @@
             </button>
             <button id="assignmentsButton"
                 class="border-2 border-purple-500 text-purple-500 px-4 py-2 rounded-full hover:bg-purple-600 hover:text-white"
-                onclick="toggleSection('assignments')">
+                onclick="
+                    @if (auth()->check() && (auth()->user()->registrations->where('workshop_id', $workshop->id)->isNotEmpty() || auth()->user()->role === \App\Enums\Role::Admin))
+                        toggleSection('assignments')
+                    @endif
+                ">
                 Tugas
             </button>
             @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
@@ -117,7 +121,7 @@
                     <button id="pesertaButton"
                         class="border-2 border-green-500 text-green-500 px-4 py-2 rounded-full hover:bg-green-600 hover:text-white"
                         onclick="">
-                        Peserta
+                        Status Tugas
                     </button>
                 </a>
             @endif
@@ -129,7 +133,7 @@
             <div class="flex flex-col md:flex-row justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-center md:text-left">Pertemuan</h2>
                 @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md", onclick="toggleAddMeetingPopUp(true)">Tambahkan Pertemuan</button>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded-md", onclick="toggleAddMeetingPopUp(true)">Tambahkan Pertemuan</button>
                 @endif
             </div>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">

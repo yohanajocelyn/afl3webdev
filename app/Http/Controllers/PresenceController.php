@@ -53,7 +53,7 @@ class PresenceController extends Controller
     $workshop = $meet->workshop;
 
     // Get all registrations for the workshop
-    $registrations = Registration::where('workshop_id', $workshop->id)->get();
+    $registrations = Registration::where('workshop_id', $workshop->id)->where('isApproved', true)->get();
 
     // Get all teacher IDs from the registrations
     $teacherIds = $registrations->pluck('teacher_id')->toArray();
