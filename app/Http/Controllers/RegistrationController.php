@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Meet;
+use App\Models\Presence;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 
@@ -60,6 +62,16 @@ class RegistrationController extends Controller
 
         $registration->isApproved = !$registration->isApproved;
         $registration->save();
+
+        $meets = Meet::where('workshop_id', $registration->workshop_id)->get();
+        foreach($meets as $meet){
+            Presence::firstOrCreate([
+                'meet_id' => $meet->id,
+                'registration_id' => $registration->id,
+                'isPresent' => false,
+                'dateTime' => now() 
+            ]);
+        }
 
         return response()->json([
             'success' => true,
