@@ -11,14 +11,23 @@
 
         <div class="border-t border-gray-300 mt-6 pt-4">
             @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                {{-- Admin View --}}
-                <div class="flex justify-end">
+            <div class="flex justify-end gap-4">
+                {{-- Check Submissions Button --}}
+                <a href="/submissions/?assignmentId={{ $assignment->id }}">
                     <button 
-                        id="editAssignmentButton" 
-                        class="bg-blue-500 text-white px-4 py-2 rounded-md">
-                        Edit Assignment
+                        id="checkSubmissionsButton" 
+                        class="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600">
+                        Check Submissions
                     </button>
-                </div>
+                </a>
+            
+                {{-- Edit Assignment Button --}}
+                <button 
+                    id="editAssignmentButton" 
+                    class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                    Edit Assignment
+                </button>
+            </div>            
 
                 {{-- Edit Modal --}}
                 <div 

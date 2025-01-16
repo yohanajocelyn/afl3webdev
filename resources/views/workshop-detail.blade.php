@@ -76,10 +76,10 @@
                 <h2 class="text-lg font-bold mb-4">Confirm Registration</h2>
                 <form action="{{ route('registerToWorkshop') }}" method="POST" enctype="multipart/form-data">
                 @if ($workshop['price'] != 0)
-                    <p>Upload file here</p>
+                    <p>Upload bukti pembayaran</p>
                     <input type="file" name="registrationProof" id="registrationProof" required>
                 @endif
-                <p class="text-gray-600 mb-6">Are you sure you want to register for this workshop?</p>
+                <p class="text-gray-600 mb-6">Apakah anda yakin ingin mendaftar ke workshop ini?</p>
                 <div class="flex justify-end space-x-4">
                     <button id="cancelButton" class="bg-gray-300 px-4 py-2 rounded-md" onclick="togglePopUp(false)">
                         Cancel

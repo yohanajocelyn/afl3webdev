@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Auth;
 class LoginRegisterController extends Controller
 {
     public function logRegSchool() {
+        // Check if the user is already authenticated
+        if (Auth::check()) {
+            // Redirect the user to the home route
+            return redirect()->route('home');
+        }
+    
+        // If not authenticated, return the view with the schools data
         return view('log-reg', [
             'schools' => School::all()
         ]);

@@ -5,6 +5,7 @@ use App\Models\School;
 use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\WorkshopController;
 use App\Models\Teacher;
@@ -101,3 +102,5 @@ Route::put('/open-workshop', [WorkshopController::class, 'openWorkshop'])->name(
 
 Route::get('/assignment-detail', [AssignmentController::class, 'assignmentDetail'])->name('assignment-detail');
 Route::put('/edit-assignment', [AssignmentController::class, 'editAssignment'])->name('edit-assignment');
+
+Route::get('/submissions', [SubmissionController::class, 'showSubmissions'])->name('submissions');
