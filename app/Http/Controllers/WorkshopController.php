@@ -137,15 +137,17 @@ class WorkshopController extends Controller
             'workshop_id' => $workshopId,
         ]);
 
-        // $meets = Meet::where('workshop_id', $workshopId)->get();
-        // foreach($meets as $meet){
-        //     Presence::create([
-        //         'meet_id' => $meet['id'],
-        //         'registration_id' => $registration['id'],
-        //         'isPresent' => false,
-        //         'dateTime' => now() 
-        //     ]);
-        // }
+        $meets = Meet::where('workshop_id', $workshopId)->get();
+        if($meets->count() > 0){
+            foreach($meets as $meet){
+                Presence::create([
+                    'meet_id' => $meet['id'],
+                    'registration_id' => $registration['id'],
+                    'isPresent' => false,
+                    'dateTime' => now() 
+                ]);
+            }
+        }
 
         return redirect(url()->previous());
 

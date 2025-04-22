@@ -51,7 +51,7 @@
     
                 {{-- Image --}}
                 <div class="mb-4">
-                    <label for="workshop_image" class="block text-sm font-bold mb-2">Upload Image</label>
+                    <label for="workshop_image" class="block text-sm font-bold mb-2">Upload Image - max 2MB</label>
                     <input type="file" name="workshop_image" id="workshop_image" class="w-full p-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200">
                 </div>
     
