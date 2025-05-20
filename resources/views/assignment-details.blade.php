@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="mb-6 mt-12">
+    <div class="mb-6 mt-6">
         <h1 class="text-3xl font-bold text-gray-800">{{ $assignment->title }}</h1>
         <p class="text-gray-600 mt-2">{{ $assignment->date }}</p>
     </div>
@@ -30,10 +30,14 @@
                     <p><strong>Link:</strong> <a href="{{ $userSubmission->url }}" target="_blank"
                             class="text-blue-600 underline">{{ $userSubmission->url }}</a></p>
                     <p><strong>Note:</strong> {{ $userSubmission->note ?? 'No notes' }}</p>
-                    <p><strong>Status:</strong> {{ $userSubmission->isApproved ? 'Approved' : 'Pending Approval' }}</p>
+                    <p><strong>Status:</strong>
+                        <span class="{{ $userSubmission->isApproved ? 'text-green-500' : 'text-yellow-500'}}">
+                            {{ $userSubmission->isApproved ? 'Approved' : 'Pending Approval' }}
+                        </span>
+                    </p>
                 </div>
 
-                {{-- Edit and Remove Button--}}
+                {{-- Edit and Remove Button --}}
                 @if (!$userSubmission->isApproved)
                     <div class="flex justify-end gap-4">
                         <form action="{{ route('delete-submission', ['id' => $userSubmission->id]) }}" method="POST"
