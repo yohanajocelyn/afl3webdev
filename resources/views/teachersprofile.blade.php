@@ -160,7 +160,9 @@
                                     class="text-purple-700 hover:text-purple-900 hover:underline transition-colors duration-200">
                                     {{ $assignment->title }}
                                 </a>
-                            </strong><br>
+                            </strong>
+                            <p>{{ $assignment->date }}</p>
+                            <br>
                             {{ $assignment->description ?? 'No description.' }}
                         </div>
                     @endforeach
@@ -174,7 +176,9 @@
                                     class="text-green-700 hover:text-green-900 hover:underline transition-colors duration-200">
                                     {{ $assignment->title }}
                                 </a>
-                            </strong><br>
+                            </strong>
+                            {{-- <p>{{ $assignment->submissions-> }}</p> --}}
+                            <br>
                             {{ $assignment->description ?? 'No description.' }}
                         </div>
                     @endforeach
