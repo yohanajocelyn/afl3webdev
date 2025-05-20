@@ -20,7 +20,7 @@ class WorkshopController extends Controller
     public function index()
     {
         $workshops = Workshop::withCount(['meets', 'assignments'])->get(); // eager-load counts
-        return view('admin.workshops', compact('workshops'));
+        return view('admin.workshop-detail', compact('workshops'));
     }
 
     public function getAll() {
