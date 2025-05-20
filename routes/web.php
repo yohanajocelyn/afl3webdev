@@ -114,3 +114,8 @@ Route::get('/admin/workshops/{record}/detail', WorkshopDetail::class)->name('adm
 Route::get('/admin/meets/{record}/detail', MeetDetail::class)->name('admin-meets.show');
 Route::get('/admin/assignments/{record}/detail', AssignmentDetail::class)->name('admin-assignments.show');
 Route::get('/admin/submissions/{record}/detail', SubmissionDetail::class)->name('admin-submissions.show');
+Route::get('/submissions', [SubmissionController::class, 'showSubmissions'])->name('submissions');
+Route::post('approveSubmission/{submissionId}', [SubmissionController::class, 'update'])->name('approveSubmission');
+
+Route::post('/assignment-detail/{id}/submit', [SubmissionController::class, 'submitAssignment'])->name('submit-assignment');
+Route::delete('/submission/{id}', [SubmissionController::class, 'destroy'])->name('delete-submission');
