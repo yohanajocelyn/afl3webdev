@@ -41,7 +41,7 @@ class SubmissionResource extends Resource
                     ->options(function () {
                         return Registration::with(['teacher', 'workshop'])->get()
                             ->mapWithKeys(function ($registration) {
-                                $label = "{$registration->teacher->name} - {$registration->workshop->title}";
+                                $label = "{$registration->teacher->name} - Workshop: {$registration->workshop->title}";
                                 return [$registration->id => $label];
                             });
                     })
@@ -112,9 +112,10 @@ class SubmissionResource extends Resource
 
                 TextColumn::make('subject')->searchable(),
                 TextColumn::make('title')->searchable(),
-                TextColumn::make('educationLevel'),
 
                 TextColumn::make('url')->limit(30),
+                IconColumn::make('isApproved')
+                    ->boolean(),
             ])
             ->filters([
                 //

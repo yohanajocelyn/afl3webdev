@@ -1,4 +1,4 @@
-{{-- <x-filament-panels::page :class="static::class">
+<x-filament-panels::page :class="static::class">
     <div class="bg-gray-900 rounded-xl border border-gray-800 shadow-sm overflow-hidden">
         <!-- Header -->
         <div class="px-6 py-4 border-b border-gray-800 bg-gray-950">
@@ -86,4 +86,4 @@
             </div>
         </div>
     </div>
-</x-filament-panels::page> --}}
+</x-filament-panels::page>

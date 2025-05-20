@@ -26,11 +26,11 @@ class SubmissionDetail extends Page
         ];
     }
 
-    // public function approve(): void
-    // {
-    //     $this->submission->isApproved = !$this->submission->isApproved;
-    //     $this->submission->save();
+    public function approve(): void
+    {
+        $this->submission->isApproved = !$this->submission->isApproved;
+        $this->submission->save();
         
-    //     $action = $this->submission->isApproved ? 'approved' : 'revoked';
-    // }
+        $action = $this->submission->isApproved ? 'approved' : 'revoked';
+    }
 }

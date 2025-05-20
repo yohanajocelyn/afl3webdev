@@ -37,10 +37,14 @@ class PresenceResource extends Resource
                     ->required(),
 
                 Select::make('registration_id')
-                    ->label('Registration')
-                    ->options(Registration::all()->mapWithKeys(fn ($reg) => [
-                        $reg->id => 'Reg #' . $reg->id . ' - Workshop: ' . ($reg->workshop->title ?? 'N/A'),
-                    ]))
+                    ->label('Teacher - Workshop')
+                    ->options(function () {
+                        return Registration::with(['teacher', 'workshop'])->get()
+                            ->mapWithKeys(function ($registration) {
+                                $label = "{$registration->teacher->name} - Workshop: {$registration->workshop->title}";
+                                return [$registration->id => $label];
+                            });
+                    })
                     ->searchable()
                     ->required(),
 
