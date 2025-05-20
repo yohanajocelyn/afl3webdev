@@ -106,4 +106,4 @@ Route::put('/edit-assignment', [AssignmentController::class, 'editAssignment'])-
 Route::post('approveSubmission/{submissionId}', [SubmissionController::class, 'update'])->name('approveSubmission');
 
 //NEW
-Route::get('/admin-workshops', [WorkshopController::class, 'index'])->name('admin-workshops');
+Route::get('/admin-workshops/{id}', [WorkshopController::class, 'show'])->name('admin-workshops.show');

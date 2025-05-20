@@ -108,7 +108,7 @@ class WorkshopResource extends Resource
             EditAction::make(), // 👈 This is required for the edit button to appear
             Action::make('view')
                 ->label('View Details')
-                ->url(fn ($record) => route('admin-workshops', $record->id))
+                ->url(fn ($record) => route('admin-workshops.show', $record->id))
                 ->openUrlInNewTab(false), // open in same tab
         ]);
         ;

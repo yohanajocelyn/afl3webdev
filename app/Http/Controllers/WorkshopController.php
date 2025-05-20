@@ -17,10 +17,10 @@ use Illuminate\Support\Facades\Log;
 class WorkshopController extends Controller
 {
 
-    public function index()
+    public function show($id)
     {
-        $workshops = Workshop::withCount(['meets', 'assignments'])->get(); // eager-load counts
-        return view('admin.workshop-detail', compact('workshops'));
+        $workshop = Workshop::with(['meets', 'assignments'])->findOrFail($id);
+        return view('admin.workshop-detail', compact('workshop'));
     }
 
     public function getAll() {

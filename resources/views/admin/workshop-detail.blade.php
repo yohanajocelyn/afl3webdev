@@ -8,20 +8,9 @@
         <div class="p-6">
             <div class="flex justify-between items-center mb-4">
                 <h1 class="text-3xl font-bold text-gray-800">{{ $workshop->title }}</h1>
-                <div class="flex items-center gap-3">
-                    <label class="text-sm font-medium text-gray-700">Status:</label>
-                    <label class="inline-flex items-center cursor-pointer">
-                        <input type="checkbox"
-                            id="toggleStatus"
-                            data-id="{{ $workshop->id }}"
-                            class="sr-only peer"
-                            {{ $workshop->isOpen ? 'checked' : '' }}>
-                        <div class="w-11 h-6 bg-gray-300 peer-checked:bg-green-500 rounded-full peer peer-focus:ring-2 ring-offset-2 ring-green-400 transition duration-300"></div>
-                        <span id="statusText" class="ml-2 text-sm">
-                            {{ $workshop->isOpen ? 'Open' : 'Closed' }}
-                        </span>
-                    </label>
-                </div>
+                <span class="text-sm px-3 py-1 rounded-full {{ $workshop->isOpen ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                    {{ $workshop->isOpen ? 'Open' : 'Closed' }}
+                </span>
             </div>
 
             <p class="text-gray-600 mb-4">{{ $workshop->description }}</p>
@@ -121,38 +110,5 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const toggle = document.getElementById('toggleStatus');
-        const statusText = document.getElementById('statusText');
-
-        toggle.addEventListener('change', function () {
-            const workshopId = this.getAttribute('data-id');
-
-            fetch(`/admin-workshops/${workshopId}/toggle-status`, {
-                method: 'PUT',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    statusText.textContent = data.isOpen ? 'Open' : 'Closed';
-                } else {
-                    alert('Failed to update status.');
-                    toggle.checked = !toggle.checked; // revert toggle
-                }
-            })
-            .catch(() => {
-                alert('Error communicating with server.');
-                toggle.checked = !toggle.checked;
-            });
-        });
-    });
-</script>
 
 </x-admin-layout>
