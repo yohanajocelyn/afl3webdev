@@ -2,6 +2,7 @@
 
 use App\Filament\Pages\AssignmentDetail;
 use App\Filament\Pages\MeetDetail;
+use App\Filament\Pages\SubmissionDetail;
 use App\Filament\Pages\WorkshopDetail;
 use App\Http\Controllers\AssignmentController;
 use App\Models\School;
@@ -106,9 +107,10 @@ Route::put('/open-workshop', [WorkshopController::class, 'openWorkshop'])->name(
 Route::get('/assignment-detail', [AssignmentController::class, 'assignmentDetail'])->name('assignment-detail');
 Route::put('/edit-assignment', [AssignmentController::class, 'editAssignment'])->name('edit-assignment');
 
-Route::post('approveSubmission/{submissionId}', [SubmissionController::class, 'update'])->name('approveSubmission');
+Route::post('approveSubmission/{submissionId}', [SubmissionController::class, 'update'])->name('submission.approve');
 
 //NEW
 Route::get('/admin/workshops/{record}/detail', WorkshopDetail::class)->name('admin-workshops.show');
 Route::get('/admin/meets/{record}/detail', MeetDetail::class)->name('admin-meets.show');
 Route::get('/admin/assignments/{record}/detail', AssignmentDetail::class)->name('admin-assignments.show');
+Route::get('/admin/submissions/{record}/detail', SubmissionDetail::class)->name('admin-submissions.show');

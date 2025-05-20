@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Submission;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class SubmissionController extends Controller
@@ -50,21 +51,13 @@ class SubmissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($submmissionId)
+    public function update(Submission $submission): RedirectResponse
     {
-        $submission = Submission::find($submmissionId);
+        $submission->update(['isApproved' => true]);
 
-        if (!$submission) {
-            return response()->json(['success' => false, 'message' => 'Submission not found'], 404);
-        }
-
-        $submission->isApproved = !$submission->isApproved;
-        $submission->save();
-
-        return response()->json([
-            'success' => true,
-            'isApproved' => $submission->isApproved
-        ]);
+        return redirect()
+            ->route('filament.admin.pages.submission-detail', ['record' => $submission->id])
+            ->with('success', 'Submission approved successfully.');
     }
 
     /**
