@@ -15,21 +15,21 @@ class TeacherSeeder extends Seeder
      */
     public function run(): void
     {
-        Teacher::factory()->count(20)->create();
+        // Teacher::factory()->count(20)->create();
         // Teacher::factory(100)->create();
 
-        // Teacher::create([
-        //     'name' => 'Admin',
-        //     'gender' => 'female',
-        //     'phone_number' => '12345678',
-        //     'pfpUrl' => 'defaultImg',
-        //     'role' => Role::Admin,
-        //     'email' => 'admin@email.com',
-        //     'password' => bcrypt('12345678'),
-        //     'nuptk' => '12345678',
-        //     'community' => 'AdminCommunity',
-        //     'subjectTaught' => 'AdminSubject',
-        //     'school_id' => 1
-        // ]);
+        Teacher::create([
+            'name' => 'Admin',
+            'gender' => 'female',
+            'phone_number' => '12345678',
+            'pfpUrl' => 'defaultImg',
+            'role' => Role::Admin,
+            'email' => 'admin@email.com',
+            'password' => bcrypt('12345678'),
+            'nuptk' => '12345678',
+            'community' => 'AdminCommunity',
+            'subjectTaught' => 'AdminSubject',
+            'school_id' => 1
+        ]);
     }
 }
