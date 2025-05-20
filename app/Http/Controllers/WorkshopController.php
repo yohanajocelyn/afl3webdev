@@ -20,7 +20,7 @@ class WorkshopController extends Controller
     public function show($id)
     {
         $workshop = Workshop::with(['meets', 'assignments'])->findOrFail($id);
-        return view('admin.workshop-detail', compact('workshop'));
+        return view('filament.pages.workshop-detail', compact('workshop'));
     }
 
     public function getAll() {

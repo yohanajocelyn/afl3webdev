@@ -1,5 +1,6 @@
 <?php
 
+use App\Filament\Pages\WorkshopDetail;
 use App\Http\Controllers\AssignmentController;
 use App\Models\School;
 use App\Http\Controllers\LoginRegisterController;
@@ -106,4 +107,4 @@ Route::put('/edit-assignment', [AssignmentController::class, 'editAssignment'])-
 Route::post('approveSubmission/{submissionId}', [SubmissionController::class, 'update'])->name('approveSubmission');
 
 //NEW
-Route::get('/admin-workshops/{id}', [WorkshopController::class, 'show'])->name('admin-workshops.show');
+Route::get('/admin/workshops/{record}/detail', WorkshopDetail::class)->name('admin-workshops.show');
