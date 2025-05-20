@@ -5,6 +5,7 @@ use App\Models\School;
 use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\WorkshopController;
 use App\Models\Teacher;
