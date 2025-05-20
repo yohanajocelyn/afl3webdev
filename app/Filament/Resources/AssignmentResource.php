@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AssignmentResource\Pages;
 use App\Filament\Resources\AssignmentResource\RelationManagers;
 use App\Models\Assignment;
+use Filament\Tables\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -24,8 +25,6 @@ class AssignmentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationLabel = 'Assignments';
-    protected static ?string $pluralLabel = 'Assignments';
-    protected static ?string $navigationGroup = 'Workshop Management';
 
     public static function form(Form $form): Form
     {
@@ -74,6 +73,10 @@ class AssignmentResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Action::make('view')
+                ->label('View Details')
+                ->url(fn ($record) => route('admin-assignments.show', $record->id))
+                ->openUrlInNewTab(false), // open in same tab
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

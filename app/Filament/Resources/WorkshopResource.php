@@ -20,6 +20,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -115,6 +116,7 @@ class WorkshopResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
+            TextColumn::make('id')->label('ID')->sortable(),
             TextColumn::make('title')->searchable(),
             TextColumn::make('startDate'),
             TextColumn::make('endDate'),
@@ -128,7 +130,10 @@ class WorkshopResource extends Resource
                 ->label('View Details')
                 ->url(fn ($record) => route('admin-workshops.show', $record->id))
                 ->openUrlInNewTab(false), // open in same tab
-        ]);
+        ])
+        ->bulkActions([
+            DeleteBulkAction::make(),
+        ])
         ;
     }
 

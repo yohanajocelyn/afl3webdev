@@ -66,16 +66,15 @@
                             @endphp
                             <div class="p-4 flex justify-between items-center bg-gray-700">
                                 <div>
-                                    <a href="{{ route('filament.admin.resources.teachers.view', $registration->teacher->id) }}" class="hover:underline">
+                                    <a href="" class="hover:underline">
                                         <p class="text-lg font-bold text-white">{{ $registration->teacher->name }}</p>
                                     </a>
                                     <p class="text-sm text-gray-300">{{ $registration->teacher->school->name }}</p>
                                 </div>
                                 
-                                <x-filament::button
+                               <x-filament::button
                                     id="validate-btn-{{ $registration->teacher->id }}"
-                                    class="validate-btn"
-                                    color="{{ $isPresent ? 'success' : 'primary' }}"
+                                    class="validate-btn {{ $isPresent ? 'fi-btn-success' : 'fi-btn-primary' }}"
                                     data-presence-id="{{ $presenceId }}"
                                 >
                                     {{ $isPresent ? 'Present' : 'Not Present' }}

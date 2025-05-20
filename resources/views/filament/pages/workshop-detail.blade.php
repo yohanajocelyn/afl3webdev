@@ -79,7 +79,7 @@
         <x-filament::card class="bg-gray-800">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold text-white">Assignments</h2>
-                <x-filament::button size="sm" icon="heroicon-m-plus" color="success" tag="a" href="#">
+                <x-filament::button size="sm" icon="heroicon-m-plus" color="success" tag="a" href="{{ route('filament.admin.resources.assignments.create') }}">
                     Add Assignment
                 </x-filament::button>
             </div>
