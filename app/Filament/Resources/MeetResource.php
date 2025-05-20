@@ -8,6 +8,7 @@ use App\Models\Meet;
 use App\Models\Presence;
 use App\Models\Registration;
 use App\Models\Workshop;
+use Filament\Tables\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -15,6 +16,9 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -65,11 +69,15 @@ class MeetResource extends Resource
                 // add filters if needed
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
+                Action::make('view')
+                ->label('View Details')
+                ->url(fn ($record) => route('admin-meets.show', $record->id))
+                ->openUrlInNewTab(false),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                DeleteBulkAction::make(),
             ]);
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Filament\Pages\MeetDetail;
 use App\Filament\Pages\WorkshopDetail;
 use App\Http\Controllers\AssignmentController;
 use App\Models\School;
@@ -108,3 +109,4 @@ Route::post('approveSubmission/{submissionId}', [SubmissionController::class, 'u
 
 //NEW
 Route::get('/admin/workshops/{record}/detail', WorkshopDetail::class)->name('admin-workshops.show');
+Route::get('/admin/meets/{record}/detail', MeetDetail::class)->name('admin-meets.show');

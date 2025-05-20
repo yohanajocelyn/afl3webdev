@@ -13,7 +13,8 @@ class Registration extends Model
     protected $fillable = ['regDate', 'paymentProof', 'isApproved', 'courseStatus', 'teacher_id', 'workshop_id'];
 
     protected $casts = [
-        'regDate' => 'date'
+        'regDate' => 'date',
+        'isApproved' => 'boolean'
     ];
 
     public function teacher():BelongsTo {

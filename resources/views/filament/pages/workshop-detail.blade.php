@@ -51,18 +51,20 @@
         <x-filament::card class="bg-gray-800">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold text-white">Meets</h2>
-                <x-filament::button size="sm" icon="heroicon-m-plus" color="primary" tag="a" href="#">
+                <x-filament::button size="sm" icon="heroicon-m-plus" color="primary" tag="a" href="{{ route('filament.admin.resources.meets.create') }}">
                     Add Meet
                 </x-filament::button>
             </div>
 
             <div class="space-y-0">
                 @forelse ($workshop->meets as $meet)
-                    <x-filament::card class="bg-gray-700 border-0 rounded-none">
-                        <h3 class="font-bold text-white">{{ $meet->title }}</h3>
-                        <p class="text-sm text-gray-300">{{ \Carbon\Carbon::parse($meet->date)->format('F j, Y') }}</p>
-                        <p class="text-gray-300 mt-1">{{ $meet->description }}</p>
-                    </x-filament::card>
+                    <a href="{{ route('admin-meets.show', $meet->id) }}">
+                        <x-filament::card class="bg-gray-700 border-0 rounded-none">
+                            <h3 class="font-bold text-white">{{ $meet->title }}</h3>
+                            <p class="text-sm text-gray-300">{{ \Carbon\Carbon::parse($meet->date)->format('F j, Y') }}</p>
+                            <p class="text-gray-300 mt-1">{{ $meet->description }}</p>
+                        </x-filament::card>
+                    </a>
                 @empty
                     <div class="flex flex-col items-center justify-center py-12 text-center">
                         <x-filament::icon name="heroicon-o-calendar" class="w-10 h-10 mb-2 text-gray-400" />

@@ -25,6 +25,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Log;
 
 class RegistrationResource extends Resource
 {
@@ -52,7 +53,8 @@ class RegistrationResource extends Resource
                     ->image()
                     ->directory('payment-proofs')
                     ->visible(fn ($get) => empty($get('paymentProof'))) // Show upload only if no existing paymentProof
-                    ->nullable(),
+                    ->nullable()
+                    ->dehydrateStateUsing(fn ($state) => $state ?: 'registration_proofs/'),
 
                 Toggle::make('isApproved')
                     ->label('Approved')
@@ -103,30 +105,14 @@ class RegistrationResource extends Resource
             ]);
     }
 
-    // Run after create or update
-    public static function afterSave(Model $record): void
+    public static function afterCreate(Model $record): void
     {
-        // Only proceed if registration is approved
-        if ($record->isApproved) {
-            // Get all Meets for the selected Workshop
-            $meets = Meet::where('workshop_id', $record->workshop_id)->get();
+        static::afterSave($record);
+    }
 
-            foreach ($meets as $meet) {
-                // Check if Presence already exists to avoid duplicates
-                $presenceExists = Presence::where('meet_id', $meet->id)
-                    ->where('registration_id', $record->id)
-                    ->exists();
-
-                if (!$presenceExists) {
-                    Presence::create([
-                        'meet_id' => $meet->id,
-                        'registration_id' => $record->id,
-                        'isPresent' => false,
-                        'dateTime' => now(),
-                    ]);
-                }
-            }
-        }
+    public static function afterUpdate(Model $record): void
+    {
+        static::afterSave($record);
     }
 
     public static function getRelations(): array

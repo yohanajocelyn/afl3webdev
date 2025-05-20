@@ -7,9 +7,12 @@ use App\Filament\Resources\TeacherResource\RelationManagers;
 use App\Models\Teacher;
 use Filament\Tables\Actions\EditAction;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
@@ -38,8 +41,37 @@ class TeacherResource extends Resource
 
             TextInput::make('phone_number')->tel()->required(),
 
+            Placeholder::make('pfpURL')
+                ->label('Profile Picture Preview')
+                ->content(fn ($record) => $record && $record->pfpURL
+                    ? '<img src="' . asset('storage/' . $record->pfpURL) . '" style="max-width: 200px; max-height: 150px;" />'
+                    : 'No profile picture uploaded yet.')
+                ->visible(fn ($get) => filled($get('pfpURL'))),
+
+            FileUpload::make('pfpURL_file')
+                ->label('Upload Profile Picture')
+                ->image()
+                ->directory('profile_pictures')
+                ->visibility('public')
+                ->reactive()
+                ->afterStateUpdated(function ($state, Set $set) {
+                    if ($state) {
+                        $set('pfpURL', 'profile_pictures/' . $state);
+                    }
+                }),
+
             TextInput::make('pfpURL')
-                ->label('Profile Picture URL'),
+                ->label('Profile Picture URL')
+                ->disabled() // makes the input uneditable
+                ->extraAttributes(['readonly' => 'readonly', 'style' => 'pointer-events: none; user-select: none;'])
+                ->dehydrated(true)
+                ->required(false)
+                ->afterStateHydrated(function ($state, Set $set, $record) {
+                    if ($record) {
+                        $set('pfpURL', $record->pfpURL);
+                    }
+                })
+                ->dehydrateStateUsing(fn ($state) => $state ?: 'profile_pictures/defaultProfilePicture.jpg'),         
 
             TextInput::make('email')->email()->required(),
 
