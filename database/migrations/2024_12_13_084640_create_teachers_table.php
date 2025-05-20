@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('pfpURL');
             $table->string('email');
             $table->string('password');
-            $table->enum('role', ['admin', 'user']);
+            $table->enum('role', ['superadmin', 'admin', 'user']);
             $table->string('nuptk');
             $table->string('community');
             $table->string('subjectTaught');
