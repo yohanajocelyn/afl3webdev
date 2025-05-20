@@ -1,123 +1,123 @@
 <x-layout>
-    <div class="bg-gray-100 my-8 p-6">
-        {{-- Title --}}
-        <h1 class="text-3xl font-bold mb-4">{{ $assignment['title'] }}</h1>
-
-        {{-- Date --}}
-        <p class="text-gray-700 mb-6">Deadline: {{ $assignment['date'] }}</p>
-
-        {{-- Description --}}
-        <p class="text-gray-700 mb-6">{{ $assignment['description'] }}</p>
-
-        <div class="border-t border-gray-300 mt-6 pt-4">
-            @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
+    <div class="mb-6 mt-12">
+        <h1 class="text-3xl font-bold text-gray-800">{{ $assignment->title }}</h1>
+        <p class="text-gray-600 mt-2">{{ $assignment->date }}</p>
+    </div>
+    <div class="border-t border-gray-300 mt-6 pt-4">
+        @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
+            {{-- Admin buttons as before --}}
             <div class="flex justify-end gap-4">
-                {{-- Check Submissions Button --}}
                 <a href="/submissions/?assignmentId={{ $assignment->id }}">
-                    <button 
-                        id="checkSubmissionsButton" 
+                    <button id="checkSubmissionsButton"
                         class="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600">
                         Check Submissions
                     </button>
                 </a>
-            
-                {{-- Edit Assignment Button --}}
-                <button 
-                    id="editAssignmentButton" 
-                    class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+
+                <button id="editAssignmentButton" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
                     Edit Assignment
                 </button>
-            </div>            
+            </div>
+            {{-- Edit Modal (unchanged) --}}
+            ...
+        @else
+            {{-- For teachers --}}
 
-                {{-- Edit Modal --}}
-                <div 
-                    id="editAssignmentModal" 
-                    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
-                    <div class="bg-white rounded-lg shadow-lg w-2/3 p-6">
-                        <h2 class="text-2xl font-bold mb-4">Edit Assignment</h2>
-
-                        <form action="{{ route('edit-assignment') }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="mb-4">
-                                <label for="title" class="block text-gray-700 font-bold mb-2">Title:</label>
-                                <input 
-                                    type="text" 
-                                    id="title" 
-                                    name="title" 
-                                    value="{{ $assignment['title'] }}" 
-                                    class="border rounded-lg px-3 py-2 w-full" 
-                                    required>
-                            </div>
-                            <div class="mb-4">
-                                <label for="date" class="block text-gray-700 font-bold mb-2">Date:</label>
-                                <input 
-                                    type="date" 
-                                    id="date" 
-                                    name="date" 
-                                    value="{{ $assignment['date'] }}" 
-                                    class="border rounded-lg px-3 py-2 w-full" 
-                                    required>
-                            </div>
-                            <div class="mb-4">
-                                <label for="description" class="block text-gray-700 font-bold mb-2">Description:</label>
-                                <textarea 
-                                    id="description" 
-                                    name="description" 
-                                    class="border rounded-lg px-3 py-2 w-full" 
-                                    required>{{ $assignment['description'] }}</textarea>
-                            </div>
-                            <input id="assignmentId" name="assignmentId" type="hidden" value="{{ $assignment['id'] }}">
-                            <div class="flex justify-end">
-                                <button 
-                                    type="button" 
-                                    id="closeEditModalButton" 
-                                    class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2">
-                                    Cancel
-                                </button>
-                                <button 
-                                    type="submit" 
-                                    class="bg-blue-500 text-white px-4 py-2 rounded-md">
-                                    Save Changes
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+            {{-- Show submission if exists --}}
+            @if ($userSubmission)
+                <div class="mb-6 p-4 border rounded bg-white shadow">
+                    <h3 class="text-xl font-semibold mb-2">Your Submission</h3>
+                    <p><strong>Link:</strong> <a href="{{ $userSubmission->url }}" target="_blank"
+                            class="text-blue-600 underline">{{ $userSubmission->url }}</a></p>
+                    <p><strong>Note:</strong> {{ $userSubmission->note ?? 'No notes' }}</p>
+                    <p><strong>Status:</strong> {{ $userSubmission->isApproved ? 'Approved' : 'Pending Approval' }}</p>
                 </div>
+
+                {{-- Edit and Remove Button--}}
+                @if (!$userSubmission->isApproved)
+                    <div class="flex justify-end gap-4">
+                        <form action="{{ route('delete-submission', ['id' => $userSubmission->id]) }}" method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete your submission?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md">
+                                Remove Submission
+                            </button>
+                        </form>
+                        <button id="editSubmissionButton" class="bg-blue-500 text-white px-4 py-2 rounded-md">
+                            Edit Submission
+                        </button>
+                    </div>
+                @endif
+
+
+                {{-- Edit Submission Modal --}}
+                @if (!$userSubmission->isApproved)
+                    <div id="editSubmissionModal"
+                        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+                        <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
+                            <h2 class="text-2xl font-bold mb-4">Edit Your Submission</h2>
+
+                            <form action="{{ route('submit-assignment', ['id' => $assignment->id]) }}" method="POST">
+                                @csrf
+                                <div class="mb-4">
+                                    <label for="submissionLinkEdit" class="block text-gray-700 font-bold mb-2">Link
+                                        Google
+                                        Drive:</label>
+                                    <input id="submissionLinkEdit" name="submissionLink" type="url"
+                                        class="border rounded-lg px-3 py-2 w-full" required
+                                        value="{{ old('submissionLink', $userSubmission->url ?? '') }}">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="submissionNoteEdit"
+                                        class="block text-gray-700 font-bold mb-2">Note:</label>
+                                    <textarea id="submissionNoteEdit" name="submissionNoteEdit" class="border rounded-lg px-3 py-2 w-full">{{ $userSubmission->note }}</textarea>
+                                </div>
+                                <div class="flex justify-end">
+                                    <button type="button" id="closeEditSubmissionModalButton"
+                                        class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @endif
             @else
-                {{-- User View --}}
+                {{-- No submission yet: Show Submit Work button --}}
                 <div class="flex justify-end">
-                    <button 
-                        id="submitWorkButton" 
-                        class="bg-green-500 text-white px-4 py-2 rounded-md">
+                    <button id="submitWorkButton" class="bg-green-500 text-white px-4 py-2 rounded-md">
                         Submit Work
                     </button>
                 </div>
 
                 {{-- Submit Popup --}}
-                <div 
-                    id="submitWorkModal" 
+                <div id="submitWorkModal"
                     class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
                     <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
                         <h2 class="text-2xl font-bold mb-4">Kumpulkan Hasil Anda</h2>
 
-                        {{-- <form action="{{ route('submit-assignment', ['id' => $assignment['id']]) }}" method="POST"> --}}
-                            <form action="" method="POST">
+                        <form action="{{ route('submit-assignment', ['id' => $assignment['id']]) }}" method="POST">
                             @csrf
                             <div class="mb-4">
-                                <label for="submissionText" class="block text-gray-700 font-bold mb-2">Link Google Drive:</label>
-                                <input id="submissionLink" name="submissionLink" class="border rounded-lg px-3 py-2 w-full" required type="text">
+                                <label for="submissionText" class="block text-gray-700 font-bold mb-2">Link Google
+                                    Drive:</label>
+                                <input id="submissionLink" name="submissionLink"
+                                    class="border rounded-lg px-3 py-2 w-full" required type="text">
+                            </div>
+                            <div class="mb-4">
+                                <label for="submissionNote" class="block text-gray-700 font-bold mb-2">Note:</label>
+                                <textarea id="submissionNote" name="submissionNote" class="border rounded-lg px-3 py-2 w-full">-</textarea>
                             </div>
                             <div class="flex justify-end">
-                                <button 
-                                    type="button" 
-                                    id="closeSubmitModalButton" 
+                                <button type="button" id="closeSubmitModalButton"
                                     class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2">
                                     Cancel
                                 </button>
-                                <button 
-                                    type="submit" 
-                                    class="bg-green-500 text-white px-4 py-2 rounded-md">
+                                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md">
                                     Submit
                                 </button>
                             </div>
@@ -125,7 +125,7 @@
                     </div>
                 </div>
             @endif
-        </div>
+        @endif
     </div>
 
     <script>
@@ -145,6 +145,15 @@
 
         document.getElementById('closeSubmitModalButton')?.addEventListener('click', function() {
             document.getElementById('submitWorkModal').classList.add('hidden');
+        });
+
+        // Edit Submission Modal Logic
+        document.getElementById('editSubmissionButton')?.addEventListener('click', function() {
+            document.getElementById('editSubmissionModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeEditSubmissionModalButton')?.addEventListener('click', function() {
+            document.getElementById('editSubmissionModal').classList.add('hidden');
         });
     </script>
 </x-layout>

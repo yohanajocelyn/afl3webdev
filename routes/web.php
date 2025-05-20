@@ -105,3 +105,6 @@ Route::put('/edit-assignment', [AssignmentController::class, 'editAssignment'])-
 
 Route::get('/submissions', [SubmissionController::class, 'showSubmissions'])->name('submissions');
 Route::post('approveSubmission/{submissionId}', [SubmissionController::class, 'update'])->name('approveSubmission');
+
+Route::post('/assignment-detail/{id}/submit', [SubmissionController::class, 'submitAssignment'])->name('submit-assignment');
+Route::delete('/submission/{id}', [SubmissionController::class, 'destroy'])->name('delete-submission');

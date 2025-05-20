@@ -155,7 +155,12 @@
                 <div id="ongoingAssignments" class="hidden">
                     @foreach ($ongoingAssignments as $assignment)
                         <div class="border rounded p-4 mb-2 bg-purple-100">
-                            <strong>{{ $assignment->title }}</strong><br>
+                            <strong>
+                                <a href="{{ route('assignment-detail', ['assignmentId' => $assignment->id]) }}"
+                                    class="text-purple-700 hover:text-purple-900 hover:underline transition-colors duration-200">
+                                    {{ $assignment->title }}
+                                </a>
+                            </strong><br>
                             {{ $assignment->description ?? 'No description.' }}
                         </div>
                     @endforeach
@@ -164,7 +169,12 @@
                 <div id="doneAssignments" class="hidden">
                     @foreach ($doneAssignments as $assignment)
                         <div class="border rounded p-4 mb-2 bg-green-100">
-                            <strong>{{ $assignment->title }}</strong><br>
+                            <strong>
+                                <a href="{{ route('assignment-detail', ['assignmentId' => $assignment->id]) }}"
+                                    class="text-green-700 hover:text-green-900 hover:underline transition-colors duration-200">
+                                    {{ $assignment->title }}
+                                </a>
+                            </strong><br>
                             {{ $assignment->description ?? 'No description.' }}
                         </div>
                     @endforeach
@@ -173,7 +183,12 @@
                 <div id="approvedAssignments" class="hidden">
                     @foreach ($approvedAssignments as $assignment)
                         <div class="border rounded p-4 mb-2 bg-blue-100">
-                            <strong>{{ $assignment->title }}</strong><br>
+                            <strong>
+                                <a href="{{ route('assignment-detail', ['assignmentId' => $assignment->id]) }}"
+                                    class="text-blue-700 hover:text-blue-900 hover:underline transition-colors duration-200">
+                                    {{ $assignment->title }}
+                                </a>
+                            </strong><br>
                             {{ $assignment->description ?? 'No description.' }}
                         </div>
                     @endforeach
@@ -292,5 +307,4 @@
             showAssignmentCategory('ongoing');
         });
     </script>
-
 </x-layout>

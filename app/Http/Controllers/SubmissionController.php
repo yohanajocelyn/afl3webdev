@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Assignment;
 use App\Models\Submission;
+use App\Models\Registration;
 use Illuminate\Http\Request;
 
 class SubmissionController extends Controller
@@ -11,7 +12,8 @@ class SubmissionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function showSubmissions(){
+    public function showSubmissions()
+    {
         $id = request()->query('assignmentId');
         if ($id) {
             $submissions = Submission::with(['registration.teacher', 'assignment'])
@@ -29,12 +31,61 @@ class SubmissionController extends Controller
         ]);
     }
 
+    public function submitAssignment(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'submissionLink' => 'required|url',
+        ]);
+
+        $assignment = Assignment::findOrFail($id);
+        $teacher = auth('teacher')->user();
+
+        $registration = Registration::where('teacher_id', $teacher->id)
+            ->where('workshop_id', $assignment->workshop_id)
+            ->first();
+
+        if (!$registration) {
+            return redirect()->back()->withErrors('No registration found for this workshop.');
+        }
+
+        // Check if submission already exists
+        $submission = Submission::where('assignment_id', $assignment->id)
+            ->where('registration_id', $registration->id)
+            ->first();
+
+        if ($submission) {
+            // Update existing submission
+            $submission->url = $validated['submissionLink'];
+            $submission->note = $request['submissionNoteEdit'];
+            $submission->save();
+            $message = 'Submission updated!';
+        } else {
+            // Create new
+            Submission::create([
+                'assignment_id' => $assignment->id,
+                'subject' => $teacher['subjectTaught'],
+                'title' => $assignment['workshop']['title'],
+                'educationLevel' => 'SMA sederajat',
+                'studentAmount' => 100,
+                'duration' => 1,
+                'isOnsite' => 1,
+                'note' => $request['submissionNote'],
+                'url' => $validated['submissionLink'],
+                'isApproved' => 0,
+                'registration_id' => $registration->id,
+            ]);
+            $message = 'Submission successful!';
+        }
+
+        return redirect()->route('assignment-detail', ['assignmentId' => $assignment->id])
+            ->with('success', $message);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
-    public function createSubmission(){
-        
-    }
+    public function createSubmission() {}
 
     /**
      * Store a newly created resource in storage.
@@ -85,6 +136,15 @@ class SubmissionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $submission = Submission::findOrFail($id);
+
+        if ($submission->isApproved) {
+            return redirect()->back()->withErrors('Approved submissions cannot be deleted.');
+        }
+
+        $submission->delete();
+
+        return redirect()->route('assignment-detail', ['assignmentId' => $submission->assignment_id])
+            ->with('success', 'Submission deleted successfully.');
     }
 }

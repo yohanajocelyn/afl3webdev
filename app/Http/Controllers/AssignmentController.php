@@ -3,18 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assignment;
+use App\Models\Submission;
+use App\Models\Registration;
 use Illuminate\Http\Request;
 
 
 class AssignmentController extends Controller
 {
-    public function assignmentDetail(Request $request){
-        $id = $request->query('assignmentId');
+    public function assignmentDetail(Request $request)
+    {
+        $assignmentId = $request->query('assignmentId');
+        $assignment = Assignment::findOrFail($assignmentId);
 
-        $assignment = Assignment::findOrFail($id);
+        $teacherId = auth('teacher')->id();
+
+        //check ada regis or no from the teacher
+        $registration = Registration::where('teacher_id', $teacherId)
+            ->where('workshop_id', $assignment->workshop_id)
+            ->first();
+
+        $userSubmission = null;
+
+        if ($registration) {
+            $userSubmission = Submission::where('assignment_id', $assignmentId)
+                ->where('registration_id', $registration->id)
+                ->first();
+        }
 
         return view('assignment-details', [
-            'assignment' => $assignment
+            'assignment' => $assignment,
+            'userSubmission' => $userSubmission,
         ]);
     }
 
@@ -33,7 +51,7 @@ class AssignmentController extends Controller
         $assignment = Assignment::find($id);
 
         if (!$assignment) {
-            return ;
+            return;
         }
 
         $assignment->update([

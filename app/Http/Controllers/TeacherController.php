@@ -52,11 +52,14 @@ class TeacherController extends Controller
 
         // Fetch assignments from those workshops, with submissions from this teacher
         $assignments = Assignment::with(['workshop', 'submissions' => function ($query) use ($id) {
-            $query->where('teacher_id', $id);
+            $query->whereHas('registration', function ($q) use ($id) {
+                $q->where('teacher_id', $id);
+            });
         }])
             ->whereIn('workshop_id', $workshopIds)
             ->orderByDesc('created_at')
             ->get();
+
 
         // Filter assignments without any submission from this teacher
         $noSubmission = $assignments->filter(fn($assignment) => $assignment->submissions->isEmpty());
