@@ -71,12 +71,12 @@ class AssignmentResource extends Resource
             ])
             ->filters([])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
                 Action::make('view')
                 ->label('View Details')
                 ->url(fn ($record) => route('admin-assignments.show', $record->id))
-                ->openUrlInNewTab(false), // open in same tab
+                ->openUrlInNewTab(false),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

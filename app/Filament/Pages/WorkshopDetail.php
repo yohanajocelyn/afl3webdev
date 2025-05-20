@@ -2,8 +2,11 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\Presence;
 use App\Models\Workshop;
+use App\Models\Registration; // import your model
 use Filament\Pages\Page;
+use Filament\Notifications\Notification;
 
 class WorkshopDetail extends Page
 {
@@ -23,6 +26,79 @@ class WorkshopDetail extends Page
     {
         return [
             'workshop' => $this->workshop,
+            'registrations' => $this->workshop->registrations()->get(), // eager load registrations
         ];
+    }
+
+    public function allRegistrationsApproved(): bool
+    {
+        return $this->workshop->registrations()->where('isApproved', false)->count() === 0;
+    }
+
+    public function toggleApproveAllRegistrations(): void
+    {
+        $approve = !$this->allRegistrationsApproved();
+
+        $this->workshop->registrations()->update(['isApproved' => $approve]);
+
+        if ($approve) {
+            foreach ($this->workshop->registrations as $registration) {
+                foreach ($this->workshop->meets as $meet) {
+                    $presenceExists = Presence::where('registration_id', $registration->id)
+                                            ->where('meet_id', $meet->id)
+                                            ->exists();
+
+                    if (! $presenceExists) {
+                        Presence::create([
+                            'registration_id' => $registration->id,
+                            'meet_id' => $meet->id,
+                            'isPresent' => false,
+                            'dateTime' => now() 
+                        ]);
+                    }
+                }
+            }
+        }
+
+        Notification::make()
+            ->title($approve ? 'All registrations approved' : 'All approvals revoked')
+            ->success()
+            ->send();
+
+        $this->redirect(request()->header('Referer') ?? url()->current());
+    }
+
+    public function toggleApproval(int $registrationId): void
+    {
+        $registration = Registration::findOrFail($registrationId);
+        $registration->isApproved = !$registration->isApproved;
+        $registration->save();
+
+        // For each Meet in the Registration's Workshop,
+        // check if Presence exists for this registration and meet,
+        // if not, create it.
+        $workshop = $registration->workshop; // assuming relationship exists
+
+        foreach ($workshop->meets as $meet) {
+            $presenceExists = Presence::where('registration_id', $registration->id)
+                                    ->where('meet_id', $meet->id)
+                                    ->exists();
+
+            if (! $presenceExists) {
+                Presence::create([
+                    'registration_id' => $registration->id,
+                    'meet_id' => $meet->id,
+                    'isPresent' => false,
+                    'dateTime' => now() 
+                ]);
+            }
+        }
+
+        Notification::make()
+            ->title("Registration #{$registration->id} " . ($registration->isApproved ? 'approved' : 'unapproved'))
+            ->success()
+            ->send();
+
+        $this->redirect(request()->header('Referer') ?? url()->current());
     }
 }

@@ -124,12 +124,12 @@ class WorkshopResource extends Resource
             BooleanColumn::make('isOpen'),
         ])
         ->actions([
-            EditAction::make(), // 👈 This is required for the edit button to appear
-            DeleteAction::make(),
             Action::make('view')
                 ->label('View Details')
                 ->url(fn ($record) => route('admin-workshops.show', $record->id))
                 ->openUrlInNewTab(false), // open in same tab
+            EditAction::make(), // 👈 This is required for the edit button to appear
+            DeleteAction::make(),
         ])
         ->bulkActions([
             DeleteBulkAction::make(),

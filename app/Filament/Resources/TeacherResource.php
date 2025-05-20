@@ -15,6 +15,7 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -114,6 +115,7 @@ class TeacherResource extends Resource
         ])
         ->actions([
             EditAction::make(), // 👈 This is required for the edit button to appear
+            DeleteAction::make(),
         ]);
     }
 

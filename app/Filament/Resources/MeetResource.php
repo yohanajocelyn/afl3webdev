@@ -69,12 +69,12 @@ class MeetResource extends Resource
                 // add filters if needed
             ])
             ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
                 Action::make('view')
                 ->label('View Details')
                 ->url(fn ($record) => route('admin-meets.show', $record->id))
                 ->openUrlInNewTab(false),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
                 DeleteBulkAction::make(),

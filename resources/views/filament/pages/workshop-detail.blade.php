@@ -100,5 +100,54 @@
                 @endforelse
             </div>
         </x-filament::card>
+
+        {{-- Registrations Section --}}
+        <x-filament::card class="bg-gray-800 mt-8">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-white">Registrations</h2>
+
+                <x-filament::button
+                    size="sm"
+                    color="{{ $workshop->registrations->where('isApproved', false)->count() === 0 ? 'danger' : 'success' }}"
+                    wire:click="toggleApproveAllRegistrations"
+                    type="button"
+                >
+                    {{ $workshop->registrations->where('isApproved', false)->count() === 0 ? 'Revoke All' : 'Approve All' }}
+                </x-filament::button>
+            </div>
+
+            <div class="space-y-4">
+                @forelse ($registrations as $registration)
+                    <x-filament::card class="bg-gray-700 border-0 rounded-none flex justify-between items-center">
+                        <div>
+                            <h3 class="font-bold text-white">Registration #{{ $registration->id }}</h3>
+                            <p class="text-sm text-gray-300">User: {{ $registration->user->name ?? 'N/A' }}</p>
+                            <p class="text-gray-300 mt-1">Status: 
+                                <span class="font-semibold {{ $registration->isApproved ? 'text-green-400' : 'text-red-400' }}">
+                                    {{ $registration->isApproved ? 'Approved' : 'Pending' }}
+                                </span>
+                            </p>
+                        </div>
+
+                        <x-filament::button
+                            size="sm"
+                            color="{{ $registration->isApproved ? 'danger' : 'success' }}"
+                            wire:click="toggleApproval({{ $registration->id }})"
+                            type="button"
+                        >
+                            {{ $registration->isApproved ? 'Revoke Approval' : 'Approve' }}
+                        </x-filament::button>
+                    </x-filament::card>
+                @empty
+                    <div class="flex flex-col items-center justify-center py-12 text-center">
+                        <x-filament::icon name="heroicon-o-user-group" class="w-10 h-10 mb-2 text-gray-400" />
+                        <h3 class="text-lg font-medium text-white">No Registrations Yet</h3>
+                        <p class="text-sm text-gray-300">No users have registered for this workshop yet.</p>
+                    </div>
+                @endforelse
+            </div>
+        </x-filament::card>
+
     </div>
 </x-filament-panels::page>
+
