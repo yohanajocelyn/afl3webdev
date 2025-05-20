@@ -6,6 +6,7 @@ use App\Filament\Resources\WorkshopResource\Pages;
 use App\Filament\Resources\WorkshopResource\RelationManagers;
 use App\Models\Assignment;
 use App\Models\Workshop;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\EditAction;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -42,20 +43,21 @@ class WorkshopResource extends Resource
 
             TextInput::make('price')->numeric()->required(),
 
-            FileUpload::make('imageURL')
+            FileUpload::make('imageURL_file')
             ->label('Image')
             ->image()
             ->directory('workshop_banners') // Folder inside storage/app/public
             ->visibility('public'),
 
-            TextInput::make('imageURL_text')
+            TextInput::make('imageURL')
             ->label('Image URL')
             ->dehydrated(false)
             ->afterStateHydrated(function ($state, \Filament\Forms\Set $set, $record) {
                 if ($record) {
                     $set('imageURL_text', $record->imageURL);
                 }
-            }),
+            })
+            ->required(),
 
             Toggle::make('isOpen')->label('Is Open')->default(true),
 
@@ -104,6 +106,10 @@ class WorkshopResource extends Resource
         ])
         ->actions([
             EditAction::make(), // 👈 This is required for the edit button to appear
+            Action::make('view')
+                ->label('View Details')
+                ->url(fn ($record) => route('admin-workshops', $record->id))
+                ->openUrlInNewTab(false), // open in same tab
         ]);
         ;
     }

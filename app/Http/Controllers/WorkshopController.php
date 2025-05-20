@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\Log;
 
 class WorkshopController extends Controller
 {
+
+    public function index()
+    {
+        $workshops = Workshop::withCount(['meets', 'assignments'])->get(); // eager-load counts
+        return view('admin.workshops', compact('workshops'));
+    }
+
     public function getAll() {
         $workshops = Workshop::paginate(6);
     
