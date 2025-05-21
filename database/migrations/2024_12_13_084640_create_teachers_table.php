@@ -26,7 +26,7 @@ return new class extends Migration
             $table->foreignId('mentor_id')->constrained(
                 table:'mentors',
                 indexName:'teachers_mentor_id'
-            );
+            )->nullable();
             $table->timestamps();
         });
     }

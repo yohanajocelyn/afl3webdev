@@ -11,6 +11,7 @@ use App\Models\Workshop;
 use Filament\Tables\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -39,7 +40,7 @@ class MeetResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-                DatePicker::make('date')
+                DateTimePicker::make('dateTime')
                     ->required(),
 
                 TextInput::make('description')
@@ -60,7 +61,7 @@ class MeetResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')->sortable()->searchable(),
-                TextColumn::make('date')->date(),
+                TextColumn::make('dateTime')->dateTime(),
                 TextColumn::make('description')->limit(50),
                 TextColumn::make('workshop.title')->label('Workshop'),
                 TextColumn::make('created_at')->dateTime(),

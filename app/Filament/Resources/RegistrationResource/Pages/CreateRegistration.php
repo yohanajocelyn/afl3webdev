@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\RegistrationResource\Pages;
 
+use App\Enums\ApprovalStatus;
 use App\Filament\Resources\RegistrationResource;
 use App\Models\Meet;
 use App\Models\Presence;
@@ -25,7 +26,7 @@ class CreateRegistration extends CreateRecord
                 Presence::firstOrCreate([
                     'meet_id' => $meet->id,
                     'registration_id' => $record->id,
-                    'isPresent' => false,
+                    'status' => ApprovalStatus::Pending,
                     'dateTime' => now() 
                 ]);
             }

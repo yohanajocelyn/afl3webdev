@@ -33,92 +33,36 @@ class TeacherResource extends Resource
     {
         return $form->schema([
             TextInput::make('name')->required()->maxLength(255),
-
-            Select::make('gender')
-                ->options([
-                    'male' => 'Male',
-                    'female' => 'Female',
-                ])
-                ->required(),
-
             TextInput::make('phone_number')->tel()->required(),
-
-            Placeholder::make('pfpURL')
-                ->label('Profile Picture Preview')
-                ->content(fn ($record) => $record && $record->pfpURL
-                    ? '<img src="' . asset('storage/' . $record->pfpURL) . '" style="max-width: 200px; max-height: 150px;" />'
-                    : 'No profile picture uploaded yet.')
-                ->visible(fn ($get) => filled($get('pfpURL'))),
-
-            FileUpload::make('pfpURL_file')
-                ->label('Upload Profile Picture')
-                ->image()
-                ->directory('profile_pictures')
-                ->visibility('public')
-                ->reactive()
-                ->afterStateUpdated(function ($state, Set $set) {
-                    if ($state) {
-                        $set('pfpURL', 'profile_pictures/' . $state);
-                    }
-                }),
-
-            TextInput::make('pfpURL')
-                ->label('Profile Picture URL')
-                ->disabled() // makes the input uneditable
-                ->extraAttributes(['readonly' => 'readonly', 'style' => 'pointer-events: none; user-select: none;'])
-                ->dehydrated(true)
-                ->required(false)
-                ->afterStateHydrated(function ($state, Set $set, $record) {
-                    if ($record) {
-                        $set('pfpURL', $record->pfpURL);
-                    }
-                })
-                ->dehydrateStateUsing(fn ($state) => $state ?: 'profile_pictures/defaultProfilePicture.jpg'),         
-
             TextInput::make('email')->email()->required(),
-
             TextInput::make('password')
             ->password()
             ->required()
             ->dehydrateStateUsing(fn ($state) => Hash::make($state))
-            ->dehydrated(fn ($state) => filled($state)) // avoid overwriting with null on edit
+            ->afterStateHydrated(function ($state, Set $set, $record) {
+                $set('password', ''); // set the password field to empty string
+            })
+            ->dehydrated(fn ($state) => filled($state))
             ->label('Password'),
-
-            Select::make('role')
-                ->options([
-                    'admin' => 'Admin',
-                    'user' => 'User',
-                ])
-                ->required(),
-
             TextInput::make('nuptk')->required(),
-
-            TextInput::make('community')->required(),
-
-            TextInput::make('subjectTaught')->label('Subject Taught')->required(),
-
+            TextInput::make('community')->nullable(),
             Select::make('school_id')
                 ->relationship('school', 'name')
                 ->required(),
+            Select::make('mentor_id')->relationship('mentor', 'name')->required(),
         ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table->columns([
-            TextColumn::make('name')->sortable()->searchable(),
-            TextColumn::make('gender'),
-            TextColumn::make('phone_number'),
-            ImageColumn::make('pfpURL')->label('Profile'),
+            TextColumn::make('name')->searchable(),
             TextColumn::make('email'),
-            TextColumn::make('role'),
-            TextColumn::make('nuptk'),
-            TextColumn::make('community'),
-            TextColumn::make('subjectTaught')->label('Subject'),
-            TextColumn::make('school.name')->label('School'),
+            TextColumn::make('school.name')->label('School')->sortable(),
+            TextColumn::make('mentor.name')->label('Mentor')->sortable(),
         ])
         ->actions([
-            EditAction::make(), // 👈 This is required for the edit button to appear
+            EditAction::make(),
             DeleteAction::make(),
         ]);
     }

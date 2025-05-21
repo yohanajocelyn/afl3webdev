@@ -10,13 +10,17 @@ use App\Models\Registration;
 use App\Models\Workshop;
 use Carbon\Carbon;
 use Filament\Forms;
+use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\BooleanColumn;
@@ -26,6 +30,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\HtmlString;
 
 class RegistrationResource extends Resource
 {
@@ -37,46 +42,74 @@ class RegistrationResource extends Resource
     {
         return $form
             ->schema([
-                DatePicker::make('regDate')
-                    ->label('Registration Date')
-                    ->default(fn () => Carbon::today())
-                    ->required(),
-
-                Placeholder::make('paymentProofPreview')
-                    ->label('Payment Proof')
-                    ->content(fn ($record) => $record && $record->paymentProof
-                        ? '<img src="' . asset('storage/' . $record->paymentProof) . '" style="max-width: 200px; max-height: 150px;" />'
-                        : 'No payment proof uploaded yet.'),
-
-                FileUpload::make('paymentProof')
-                    ->label('Upload Payment Proof')
-                    ->image()
-                    ->directory('payment-proofs')
-                    ->visible(fn ($get) => empty($get('paymentProof'))) // Show upload only if no existing paymentProof
-                    ->nullable()
-                    ->dehydrateStateUsing(fn ($state) => $state ?: 'registration_proofs/'),
-
-                Toggle::make('isApproved')
-                    ->label('Approved')
-                    ->default(false),
-
-                Select::make('courseStatus')
-                    ->options([
-                        'assigned' => 'Assigned',
-                        'finished' => 'Finished',
-                    ])
-                    ->required(),
-
-                Select::make('teacher_id')
-                    ->label('Teacher')
-                    ->relationship('teacher', 'name')
-                    ->required(),
-
-                Select::make('workshop_id')
-                    ->label('Workshop')
-                    ->required()
-                    ->searchable()
-                    ->options(Workshop::all()->pluck('title', 'id')->toArray()),
+                Section::make('Registration Details')
+                    ->schema([
+                        Grid::make()
+                            ->schema([
+                                Select::make('teacher_id')
+                                    ->label('Teacher')
+                                    ->relationship('teacher', 'name')
+                                    ->required(),
+                                
+                                Select::make('workshop_id')
+                                    ->label('Workshop')
+                                    ->required()
+                                    ->searchable()
+                                    ->options(Workshop::all()->pluck('title', 'id')->toArray()),
+                            ])->columns(2),
+                        
+                        Grid::make()
+                            ->schema([
+                                Select::make('courseStatus')
+                                    ->options([
+                                        'assigned' => 'Assigned',
+                                        'finished' => 'Finished',
+                                    ])
+                                    ->required(),
+                                
+                                Toggle::make('isApproved')
+                                    ->label('Approved')
+                                    ->default(false),
+                            ])->columns(2),
+                    ]),
+                
+                Section::make('Payment Verification')
+                    ->schema([
+                        Grid::make()
+                            ->schema([
+                                Card::make()
+                                    ->schema([
+                                        Placeholder::make('paymentProofPreview')
+                                            ->label('Payment Proof')
+                                            ->content(fn ($record) => new HtmlString(
+                                                $record && $record->paymentProof
+                                                    ? '<img src="' . asset('storage/' . $record->paymentProof) . '" style="max-width: 200px; max-height: 150px;" />'
+                                                    : '<img src="' . asset('storage/registration_proofs/pelatihanGratis.jpg') . '" style="max-width: 200px; max-height: 150px;" />'
+                                            )),
+                                    ])->columnSpan(1),
+                                
+                                Card::make()
+                                    ->schema([
+                                        FileUpload::make('paymentProof_file')
+                                            ->label('Upload Payment Proof')
+                                            ->image()
+                                            ->directory('registration_proofs')
+                                            ->visibility('public')
+                                            ->nullable()
+                                            ->afterStateUpdated(function ($state, Set $set) {
+                                                if ($state) {
+                                                    $set('paymentProof', 'registration_proofs/' . $state);
+                                                }
+                                            }),
+                                        
+                                        TextInput::make('paymentProof')
+                                            ->label('Payment Proof Path')
+                                            ->default('registration_proofs/pelatihanGratis.jpg')
+                                            ->disabled()
+                                            ->dehydrated(true),
+                                    ])->columnSpan(1),
+                            ])->columns(2),
+                    ]),
             ]);
     }
 
@@ -84,14 +117,10 @@ class RegistrationResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')->label('ID')->sortable(),
-                TextColumn::make('regDate')->label('Registration Date')->date(),
-                TextColumn::make('paymentProof')->limit(50)->wrap(),
-                BooleanColumn::make('isApproved')->label('Approved')->boolean(),
-                TextColumn::make('courseStatus')->label('Course Status'),
                 TextColumn::make('teacher.name')->label('Teacher'),
                 TextColumn::make('workshop.title')->label('Workshop'),
-                TextColumn::make('created_at')->dateTime()->label('Created At'),
+                BooleanColumn::make('isApproved'),
+                TextColumn::make('courseStatus')->badge(),
             ])
             ->filters([
                 // add filters if you want

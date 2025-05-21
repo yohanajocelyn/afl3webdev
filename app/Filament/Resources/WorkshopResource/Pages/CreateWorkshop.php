@@ -7,6 +7,7 @@ use App\Models\Assignment;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class CreateWorkshop extends CreateRecord
 {
@@ -14,29 +15,38 @@ class CreateWorkshop extends CreateRecord
 
     protected function afterCreate(): void
     {
-
         $record = $this->record;
         $data = $this->data;
 
         $assignmentCount = (int) ($data['assignment_count'] ?? 0);
         $dueDate = $data['assignment_due_date'] ?? null;
 
+        // Sanitize the workshop title to create a folder name
+        $folderName = preg_replace('/\s+/', '', $record->title);
+        $basePath = "workshops/{$folderName}";
+
+        // Use the 'public' disk to ensure files are publicly accessible
+        $disk = Storage::disk('public');
+
+        // Create the main workshop folder and subfolders
+        $disk->makeDirectory("{$basePath}/meets");
+        $disk->makeDirectory("{$basePath}/assignments");
+
+        // Create assignment subfolders
+        for ($i = 1; $i <= $assignmentCount; $i++) {
+            $disk->makeDirectory("{$basePath}/assignments/microteaching{$i}");
+        }
+
         if ($assignmentCount > 0 && $dueDate) {
-            for ($i = 1; $i <= $assignmentCount + 2; $i++) {
-                if ($i === 1) {
-                    $title = 'pre-test';
-                } else if ($i === 2) {
-                    $title = 'post-test';
-                } else {
-                    $title = 'Assignment ' . ($i - 2);
-                }
+            for ($i = 1; $i <= $assignmentCount; $i++) {
+                $title = 'Microteaching ' . ($i);
 
                 Log::info('Creating Assignment:', ['title' => $title, 'workshop_id' => $record->id]);
 
                 Assignment::create([
                     'workshop_id' => $record->id,
                     'title' => $title,
-                    'date' => $dueDate,  // or 'due_date' if that is the correct field
+                    'due_dateTime' => $dueDate,  // or 'due_date' if that is the correct field
                     'description' => ""
                 ]);
             }

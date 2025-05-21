@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Enums\ApprovalStatus;
 use App\Models\Assignment;
 use App\Models\Registration;
 use App\Models\Workshop;
@@ -52,7 +53,7 @@ class AssignmentDetail extends Page implements HasTable
         return [
             TextColumn::make('teacher.name')
                 ->label('Participant')
-                ->url(fn ($record) => '/teacherprofile?teacherId='.$record->teacher->id),
+                ->url(fn ($record) => route('admin-submissions.show', $record->id)),
             
             BadgeColumn::make('submissions_status')
                 ->label('Status')
@@ -61,24 +62,18 @@ class AssignmentDetail extends Page implements HasTable
                     'success' => 'Submitted',
                     'danger' => 'Empty',
                 ]),
-                
-            IconColumn::make('approval_status')
-                ->label('Approve')
-                ->state(fn ($record) => $record->submissions->first()?->isApproved ?? false)
-                ->icon(fn (bool $state): string => $state ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle')
-                ->color(fn (bool $state): string => $state ? 'success' : 'danger')
-                ->action(fn ($record) => $this->toggleApproval($record)),
-        ];
-    }
 
-    public function toggleApproval($record): void
-    {
-        $submission = $record->submissions->firstWhere('assignment_id', $this->assignment->id);
-        
-        if ($submission) {
-            $submission->update(['isApproved' => !$submission->isApproved]);
-            $this->dispatch('approval-toggled', approved: $submission->isApproved);
-        }
+            TextColumn::make('approval_status')
+                ->label('Approval Status')
+                ->state(fn ($record) => $record->submissions->first()?->status?->value ?? 'N/A')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    'approved' => 'success',
+                    'pending' => 'warning',
+                    'rejected' => 'danger',
+                    default => 'gray',
+                }),
+        ];
     }
 
     protected function getTableActions(): array

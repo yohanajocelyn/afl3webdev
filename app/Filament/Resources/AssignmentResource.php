@@ -8,6 +8,7 @@ use App\Models\Assignment;
 use Filament\Tables\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -39,13 +40,16 @@ class AssignmentResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-                DatePicker::make('date')
+                DateTimePicker::make('due_dateTime')
                     ->label('Due Date')
                     ->required(),
 
                 Textarea::make('description')
                     ->rows(4)
                     ->required(),
+                TextInput::make('url')
+                    ->label('Template URL')
+                    ->nullable(),
             ]);
     }
 
@@ -53,21 +57,14 @@ class AssignmentResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('title')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('due_dateTime')->dateTime(),
                 TextColumn::make('workshop.title')
                     ->label('Workshop')
                     ->searchable()
                     ->sortable(),
-
-                TextColumn::make('title')
-                    ->searchable()
-                    ->sortable(),
-
-                TextColumn::make('date')
-                    ->label('Due Date')
-                    ->sortable(),
-
-                TextColumn::make('description')
-                    ->limit(50),
             ])
             ->filters([])
             ->actions([
