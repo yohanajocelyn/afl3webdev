@@ -35,11 +35,11 @@ class TeacherController extends Controller
             // 'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'name' => 'required|string|max:255',
             // 'school' => 'nullable|string|max:255',
-            'gender' => 'required|in:Laki-laki,Perempuan',
+            // 'gender' => 'required|in:Laki-laki,Perempuan',
             'email' => 'required|email|max:255|unique:teachers,email,' . $teacher->id,
             'phone_number' => 'required|string|max:20',
             'nuptk' => 'required|string|max:255',
-            'community' => 'required|string|max:255',
+            'community' => 'nullable|string|max:255',
             'subject' => 'required|string|max:255',
         ]);
 
@@ -66,12 +66,10 @@ class TeacherController extends Controller
         // Update teacher details
         $teacher->update([
             'name' => $validatedData['name'],
-            'gender' => $validatedData['gender'],
             'email' => $validatedData['email'],
             'phone_number' => $validatedData['phone_number'],
             'nuptk' => $validatedData['nuptk'],
             'community' => $validatedData['community'],
-            'subjectTaught' => $validatedData['subject'],
             // 'school_id' => $school->id
         ]);
 

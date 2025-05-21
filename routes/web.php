@@ -68,4 +68,4 @@ Route::delete('/submission/{id}', [SubmissionController::class, 'destroy'])->nam
 Route::get('/my-courses', [TeacherController::class, 'getCourses'])->middleware('auth:teacher')->name('my-courses');
 
 //edit profile
-Route::put('/teacherprofile/edit', [TeacherController::class, 'editProfile'])->name('edit-profile');
+Route::post('/teacherprofile/edit', [TeacherController::class, 'editProfile'])->name('edit-profile');

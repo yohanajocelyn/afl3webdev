@@ -31,13 +31,11 @@ class LoginRegisterController extends Controller
             'newSchoolName' => 'required_without:school|nullable|string|max:255',
             'newSchoolAddress' => 'required_without:school|nullable|string|max:255',
             'newSchoolCity' => 'required_without:school|nullable|string|max:255',
-            'gender' => 'required|in:Laki-laki,Perempuan',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
             'password' => 'required|string|min:8|max:255',
             'nuptk' => 'required|string|max:255',
-            'community' => 'required|string|max:255',
-            'subject' => 'required|string|max:255',
+            'community' => 'nullable|string|max:255',
         ]);
 
         if (isset($validatedData['school'])) {
@@ -68,13 +66,11 @@ class LoginRegisterController extends Controller
         $teacher = Teacher::create([
             'pfpURL' => $path,
             'name' => $validatedData['name'],
-            'gender' => $validatedData['gender'],
             'email' => $validatedData['email'],
             'phone_number' => $validatedData['phone'],
             'password' => bcrypt($validatedData['password']), // Hash the password before storing
             'nuptk' => $validatedData['nuptk'],
             'community' => $validatedData['community'],
-            'subjectTaught' => $validatedData['subject'],
             'role' => Role::User,
             'school_id' => $school->id
         ]);

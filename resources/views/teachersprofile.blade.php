@@ -20,10 +20,10 @@
                                 <label class="block text-sm font-medium text-gray-700">Nama</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['name'] }}</p>
                             </div>
-                            <div class="flex-1">
+                            {{-- <div class="flex-1">
                                 <label class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['gender'] }}</p>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="flex flex-col sm:flex-row sm:space-x-6">
                             <div class="flex-1">
@@ -41,10 +41,10 @@
                                 <label class="block text-sm font-medium text-gray-700">Instansi</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['school']['name'] }}</p>
                             </div>
-                            <div class="flex-1">
+                            {{-- <div class="flex-1">
                                 <label class="block text-sm font-medium text-gray-700">Mata Pelajaran</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['subjectTaught'] }}</p>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="flex flex-col sm:flex-row sm:space-x-6">
@@ -80,7 +80,7 @@
                     <form action="{{ route('edit-profile')}}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
+                        {{-- @method('PUT') --}}
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
@@ -88,7 +88,7 @@
                                 <input type="text" name="name" value="{{ $teacher['name'] }}"
                                     class="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" />
                             </div>
-                            <div>
+                            {{-- <div>
                                 <label class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
                                 <select name="gender"
                                     class="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200">
@@ -97,7 +97,7 @@
                                     <option value="Perempuan" @if ($teacher['gender'] == 'Perempuan') selected @endif>
                                         Perempuan</option>
                                 </select>
-                            </div>
+                            </div> --}}
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Email</label>
                                 <input type="email" name="email" value="{{ $teacher['email'] }}"
@@ -108,17 +108,17 @@
                                 <input type="text" name="phone_number" value="{{ $teacher['phone_number'] }}"
                                     class="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" />
                             </div>
-                            <div>
+                            {{-- <div>
                                 <label class="block text-sm font-medium text-gray-700">Mata Pelajaran</label>
                                 <input type="text" name="subject" value="{{ $teacher['subjectTaught'] }}"
                                     class="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" />
-                            </div>
+                            </div> --}}
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">NUPTK</label>
                                 <input type="text" name="nuptk" value="{{ $teacher['nuptk'] }}"
                                     class="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" />
                             </div>
-                            <div class="sm:col-span-2">
+                            <div>
                                 <label class="block text-sm font-medium text-gray-700">Komunitas</label>
                                 <input type="text" name="community" value="{{ $teacher['community'] }}"
                                     class="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" />
