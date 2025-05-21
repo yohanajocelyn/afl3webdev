@@ -24,14 +24,12 @@
     <!-- Authentication Buttons (Right) -->
     <div class="flex space-x-4">
         @guest
-            <button class="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 transition duration-300"
-            onclick="window.location.href = '/loginregister/?form=login'">
+            <a href="{{ route('loginregister', ['form' => 'login']) }}" class="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 transition duration-300 inline-block">
                 Masuk
-            </button>
-            <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
-            onclick="window.location.href = '/loginregister/?form=register'">
+            </a>
+            <a href="{{ route('loginregister', ['form' => 'register']) }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300 inline-block">
                 Daftar
-            </button>
+            </a>
         @else
         <div class="flex space-x-4">
             @auth
