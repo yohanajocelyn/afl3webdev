@@ -99,7 +99,7 @@ class WorkshopController extends Controller
             }else if($i === 2){
                 $title = 'post-test';
             }else{
-                $title = 'Assignment '. ($i - 2);
+                $title = 'Tugas '. ($i - 2);
             }
 
             Log::info('Creating Assignment:', ['title' => $title, 'workshop_id' => $workshop->id]);

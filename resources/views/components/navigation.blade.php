@@ -17,7 +17,7 @@
 
     <!-- Menu Section (Center) -->
     <div class="flex space-x-6">
-        <a href="{{ route('home') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">Home</a>
+        <a href="{{ route('home') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">Beranda</a>
         <a href="{{ route('home') }}#workshops" class="text-gray-800 hover:text-blue-600 transition duration-300">Pelatihan</a>
     </div>
 
@@ -26,11 +26,11 @@
         @guest
             <button class="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 transition duration-300"
             onclick="window.location.href = '/loginregister/?form=login'">
-                Log In
+                Masuk
             </button>
             <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
             onclick="window.location.href = '/loginregister/?form=register'">
-                Sign Up
+                Daftar
             </button>
         @else
         <div class="flex space-x-4">

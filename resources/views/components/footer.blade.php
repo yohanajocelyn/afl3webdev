@@ -12,7 +12,7 @@
 
             <!-- Contact Information -->
             <div>
-                <h4 class="text-xl font-bold text-gray-900 mb-4">Contact Us</h4>
+                <h4 class="text-xl font-bold text-gray-900 mb-4">Hubungi Kami</h4>
                 <div class="space-y-3">
                     <div class="flex flex-row items-start text-gray-700">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -48,11 +48,11 @@
 
             <!-- Quick Links -->
             <div>
-                <h4 class="text-xl font-bold text-gray-900 mb-4">Quick Links</h4>
+                <h4 class="text-xl font-bold text-gray-900 mb-4">Link Cepat</h4>
                 <div class="space-y-2">
-                    <a href="{{ route('home') }}" class="block text-gray-600 hover:text-blue-600 transition">Home</a>
-                    <a href="{{ route('home') }}#workshops" class="block text-gray-600 hover:text-blue-600 transition">Workshops</a>
-                    <a href="{{ route('about') }}" class="block text-gray-600 hover:text-blue-600 transition">About Us</a>
+                    <a href="{{ route('home') }}" class="block text-gray-600 hover:text-blue-600 transition">Beranda</a>
+                    <a href="{{ route('home') }}#workshops" class="block text-gray-600 hover:text-blue-600 transition">Pelatihan</a>
+                    {{-- <a href="{{ route('about') }}" class="block text-gray-600 hover:text-blue-600 transition">About Us</a> --}}
                 </div>
             </div>
         </div>
