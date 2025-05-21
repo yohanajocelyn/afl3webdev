@@ -40,7 +40,7 @@ class TeacherController extends Controller
             'phone_number' => 'required|string|max:20',
             'nuptk' => 'required|string|max:255',
             'community' => 'nullable|string|max:255',
-            'subject' => 'required|string|max:255',
+            // 'subject' => 'required|string|max:255',
         ]);
 
         // Handle school data
