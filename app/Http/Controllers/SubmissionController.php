@@ -131,7 +131,7 @@ class SubmissionController extends Controller
      */
     public function update(Submission $submission): RedirectResponse
     {
-        $submission->update(['isApproved' => true]);
+        $submission->update(['status' => ApprovalStatus::Approved]);
 
         return redirect()
             ->route('filament.admin.pages.submission-detail', ['record' => $submission->id])
@@ -145,7 +145,7 @@ class SubmissionController extends Controller
     {
         $submission = Submission::findOrFail($id);
 
-        if ($submission->isApproved) {
+        if ($submission->status === ApprovalStatus::Approved) {
             return redirect()->back()->withErrors('Approved submissions cannot be deleted.');
         }
 

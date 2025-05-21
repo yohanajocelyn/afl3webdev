@@ -25,25 +25,25 @@
 
                 <p><strong>Status:</strong>
                     @php
-                        $status = $userSubmission->status;
+                        $status = $userSubmission->status->value;
                     @endphp
                     <span
                         class="@switch($status)
-                @case(SubmissionStatus::Approved)
-                    text-green-500
-                    @break
-                @case(SubmissionStatus::Pending)
-                    text-yellow-500
-                    @break
-                @case(SubmissionStatus::Rejected)
-                    text-red-500
-                    @break
-            @endswitch">
-                        {{ ucfirst($status->value) }}
+                        @case('approved')
+                        text-green-500
+                        @break
+                        @case('pending')
+                        text-yellow-500
+                        @break
+                        @case('rejected')
+                        text-red-500
+                        @break
+                    @endswitch">
+                        {{ ucfirst($status) }}
                     </span>
                 </p>
-                {{-- ✅ Show file link and revisionNote if status is Rejected --}}
-                @if ($userSubmission->status === SubmissionStatus::Rejected)
+                {{-- file and revision note shown when rejected --}}
+                @if ($userSubmission->status === 'rejected')
                     <p class="text-sm text-red-600 mt-1">
                         <strong>Revision Note:</strong>
                         {{ $userSubmission->revisionNote ?? 'No revision notes provided.' }}

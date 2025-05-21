@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ApprovalStatus;
 use App\Models\School;
 use App\Models\Teacher;
 use App\Models\Registration;
@@ -120,19 +121,25 @@ class TeacherController extends Controller
             ->get();
 
 
-        // Filter assignments without any submission from this teacher
+        //belum dikerjakan = no submission
         $noSubmission = $assignments->filter(fn($assignment) => $assignment->submissions->isEmpty());
 
-        // Assignments with submissions but not approved yet
-        $submittedNotApproved = $assignments->filter(function ($assignment) {
+        //menunggu Persetujuan = status pending
+        $pending = $assignments->filter(function ($assignment) {
             $submission = $assignment->submissions->first();
-            return $submission && $submission->url && !$submission->isApproved;
+            return $submission && $submission->status === ApprovalStatus::Pending;
         });
 
-        // Assignments with approved submissions
+        //approved
         $approved = $assignments->filter(function ($assignment) {
             $submission = $assignment->submissions->first();
-            return $submission && $submission->url && $submission->isApproved;
+            return $submission && $submission->status === ApprovalStatus::Approved;
+        });
+
+        //need revision
+        $needRevision = $assignments->filter(function ($assignment) {
+            $submission = $assignment->submissions->first();
+            return $submission && $submission->status === ApprovalStatus::Rejected;
         });
 
         return view('my-courses', [
@@ -140,9 +147,11 @@ class TeacherController extends Controller
             "joinedWorkshops" => $joinedWorkshops,
             "pendingWorkshops" => $pendingWorkshops,
             "historyWorkshops" => $historyWorkshops,
-            "ongoingAssignments" => $noSubmission,
-            "doneAssignments" => $submittedNotApproved,
-            "approvedAssignments" => $approved
+            "noSubmission" => $noSubmission,
+            "pendingAssignments" => $pending,
+            "approvedAssignments" => $approved,
+            "needRevisionAssignments" => $needRevision,
+            "ApprovalStatus" => ApprovalStatus::class, 
         ]);
     }
 }

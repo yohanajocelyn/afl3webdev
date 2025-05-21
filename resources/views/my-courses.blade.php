@@ -1,16 +1,16 @@
 <x-layout>
-    <section class=" min-h-screen py-16">
+    <section class="min-h-screen py-16">
         <div class="container mx-auto px-4 max-w-6xl">
-            <!-- Page Header -->
+            <!-- atas -->
             <div class="mb-12 text-center">
                 <h1 class="text-4xl font-bold text-gray-800 mb-4">Pelatihan Saya</h1>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">Pantau dan kelola semua pelatihan dan penugasan yang
                     Anda ikuti dalam satu tempat</p>
             </div>
 
-            <!-- Main Content Card -->
+            <!-- main box -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-10">
-                <!-- Tabs Navigation -->
+                <!-- tab nav -->
                 <div class="flex border-b">
                     <button
                         class="tab-btn active-tab flex-1 py-4 px-6 text-center font-medium focus:outline-none transition-all duration-200"
@@ -34,9 +34,9 @@
                     </button>
                 </div>
 
-                <!-- Workshops Tab Content -->
+                <!-- workshop tab -->
                 <div id="workshops" class="tab-content p-6">
-                    <!-- Category Selection -->
+                    <!-- select category -->
                     <div class="flex flex-wrap gap-3 mb-8">
                         <button
                             class="category-btn active-category px-5 py-2 rounded-full text-sm font-medium focus:outline-none transition-all duration-200 bg-blue-600 text-white"
@@ -55,7 +55,7 @@
                         </button>
                     </div>
 
-                    <!-- Workshop Cards -->
+                    <!-- workshop card -->
                     @php
                         $workshopsByStatus = [
                             'berjalan' => $joinedWorkshops,
@@ -113,9 +113,9 @@
                     @endforeach
                 </div>
 
-                <!-- Assignments Tab Content -->
+                <!-- assignment tab -->
                 <div id="assignments" class="tab-content p-6 hidden">
-                    <!-- Category Selection -->
+                    <!-- select category -->
                     <div class="flex flex-wrap gap-3 mb-8">
                         <button
                             class="category-btn active-category px-5 py-2 rounded-full text-sm font-medium focus:outline-none transition-all duration-200 bg-purple-600 text-white"
@@ -128,17 +128,23 @@
                             Menunggu Persetujuan
                         </button>
                         <button
+                            class="category-btn px-5 py-2 rounded-full text-sm font-medium focus:outline-none transition-all duration-200 bg-gray-200 text-gray-700 hover:bg-red-500 hover:text-white"
+                            data-category="perlu-revisi">
+                            Perlu Revisi
+                        </button>
+                        <button
                             class="category-btn px-5 py-2 rounded-full text-sm font-medium focus:outline-none transition-all duration-200 bg-gray-200 text-gray-700 hover:bg-green-500 hover:text-white"
                             data-category="disetujui">
                             Disetujui
                         </button>
                     </div>
 
-                    <!-- Assignment Cards -->
+                    <!-- assignment card -->
                     @php
                         $assignmentsByStatus = [
-                            'belum-dikerjakan' => $ongoingAssignments,
-                            'menunggu-persetujuan' => $doneAssignments,
+                            'belum-dikerjakan' => $noSubmission,
+                            'menunggu-persetujuan' => $pendingAssignments,
+                            'perlu-revisi' => $needRevisionAssignments,
                             'disetujui' => $approvedAssignments,
                         ];
                     @endphp
@@ -152,7 +158,9 @@
                                         <div
                                             class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-200">
                                             <div
-                                                class="p-1 {{ $status === 'belum-dikerjakan' ? 'bg-purple-500' : ($status === 'menunggu-persetujuan' ? 'bg-orange-500' : 'bg-green-500') }}">
+                                                class="p-1 {{ $status === 'belum-dikerjakan' ? 'bg-purple-500' : 
+                                                            ($status === 'menunggu-persetujuan' ? 'bg-orange-500' : 
+                                                            ($status === 'perlu-revisi' ? 'bg-red-500' : 'bg-green-500')) }}">
                                             </div>
                                             <div class="p-6">
                                                 <h3 class="text-xl font-semibold mb-2 text-gray-800">
@@ -197,7 +205,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Tab switching
+            //switch tab
             const tabs = document.querySelectorAll('.tab-btn');
             const contents = document.querySelectorAll('.tab-content');
 
@@ -205,11 +213,11 @@
                 tab.addEventListener('click', () => {
                     const target = tab.getAttribute('data-tab');
 
-                    // Update active tab styling
+                    //active tab
                     tabs.forEach(t => t.classList.remove('active-tab'));
                     tab.classList.add('active-tab');
 
-                    // Show/hide content
+                    //show hide
                     contents.forEach(content => {
                         content.id === target ?
                             content.classList.remove('hidden') :
@@ -218,7 +226,7 @@
                 });
             });
 
-            // Category switching for workshops
+            //category switch
             const workshopCategoryBtns = document.querySelectorAll('#workshops .category-btn');
             const workshopCategoryContents = document.querySelectorAll('#workshops .category-content');
 
@@ -226,14 +234,14 @@
                 btn.addEventListener('click', () => {
                     const target = btn.getAttribute('data-category');
 
-                    // Reset all buttons to default state
+                    // reset buttons
                     workshopCategoryBtns.forEach(b => {
                         b.classList.remove('active-category', 'bg-blue-600',
                             'bg-yellow-500', 'bg-gray-500', 'text-white');
                         b.classList.add('bg-gray-200', 'text-gray-700');
                     });
 
-                    // Add active-category class and apply specific color based on category
+                    //active caetgory
                     btn.classList.add('active-category', 'text-white');
                     btn.classList.remove('bg-gray-200', 'text-gray-700');
 
@@ -245,7 +253,7 @@
                         btn.classList.add('bg-gray-500');
                     }
 
-                    // Show/hide content
+                    // show hide 
                     workshopCategoryContents.forEach(content => {
                         content.id === `${target}-content` ?
                             content.classList.remove('hidden') :
@@ -254,7 +262,7 @@
                 });
             });
 
-            // Category switching for assignments
+            //switch category
             const assignmentCategoryBtns = document.querySelectorAll('#assignments .category-btn');
             const assignmentCategoryContents = document.querySelectorAll('#assignments .category-content');
 
@@ -262,14 +270,14 @@
                 btn.addEventListener('click', () => {
                     const target = btn.getAttribute('data-category');
 
-                    // Reset all buttons to default state
+                    //reset buttons
                     assignmentCategoryBtns.forEach(b => {
                         b.classList.remove('active-category', 'bg-purple-600',
-                            'bg-orange-500', 'bg-green-500', 'text-white');
+                            'bg-orange-500', 'bg-red-500', 'bg-green-500', 'text-white');
                         b.classList.add('bg-gray-200', 'text-gray-700');
                     });
 
-                    // Add active-category class and apply specific color based on category
+                    //add active category class
                     btn.classList.add('active-category', 'text-white');
                     btn.classList.remove('bg-gray-200', 'text-gray-700');
 
@@ -277,11 +285,13 @@
                         btn.classList.add('bg-purple-600');
                     } else if (target === 'menunggu-persetujuan') {
                         btn.classList.add('bg-orange-500');
+                    } else if (target === 'perlu-revisi') {
+                        btn.classList.add('bg-red-500');
                     } else if (target === 'disetujui') {
                         btn.classList.add('bg-green-500');
                     }
 
-                    // Show/hide content
+                    //show hide content logic
                     assignmentCategoryContents.forEach(content => {
                         content.id === `${target}-content` ?
                             content.classList.remove('hidden') :
@@ -306,7 +316,6 @@
             overflow: hidden;
         }
 
-        /* Optional animations for smoother transitions */
         .tab-content {
             transition: all 0.3s ease-in-out;
         }
