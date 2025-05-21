@@ -8,7 +8,6 @@ use App\Models\Registration;
 use App\Models\Assignment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Enums\Role;
 use PhpParser\Node\Stmt\TryCatch;
 
 class TeacherController extends Controller

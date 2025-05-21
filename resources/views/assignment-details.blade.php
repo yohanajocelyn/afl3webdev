@@ -5,23 +5,53 @@
     </div>
     <div class="border-t border-gray-300 mt-6 pt-4">
 
-        {{-- For teachers --}}
-
-        {{-- Show submission if exists --}}
+        {{-- show users submission --}}
         @if ($userSubmission)
             <div class="mb-6 p-4 border rounded bg-white shadow">
                 <h3 class="text-xl font-semibold mb-2">Your Submission</h3>
-                <p><strong>Link:</strong> <a href="{{ $userSubmission->url }}" target="_blank"
-                        class="text-blue-600 underline">{{ $userSubmission->url }}</a></p>
+
+                <p><strong>Link:</strong>
+                    <a href="{{ $userSubmission->url }}" target="_blank" class="text-blue-600 underline">
+                        {{ $userSubmission->url }}
+                    </a>
+                </p>
+                <p class="text-sm text-gray-500 mt-2">
+                    <strong>Submitted File:</strong>
+                    <a href="{{ asset($userSubmission->path) }}" target="_blank" class="text-blue-600 underline">
+                        View Submission PDF
+                    </a>
+                </p>
                 <p><strong>Note:</strong> {{ $userSubmission->note ?? 'No notes' }}</p>
+
                 <p><strong>Status:</strong>
-                    <span class="{{ $userSubmission->isApproved ? 'text-green-500' : 'text-yellow-500' }}">
-                        {{ $userSubmission->isApproved ? 'Approved' : 'Pending Approval' }}
+                    @php
+                        $status = $userSubmission->status;
+                    @endphp
+                    <span
+                        class="@switch($status)
+                @case(SubmissionStatus::Approved)
+                    text-green-500
+                    @break
+                @case(SubmissionStatus::Pending)
+                    text-yellow-500
+                    @break
+                @case(SubmissionStatus::Rejected)
+                    text-red-500
+                    @break
+            @endswitch">
+                        {{ ucfirst($status->value) }}
                     </span>
                 </p>
+                {{-- ✅ Show file link and revisionNote if status is Rejected --}}
+                @if ($userSubmission->status === SubmissionStatus::Rejected)
+                    <p class="text-sm text-red-600 mt-1">
+                        <strong>Revision Note:</strong>
+                        {{ $userSubmission->revisionNote ?? 'No revision notes provided.' }}
+                    </p>
+                @endif
             </div>
 
-            {{-- Edit and Remove Button --}}
+            {{-- edit and remove button --}}
             @if (!$userSubmission->isApproved)
                 <div class="flex justify-end gap-4">
                     <form action="{{ route('delete-submission', ['id' => $userSubmission->id]) }}" method="POST"
@@ -39,14 +69,15 @@
             @endif
 
 
-            {{-- Edit Submission Modal --}}
+            {{-- edit submission modal --}}
             @if (!$userSubmission->isApproved)
                 <div id="editSubmissionModal"
                     class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
                     <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
                         <h2 class="text-2xl font-bold mb-4">Edit Your Submission</h2>
 
-                        <form action="{{ route('submit-assignment', ['id' => $assignment->id]) }}" method="POST">
+                        <form action="{{ route('submit-assignment', ['id' => $assignment->id]) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="mb-4">
                                 <label for="submissionLinkEdit" class="block text-gray-700 font-bold mb-2">Link
@@ -55,10 +86,22 @@
                                 <input id="submissionLinkEdit" name="submissionLink" type="url"
                                     class="border rounded-lg px-3 py-2 w-full" required
                                     value="{{ old('submissionLink', $userSubmission->url ?? '') }}">
+                                <label for="submissionFileEdit">PDF File:</label>
+                                <input id="submissionFileEdit" name="submissionFile" type="file"
+                                    class="border rounded-lg px-3 py-2 w-full">
+
+                                @if ($userSubmission->path)
+                                    <p class="text-sm text-gray-500 mt-1">Current File:
+                                        <a href="{{ asset($userSubmission->path) }}" target="_blank"
+                                            class="text-blue-600 underline">
+                                            View Submission PDF
+                                        </a>
+                                    </p>
+                                @endif
                             </div>
                             <div class="mb-4">
                                 <label for="submissionNoteEdit" class="block text-gray-700 font-bold mb-2">Note:</label>
-                                <textarea id="submissionNoteEdit" name="submissionNoteEdit" class="border rounded-lg px-3 py-2 w-full">{{ $userSubmission->note }}</textarea>
+                                <textarea id="submissionNoteEdit" name="submissionNote" class="border rounded-lg px-3 py-2 w-full">{{ $userSubmission->note }}</textarea>
                             </div>
                             <div class="flex justify-end">
                                 <button type="button" id="closeEditSubmissionModalButton"
@@ -87,13 +130,18 @@
                 <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
                     <h2 class="text-2xl font-bold mb-4">Kumpulkan Hasil Anda</h2>
 
-                    <form action="{{ route('submit-assignment', ['id' => $assignment['id']]) }}" method="POST">
+                    <form action="{{ route('submit-assignment', ['id' => $assignment['id']]) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="mb-4">
                             <label for="submissionText" class="block text-gray-700 font-bold mb-2">Link Google
                                 Drive:</label>
                             <input id="submissionLink" name="submissionLink" class="border rounded-lg px-3 py-2 w-full"
                                 required type="text">
+                            <label for="submissionFile" class="block text-gray-700 font-bold mb-2">
+                                PDF File (max ...)
+                            </label>
+                            <input id="submissionFile" name="submissionFile" required type="file">
                         </div>
                         <div class="mb-4">
                             <label for="submissionNote" class="block text-gray-700 font-bold mb-2">Note:</label>

@@ -30,17 +30,17 @@
                     @if (auth()->check())
                         @if (auth()->user()->registrations()->where('workshop_id', $workshop->id)->exists())
                             <button class="bg-gray-300 text-gray-600 px-4 py-2 rounded-md">
-                                Registered
+                                Terdaftar
                             </button>
                         @else
                             <button class="bg-blue-500 text-white px-4 py-2 rounded-md" onclick="togglePopUp(true)">
-                                Register
+                                Daftar
                             </button>
                         @endif
                     @else
                         <button class="bg-blue-500 text-white px-4 py-2 rounded-md"
                             onclick="window.location.href = '/loginregister'">
-                            Register
+                            Daftar
                         </button>
                     @endif
                 </div>
@@ -50,7 +50,7 @@
         {{-- registration popup --}}
         <div id="registerPopUp" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
             <div class="bg-white rounded-lg p-6 shadow-lg w-[90%] max-w-md">
-                <h2 class="text-lg font-bold mb-4">Confirm Registration</h2>
+                <h2 class="text-lg font-bold mb-4">Konfirmasi Registrasi</h2>
                 <form action="{{ route('registerToWorkshop') }}" method="POST" enctype="multipart/form-data">
                     @if ($workshop['price'] != 0)
                         <p>Upload bukti pembayaran</p>
@@ -136,27 +136,6 @@
                 @endif
             </div>
         </div>
-
-        {{-- Peserta Section --}}
-        {{-- <div id="pesertaSection" class="hidden px-4 md:px-10">
-            <h2 class="text-2xl font-bold mb-6 text-center md:text-left">Peserta</h2>
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                @if ($registrations->isEmpty())
-                    <div class="flex flex-col w-full h-40 items-center justify-center">
-                        <p class="text-gray-600 italic">
-                            Saat ini belum ada data peserta.
-                        </p>
-                    </div>
-                @else
-                    @foreach ($registrations as $registration)
-                    <x-teacher-card :teacher="$registration->teacher" :registration="$registration" /> --}}
-        {{-- <x-slot:title>{{  $registration->teacher->name }}</x-slot:title>
-                        <x-slot:date>{{  $registration->regDate->format('F j, Y') }}</x-slot:date> --}}
-        {{-- </x-teacher-card> --}}
-        {{-- @endforeach
-                @endif
-            </div>
-        </div> --}}
 
         <script>
             //for the registration popup

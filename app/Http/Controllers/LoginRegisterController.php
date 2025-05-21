@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Role;
 use App\Models\School;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
