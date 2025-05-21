@@ -23,10 +23,12 @@ return new class extends Migration
                 table:'schools',
                 indexName:'teachers_school_id'
             );
-            $table->foreignId('mentor_id')->constrained(
-                table:'mentors',
-                indexName:'teachers_mentor_id'
-            )->nullable();
+            $table->foreignId('mentor_id')
+            ->nullable()
+            ->constrained(
+                table: 'mentors',
+                indexName: 'teachers_mentor_id'
+            );
             $table->timestamps();
         });
     }

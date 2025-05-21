@@ -49,7 +49,7 @@ class TeacherResource extends Resource
             Select::make('school_id')
                 ->relationship('school', 'name')
                 ->required(),
-            Select::make('mentor_id')->relationship('mentor', 'name')->required(),
+            Select::make('mentor_id')->relationship('mentor', 'name')->nullable(),
         ]);
     }
 
