@@ -1,5 +1,5 @@
 <x-layout>
-    <section class="bg-gradient-to-b from-blue-50 to-gray-100 min-h-screen py-16">
+    <section class=" min-h-screen py-16">
         <div class="container mx-auto px-4 max-w-6xl">
             <!-- Page Header -->
             <div class="mb-12 text-center">
@@ -226,13 +226,24 @@
                 btn.addEventListener('click', () => {
                     const target = btn.getAttribute('data-category');
 
-                    // Update active category styling
+                    // Reset all buttons to default state
                     workshopCategoryBtns.forEach(b => {
-                        b.classList.remove('active-category', 'bg-blue-600', 'text-white');
+                        b.classList.remove('active-category', 'bg-blue-600',
+                            'bg-yellow-500', 'bg-gray-500', 'text-white');
                         b.classList.add('bg-gray-200', 'text-gray-700');
                     });
-                    btn.classList.add('active-category', 'bg-blue-600', 'text-white');
+
+                    // Add active-category class and apply specific color based on category
+                    btn.classList.add('active-category', 'text-white');
                     btn.classList.remove('bg-gray-200', 'text-gray-700');
+
+                    if (target === 'berjalan') {
+                        btn.classList.add('bg-blue-600');
+                    } else if (target === 'menunggu') {
+                        btn.classList.add('bg-yellow-500');
+                    } else if (target === 'riwayat') {
+                        btn.classList.add('bg-gray-500');
+                    }
 
                     // Show/hide content
                     workshopCategoryContents.forEach(content => {
@@ -251,23 +262,24 @@
                 btn.addEventListener('click', () => {
                     const target = btn.getAttribute('data-category');
 
-                    // Update active category styling
+                    // Reset all buttons to default state
                     assignmentCategoryBtns.forEach(b => {
                         b.classList.remove('active-category', 'bg-purple-600',
-                        'text-white');
+                            'bg-orange-500', 'bg-green-500', 'text-white');
                         b.classList.add('bg-gray-200', 'text-gray-700');
                     });
-                    btn.classList.add('active-category');
 
-                    // Apply special colors based on category
-                    if (target === 'belum-dikerjakan') {
-                        btn.classList.add('bg-purple-600', 'text-white');
-                    } else if (target === 'menunggu-persetujuan') {
-                        btn.classList.add('bg-orange-500', 'text-white');
-                    } else if (target === 'disetujui') {
-                        btn.classList.add('bg-green-500', 'text-white');
-                    }
+                    // Add active-category class and apply specific color based on category
+                    btn.classList.add('active-category', 'text-white');
                     btn.classList.remove('bg-gray-200', 'text-gray-700');
+
+                    if (target === 'belum-dikerjakan') {
+                        btn.classList.add('bg-purple-600');
+                    } else if (target === 'menunggu-persetujuan') {
+                        btn.classList.add('bg-orange-500');
+                    } else if (target === 'disetujui') {
+                        btn.classList.add('bg-green-500');
+                    }
 
                     // Show/hide content
                     assignmentCategoryContents.forEach(content => {
