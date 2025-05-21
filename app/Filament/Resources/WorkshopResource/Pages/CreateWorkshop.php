@@ -8,6 +8,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CreateWorkshop extends CreateRecord
 {
@@ -22,7 +23,7 @@ class CreateWorkshop extends CreateRecord
         $dueDate = $data['assignment_due_date'] ?? null;
 
         // Sanitize the workshop title to create a folder name
-        $folderName = preg_replace('/\s+/', '', $record->title);
+        $folderName = Str::slug($record->title);
         $basePath = "workshops/{$folderName}";
 
         // Use the 'public' disk to ensure files are publicly accessible

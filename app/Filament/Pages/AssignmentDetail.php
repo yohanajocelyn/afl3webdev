@@ -13,6 +13,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class AssignmentDetail extends Page implements HasTable
@@ -45,7 +46,9 @@ class AssignmentDetail extends Page implements HasTable
     {
         return Registration::query()
             ->where('workshop_id', $this->workshop->id)
-            ->with(['teacher', 'submissions' => fn ($q) => $q->where('assignment_id', $this->assignment->id)]);
+            ->with(['teacher', 
+            'teacher.mentor',
+            'submissions' => fn ($q) => $q->where('assignment_id', $this->assignment->id)]);
     }
 
     protected function getTableColumns(): array
@@ -73,11 +76,24 @@ class AssignmentDetail extends Page implements HasTable
                     'rejected' => 'danger',
                     default => 'gray',
                 }),
+            TextColumn::make('teacher.mentor.name')
+                ->label('Mentor')
+                ->searchable()
+                ->sortable(),
         ];
     }
 
     protected function getTableActions(): array
     {
         return [];
+    }
+
+    protected function getTableFilters(): array
+    {
+        return [
+            SelectFilter::make('mentor_id')
+                ->label('Filter by Mentor')
+                ->relationship('teacher.mentor', 'name'),
+        ];
     }
 }

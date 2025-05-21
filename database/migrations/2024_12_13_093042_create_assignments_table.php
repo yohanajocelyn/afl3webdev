@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('workshop_id')->constrained(
                 table: 'workshops', 
                 indexName: 'workshop_has_assignments'
-            );
+            )
+            ->onDelete('cascade');
             $table->string('title');
             $table->dateTime('due_dateTime');
             $table->text('description')->nullable();

@@ -115,7 +115,7 @@ class SubmissionResource extends Resource
                                             $assignmentNumber = (int) Str::after($assignmentTitle, 'Microteaching ');
                                             
                                             // Prepare the safe workshop title (no spaces)
-                                            $workshopTitle = str_replace(' ', '', $workshop->title);
+                                            $workshopTitle = Str::slug($workshop->title);
                                             
                                             // Create the directory structure
                                             $directory = "workshops/{$workshopTitle}/assignments/microteaching{$assignmentNumber}";
@@ -146,7 +146,7 @@ class SubmissionResource extends Resource
                                             if (!$assignment) return 'uploads';
                                             
                                             // Prepare the safe workshop title (no spaces)
-                                            $workshopTitle = str_replace(' ', '', $workshop->title);
+                                            $workshopTitle = Str::slug($workshop->title);
 
                                             $assignmentTitle = $assignment->title;
                                             $assignmentNumber = (int) Str::after($assignmentTitle, 'Microteaching ');

@@ -35,21 +35,27 @@ class TeacherResource extends Resource
             TextInput::make('name')->required()->maxLength(255),
             TextInput::make('phone_number')->tel()->required(),
             TextInput::make('email')->email()->required(),
+
             TextInput::make('password')
-            ->password()
-            ->required()
-            ->dehydrateStateUsing(fn ($state) => Hash::make($state))
-            ->afterStateHydrated(function ($state, Set $set, $record) {
-                $set('password', ''); // set the password field to empty string
-            })
-            ->dehydrated(fn ($state) => filled($state))
-            ->label('Password'),
+                ->password()
+                ->label('Password')
+                ->required(fn (string $context): bool => $context === 'create') // Only required when creating
+                ->dehydrated(fn ($state) => filled($state)) // Only save if filled
+                ->dehydrateStateUsing(fn ($state) => filled($state) ? Hash::make($state) : null) // Hash only if filled
+                ->afterStateHydrated(function ($state, Set $set) {
+                    $set('password', ''); // Clear the field so it doesn't show hashed value
+                }),
+
             TextInput::make('nuptk')->required(),
             TextInput::make('community')->nullable(),
+
             Select::make('school_id')
                 ->relationship('school', 'name')
                 ->required(),
-            Select::make('mentor_id')->relationship('mentor', 'name')->nullable(),
+
+            Select::make('mentor_id')
+                ->relationship('mentor', 'name')
+                ->nullable(),
         ]);
     }
 
