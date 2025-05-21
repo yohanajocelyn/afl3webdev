@@ -208,7 +208,6 @@ class SubmissionResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('subject')->searchable(),
                 TextColumn::make('title')->searchable(),
 
                 TextColumn::make('url')->limit(30),
