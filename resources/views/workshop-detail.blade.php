@@ -59,13 +59,13 @@
                     <p class="text-gray-600 mb-6">Apakah anda yakin ingin mendaftar ke workshop ini?</p>
                     <div class="flex justify-end space-x-4">
                         <button id="cancelButton" class="bg-gray-300 px-4 py-2 rounded-md" onclick="togglePopUp(false)">
-                            Cancel
+                            Batal
                         </button>
 
                         @csrf
                         <input type="hidden" name="workshopId" id="workshopId" value="{{ $workshop->id }}">
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">
-                            Confirm
+                            Konfirmasi
                         </button>
                 </form>
             </div>
@@ -82,9 +82,7 @@
             <button id="assignmentsButton"
                 class="border-2 border-purple-500 text-purple-500 px-4 py-2 rounded-full hover:bg-purple-600 hover:text-white"
                 onclick="
-                    @if (auth()->check() &&
-                            (auth()->user()->registrations->where('workshop_id', $workshop->id)->isNotEmpty() ||
-                                auth()->user()->role === \App\Enums\Role::Admin)) toggleSection('assignments') @endif
+                    @if (auth()->check() && auth()->user()->registrations->where('workshop_id', $workshop->id)->isNotEmpty()) toggleSection('assignments') @endif
                 ">
                 Tugas
             </button>

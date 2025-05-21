@@ -97,8 +97,5 @@ class WorkshopController extends Controller
 
     }
 
-    // public function teacherRegistered(){
-    //     $teachers = Registration::with(['teacher', 'workshop'])->get();
-    // }
 
 }
