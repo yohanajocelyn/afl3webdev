@@ -54,7 +54,7 @@
                             </div>
                             <div class="flex-1">
                                 <label class="block text-sm font-medium text-gray-700">Komunitas</label>
-                                <p class="mt-1 text-gray-900">{{ $teacher['community'] }}</p>
+                                <p class="mt-1 text-gray-900">{{ $teacher['community'] ?? '-'}}</p>
                             </div>
                         </div>
                     </div>
