@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ApprovalStatus;
 use App\Models\Assignment;
 use App\Models\Submission;
 use Illuminate\Http\RedirectResponse;
@@ -15,21 +16,7 @@ class SubmissionController extends Controller
      */
     public function showSubmissions()
     {
-        $id = request()->query('assignmentId');
-        if ($id) {
-            $submissions = Submission::with(['registration.teacher', 'assignment'])
-                ->where('assignment_id', $id)
-                ->get();
-        } else {
-            $submissions = Submission::with(['registration.teacher', 'assignment'])->get();
-        }
 
-        $assignment = Assignment::where('id', $id)->first();
-
-        return view('submissions', [
-            "submissions" => $submissions,
-            'assignment' => $assignment
-        ]);
     }
 
     public function submitAssignment(Request $request, $id)
@@ -64,15 +51,11 @@ class SubmissionController extends Controller
             // Create new
             Submission::create([
                 'assignment_id' => $assignment->id,
-                'subject' => $teacher['subjectTaught'],
                 'title' => $assignment['workshop']['title'],
-                'educationLevel' => 'SMA sederajat',
-                'studentAmount' => 100,
-                'duration' => 1,
-                'isOnsite' => 1,
                 'note' => $request['submissionNote'],
                 'url' => $validated['submissionLink'],
-                'isApproved' => 0,
+                'status' => ApprovalStatus::Pending,
+
                 'registration_id' => $registration->id,
             ]);
             $message = 'Submission successful!';

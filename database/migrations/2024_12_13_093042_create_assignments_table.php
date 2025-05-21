@@ -18,8 +18,9 @@ return new class extends Migration
                 indexName: 'workshop_has_assignments'
             );
             $table->string('title');
-            $table->date('date');
-            $table->text('description');
+            $table->dateTime('due_dateTime');
+            $table->text('description')->nullable();
+            $table->string('url')->nullable();
             $table->timestamps();
         });
     }

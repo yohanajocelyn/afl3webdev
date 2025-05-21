@@ -12,31 +12,37 @@ use App\Enums\Role;
 class Teacher extends Authenticatable
 {
     use HasFactory;
-    protected $fillable = ['name', 'gender', 'phone_number', 'pfpURL', 'email', 'password', 'nuptk', 'community', 'subjectTaught', 'school_id'];
+    protected $fillable = ['name', 'phone_number', 'email', 'password', 'nuptk', 'community', 'school_id', 'mentor_id'];
 
-    protected $casts = [
-        'role' => Role::class,
-    ];
-
-    public function school():BelongsTo {
+    public function school(): BelongsTo
+    {
         return $this->belongsTo(School::class);
     }
 
-    public function registrations():HasMany {
+    public function registrations(): HasMany
+    {
         return $this->hasMany(Registration::class, 'teacher_id');
     }
 
-    public static function allData() {
+    public function mentor(): BelongsTo
+    {
+        return $this->belongsTo(Mentor::class);
+    }
+
+    public static function allData()
+    {
         return Teacher::all();
     }
 
-    public static function dataWithId($id){
+    public static function dataWithId($id)
+    {
         return self::find($id);
     }
 
-    public static function dataWithSchoolId($id){
+    public static function dataWithSchoolId($id)
+    {
         $teachersFromSchool = static::allData();
-        return $teachersFromSchool -> where('school_id', $id);
+        return $teachersFromSchool->where('school_id', $id);
         return Teacher::find($id);
     }
 }

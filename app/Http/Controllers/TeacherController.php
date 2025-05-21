@@ -32,15 +32,11 @@ class TeacherController extends Controller
         $teacher = Auth::guard('teacher')->user();
 
         $validatedData = $request->validate([
-            // 'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'name' => 'required|string|max:255',
-            // 'school' => 'nullable|string|max:255',
-            // 'gender' => 'required|in:Laki-laki,Perempuan',
             'email' => 'required|email|max:255|unique:teachers,email,' . $teacher->id,
             'phone_number' => 'required|string|max:20',
             'nuptk' => 'required|string|max:255',
             'community' => 'nullable|string|max:255',
-            // 'subject' => 'required|string|max:255',
         ]);
 
         // Handle school data
@@ -149,23 +145,5 @@ class TeacherController extends Controller
             "doneAssignments" => $submittedNotApproved,
             "approvedAssignments" => $approved
         ]);
-    }
-
-
-    public function teachersListView()
-    {
-        $id = request()->query('schoolId');
-        if ($id == null) {
-            return view('teachers', [
-                "state" => "teachers list",
-                "teachers" => Teacher::all()
-            ]);
-        } else {
-            return view('teachers', [
-                "state" => "teachers list with school",
-                "teachers" => Teacher::dataWithSchoolId($id),
-                "school" => School::dataWithId($id)
-            ]);
-        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ApprovalStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,15 +14,16 @@ class Submission extends Model
     protected $fillable = [
         'registration_id',
         'assignment_id',
-        'subject',
         'title',
-        'educationLevel',
-        'studentAmount',
-        'duration',
-        'isOnsite',
         'note',
         'url',
-        'isApproved'
+        'path',
+        'status',
+        'revisionNote'
+    ];
+
+    protected $casts = [
+        'status' => ApprovalStatus::class,
     ];
 
     public function assignment():BelongsTo {

@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('workshops', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->date('startDate');
-            $table->date('endDate');
+            $table->dateTime('startDate');
+            $table->dateTime('endDate');
             $table->text('description');
             $table->string('price');
-            $table->string('imageURL');
-            $table->boolean('isOpen');
+            $table->string('imageURL')->nullable();
+            $table->boolean('isOpen')->nullable()->default(false);
+            $table->string('certificateUrl')->nullable();
             $table->timestamps();
         });
     }

@@ -21,15 +21,12 @@ return new class extends Migration
                 table: 'assignments',
                 indexName: 'assignment_has_submissions'
             );  
-            $table->string('subject');
             $table->string('title');
-            $table->enum('educationLevel', ['TK', 'SD', 'SMP', 'SMA sederajat']);
-            $table->integer('studentAmount');
-            $table->integer('duration');
-            $table->boolean('isOnsite');
-            $table->string('note')->nullable();
+            $table->text('note')->nullable();
             $table->string('url');
-            $table->boolean('isApproved');
+            $table->string('path');
+            $table->enum('status', ['approved', 'pending', 'rejected'])->nullable()->default('pending');
+            $table->text('revisionNote')->nullable();
             $table->timestamps();
         });
     }

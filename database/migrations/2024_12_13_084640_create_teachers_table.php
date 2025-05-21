@@ -14,18 +14,18 @@ return new class extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('gender')->nullable();
             $table->string('phone_number');
-            $table->string('pfpURL');
             $table->string('email');
             $table->string('password');
-            $table->enum('role', ['admin', 'user']);
             $table->string('nuptk');
             $table->string('community')->nullable();
-            $table->string('subjectTaught')->nullable();
             $table->foreignId('school_id')->constrained(
                 table:'schools',
                 indexName:'teachers_school_id'
+            );
+            $table->foreignId('mentor_id')->constrained(
+                table:'mentors',
+                indexName:'teachers_mentor_id'
             );
             $table->timestamps();
         });

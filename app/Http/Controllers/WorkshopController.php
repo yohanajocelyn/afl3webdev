@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ApprovalStatus;
 use App\Enums\CourseStatus;
 use App\Models\Assignment;
 use App\Models\Meet;
@@ -53,69 +54,6 @@ class WorkshopController extends Controller
         ]);
     }
 
-    public function createWorkshop(Request $request){
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:200',
-            'description' => 'required|string|max:1000',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'price' => 'required|integer',
-            'assignment_count' => 'required|integer|min:1',
-            'assignment_due_date' => 'required|date|after_or_equal:end_date',
-            'workshop_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        $workshopImage = 'default.jpg';
-        if($request->hasFile('workshop_image')){
-            $workshopImage = $request->file('workshop_image')->store('workshop_banners', 'public');
-            $workshopImage = 'storage/' . $workshopImage;
-        }
-
-        $existingWorkshop = Workshop::where('title', $validatedData['title'])
-        ->where('startDate', $validatedData['start_date'])
-        ->where('endDate', $validatedData['end_date'])
-        ->first();
-
-        if ($existingWorkshop) {
-            return back()->withErrors(['title' => 'This workshop with the same title and date already exists.'])->withInput();
-        }
-
-        //create
-        $workshop = Workshop::create([
-            'title' => $validatedData['title'],
-            'startDate' => $validatedData['start_date'],
-            'endDate' => $validatedData['end_date'],
-            'description' => $validatedData['description'],
-            'price' => $validatedData['price'],
-            'imageURL'=> $workshopImage,
-            'isOpen' => false
-        ]);
-
-        //assignment from workshop creation
-        for ($i = 1; $i <= $validatedData['assignment_count']+2; $i++) {
-            $title = '';
-            if($i === 1){
-                $title = 'pre-test';
-            }else if($i === 2){
-                $title = 'post-test';
-            }else{
-                $title = 'Tugas '. ($i - 2);
-            }
-
-            Log::info('Creating Assignment:', ['title' => $title, 'workshop_id' => $workshop->id]);
-
-            Assignment::create([
-                'workshop_id' => $workshop->id,
-                'title' => $title,
-                'date' => $validatedData['assignment_due_date'],
-                'description' => ""
-            ]);
-        }
-
-        return redirect()->route('workshop-detail', ['id' => $workshop->id])
-        ->with('success', 'Workshop and its assignments created successfully');
-    }
-
     public function registerWorkshop(Request $request){
 
         $workshopId = $request->workshopId;
@@ -136,7 +74,6 @@ class WorkshopController extends Controller
         $teacherId = auth('teacher')->user()->id;
 
         $registration = Registration::create([
-            'regDate' => now(),
             'paymentProof' => $paymentProof, 
             'isApproved' => $isApproved,
             'courseStatus' => CourseStatus::Assigned,
@@ -150,8 +87,8 @@ class WorkshopController extends Controller
                 Presence::create([
                     'meet_id' => $meet['id'],
                     'registration_id' => $registration['id'],
-                    'isPresent' => false,
-                    'dateTime' => now() 
+                    'status' => ApprovalStatus::Pending,
+                    'dateTime' => now()
                 ]);
             }
         }
@@ -160,93 +97,8 @@ class WorkshopController extends Controller
 
     }
 
-    public function showRegistration(){
-        $id = request()->query('workshopId');
-        if($id){
-            $registrations = Registration::with(['teacher', 'workshop'])
-            ->where('workshop_id', $id)
-            ->get();
-        }else{
-            $registrations = Registration::with(['teacher', 'workshop'])->get();
-        }
+    // public function teacherRegistered(){
+    //     $teachers = Registration::with(['teacher', 'workshop'])->get();
+    // }
 
-        $workshop = Workshop::where('id', $id)->first();
-
-        return view('registrations', [
-            "registrations" => $registrations,
-            'workshop' => $workshop
-        ]);
-    }
-
-    public function teacherRegistered(){
-        $teachers = Registration::with(['teacher', 'workshop'])->get();
-    }
-
-    public function createMeet(Request $request) {
-        $workshopId = $request->input('workshopId');
-    
-        $validatedData = $request->validate([
-            'title' => 'required|string',
-            'date' => 'required|date',
-            'description' => 'required|string'
-        ]);
-    
-        $existingMeet = Meet::where([
-            'workshop_id' => $workshopId,
-            'title' => $validatedData['title'],
-            'date' => $validatedData['date']
-        ])->first();
-    
-        if ($existingMeet) {
-            return back()->withErrors(['title' => 'This Meet already exists for the selected date'])->withInput();
-        }
-    
-            $meet = Meet::create([
-                'title' => $validatedData['title'],
-                'date' => $validatedData['date'],
-                'description' => $validatedData['description'],
-                'workshop_id' => $workshopId
-            ]);
-    
-            $registeredUsers = Registration::where('workshop_id', $workshopId)
-            ->where('isApproved', true)
-            ->get();
-    
-            if ($registeredUsers->isNotEmpty()) {
-                foreach ($registeredUsers as $registered) {
-                    Presence::create([
-                        'meet_id' => $meet->id,
-                        'registration_id' => $registered->id,
-                        'isPresent' => false,
-                        'dateTime' => now()
-                    ]);
-                }
-            }
-    
-            return redirect(url()->previous())->with('success', 'Meet created successfully!');
-    }
-    
-    public function showProgress(Request $request){
-        $id = $request->query('workshopId');
-
-        $workshop = Workshop::with([
-            'registrations.teacher',
-            'registrations.submissions',
-            'assignments'
-        ])->findOrFail($id);
-    
-        return view('workshop-progress', compact('workshop'));
-    }
-
-    public function openWorkshop(Request $request)
-    {
-        $workshopId = $request->workshopId;
-        $workshop = Workshop::findOrFail($workshopId);
-
-        $workshop->update([
-            'isOpen' => !$workshop->isOpen,
-        ]);
-
-        return redirect()->back();
-    }
 }

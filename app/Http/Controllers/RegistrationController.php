@@ -54,29 +54,7 @@ class RegistrationController extends Controller
      */
     public function update($registrationId)
     {
-        $registration = Registration::find($registrationId);
-
-        if (!$registration) {
-            return response()->json(['success' => false, 'message' => 'Registration not found'], 404);
-        }
-
-        $registration->isApproved = !$registration->isApproved;
-        $registration->save();
-
-        $meets = Meet::where('workshop_id', $registration->workshop_id)->get();
-        foreach($meets as $meet){
-            Presence::firstOrCreate([
-                'meet_id' => $meet->id,
-                'registration_id' => $registration->id,
-                'isPresent' => false,
-                'dateTime' => now() 
-            ]);
-        }
-
-        return response()->json([
-            'success' => true,
-            'isApproved' => $registration->isApproved
-        ]);
+       
     }
 
     /**

@@ -56,7 +56,7 @@ class AssignmentController extends Controller
 
         $assignment->update([
             'title' => $validatedData['title'],
-            'date' => $validatedData['date'],
+            'due_dateTime' => $validatedData['date'],
             'description' => $validatedData['description']
         ]);
 
