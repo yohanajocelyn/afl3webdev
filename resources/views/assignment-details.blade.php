@@ -74,7 +74,7 @@
                 <div id="editSubmissionModal"
                     class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
                     <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
-                        <h2 class="text-2xl font-bold mb-4">Edit Your Submission</h2>
+                        <h2 class="text-2xl font-bold mb-4">Edit Pengumpulan</h2>
 
                         <form action="{{ route('submit-assignment', ['id' => $assignment->id]) }}" method="POST"
                             enctype="multipart/form-data">
@@ -86,7 +86,7 @@
                                 <input id="submissionLinkEdit" name="submissionLink" type="url"
                                     class="border rounded-lg px-3 py-2 w-full" required
                                     value="{{ old('submissionLink', $userSubmission->url ?? '') }}">
-                                <label for="submissionFileEdit">PDF File:</label>
+                                <label for="submissionFileEdit">File PDF:</label>
                                 <input id="submissionFileEdit" name="submissionFile" type="file"
                                     class="border rounded-lg px-3 py-2 w-full">
 

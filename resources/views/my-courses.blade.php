@@ -46,7 +46,7 @@
                         <button
                             class="category-btn px-5 py-2 rounded-full text-sm font-medium focus:outline-none transition-all duration-200 bg-gray-200 text-gray-700 hover:bg-yellow-500 hover:text-white"
                             data-category="menunggu">
-                            Menunggu Pelatihan
+                            Menunggu Persetujuan
                         </button>
                         <button
                             class="category-btn px-5 py-2 rounded-full text-sm font-medium focus:outline-none transition-all duration-200 bg-gray-200 text-gray-700 hover:bg-gray-500 hover:text-white"
