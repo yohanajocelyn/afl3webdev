@@ -1,3 +1,6 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
 <nav id="navbar"
     class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 
     transition-all duration-1000 ease-in-out 
@@ -20,8 +23,8 @@
         <a href="{{ route('home') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">Beranda</a>
         <a href="{{ route('home') }}#workshops"
             class="text-gray-800 hover:text-blue-600 transition duration-300">Pelatihan</a>
-        <a href="{{ route('my-courses')}}"
-            class="text-gray-800 hover:text-blue-600 transition duration-300">Aktivitas Saya</a>
+        <a href="{{ route('my-courses') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">Aktivitas
+            Saya</a>
 
     </div>
 
@@ -46,12 +49,14 @@
                             Log Out
                         </button>
                     </form>
+
                     <a href="/teacherprofile/?teacherId={{ auth()->user()->id }}"
                         class="text-gray-800 hover:text-blue-600 transition duration-300 flex flex-row justify-center items-center">
                         <img src="{{ asset(auth()->guard('teacher')->user()->pfpURL) }}" alt="Profile Picture"
                             class="w-8 h-8 rounded-full mr-2">
-                        <span>{{ auth()->user()->name }}</span>
+                        <span>{{ Str::limit(auth()->user()->name, 5, '...') }}</span>
                     </a>
+
                 @endauth
             </div>
         @endguest
