@@ -60,11 +60,11 @@
                         <label class="text-sm font-medium text-gray-600">Jenis Kelamin</label>
                         <div class="flex items-center gap-4">
                             <label class="flex items-center">
-                                <input type="radio" name="gender" value="male" required />
+                                <input type="radio" name="gender" value="Laki-laki" required />
                                 <span class="ml-2">Laki-laki</span>
                             </label>
                             <label class="flex items-center">
-                                <input type="radio" name="gender" value="female" required />
+                                <input type="radio" name="gender" value="Perempuan" required />
                                 <span class="ml-2">Perempuan</span>
                             </label>
                         </div>

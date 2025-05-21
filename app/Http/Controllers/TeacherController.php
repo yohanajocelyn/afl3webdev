@@ -32,52 +32,47 @@ class TeacherController extends Controller
         $teacher = Auth::guard('teacher')->user();
 
         $validatedData = $request->validate([
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'name' => 'required|string|max:255',
-            'school' => 'nullable|string|max:255',
-            'newSchoolName' => 'required_without:school|nullable|string|max:255',
-            'newSchoolAddress' => 'required_without:school|nullable|string|max:255',
-            'newSchoolCity' => 'required_without:school|nullable|string|max:255',
-            'gender' => 'required|in:male,female',
+            // 'school' => 'nullable|string|max:255',
+            'gender' => 'required|in:Laki-laki,Perempuan',
             'email' => 'required|email|max:255|unique:teachers,email,' . $teacher->id,
-            'phone' => 'required|string|max:20',
-            'password' => 'nullable|string|min:8|max:255',
+            'phone_number' => 'required|string|max:20',
             'nuptk' => 'required|string|max:255',
             'community' => 'required|string|max:255',
             'subject' => 'required|string|max:255',
         ]);
 
         // Handle school data
-        if (isset($validatedData['school'])) {
-            $school = School::where('name', $validatedData['school'])->first();
-        } else {
-            $school = School::firstOrCreate(
-                ['name' => $validatedData['newSchoolName']],
-                [
-                    'name' => $validatedData['newSchoolName'],
-                    'address' => $validatedData['newSchoolAddress'],
-                    'city' => $validatedData['newSchoolCity']
-                ]
-            );
-        }
+        // if (isset($validatedData['school'])) {
+        //     $school = School::where('name', $validatedData['school'])->first();
+        // } else {
+        //     $school = School::firstOrCreate(
+        //         ['name' => $validatedData['newSchoolName']],
+        //         [
+        //             'name' => $validatedData['newSchoolName'],
+        //             'address' => $validatedData['newSchoolAddress'],
+        //             'city' => $validatedData['newSchoolCity']
+        //         ]
+        //     );
+        // }
 
         // Handle profile picture upload
-        if ($request->hasFile('profile_picture')) {
-            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
-            $teacher->pfpURL = 'storage/' . $path;
-        }
+        // if ($request->hasFile('profile_picture')) {
+        //     $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+        //     $teacher->pfpURL = 'storage/' . $path;
+        // }
 
         // Update teacher details
         $teacher->update([
             'name' => $validatedData['name'],
             'gender' => $validatedData['gender'],
             'email' => $validatedData['email'],
-            'phone_number' => $validatedData['phone'],
-            'password' => $validatedData['password'] ? bcrypt($validatedData['password']) : $teacher->password,
+            'phone_number' => $validatedData['phone_number'],
             'nuptk' => $validatedData['nuptk'],
             'community' => $validatedData['community'],
             'subjectTaught' => $validatedData['subject'],
-            'school_id' => $school->id
+            // 'school_id' => $school->id
         ]);
 
         return redirect()->back()->with('success', 'Profile updated successfully.');

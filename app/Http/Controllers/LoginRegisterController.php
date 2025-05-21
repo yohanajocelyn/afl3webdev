@@ -31,7 +31,7 @@ class LoginRegisterController extends Controller
             'newSchoolName' => 'required_without:school|nullable|string|max:255',
             'newSchoolAddress' => 'required_without:school|nullable|string|max:255',
             'newSchoolCity' => 'required_without:school|nullable|string|max:255',
-            'gender' => 'required|in:male,female',
+            'gender' => 'required|in:Laki-laki,Perempuan',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
             'password' => 'required|string|min:8|max:255',
