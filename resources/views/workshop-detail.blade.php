@@ -170,10 +170,6 @@
                 document.getElementById('meetsButton').classList.add('border-2', 'border-blue-500', 'text-blue-500');
                 document.getElementById('assignmentsButton').classList.remove('bg-purple-500', 'text-white');
                 document.getElementById('assignmentsButton').classList.add('border-2', 'border-purple-500', 'text-purple-500');
-                @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                    // document.getElementById('pesertaButton').classList.remove('bg-green-500', 'text-white');
-                    // document.getElementById('pesertaButton').classList.add('border-2', 'border-green-500', 'text-green-500');
-                @endif
 
                 // Show the selected section
                 if (section === 'meets') {
