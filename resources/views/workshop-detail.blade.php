@@ -23,33 +23,6 @@
                     @endif
                 {{-- Register Button --}}
                 <div class="mt-auto flex justify-center md:justify-start space-x-4">
-                    @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                        <!-- Peserta Terdaftar Button -->
-                        <a href="/registrations/?workshopId={{ $workshop->id }}">
-                            <button class="bg-green-500 text-white px-4 py-2 rounded-md">
-                                Peserta Terdaftar
-                            </button>
-                        </a>
-                        <!--open workshop button -->
-                        <form action="{{ route('open-workshop') }}" method="POST">
-                            @method('PUT')
-                            @csrf
-                            <input id="workshopId" name="workshopId" type="hidden" value="{{ $workshop['id'] }}">
-                            <button type="submit" class="
-                                @if ($workshop['isOpen'])
-                                    bg-red-500
-                                @else
-                                    bg-yellow-500
-                                @endif
-                             text-white px-4 py-2 rounded-md">
-                                @if ($workshop['isOpen'])
-                                    Tutup Workshop
-                                @else
-                                    Buka Workshop
-                                @endif
-                            </button>
-                        </form>
-                    @else
                         @if (auth()->check())
                             @if (auth()->user()->registrations()->where('workshop_id', $workshop->id)->exists())
                                 <button class="bg-gray-300 text-gray-600 px-4 py-2 rounded-md">
@@ -65,7 +38,6 @@
                                 Register
                             </button>
                         @endif
-                    @endif
                 </div>                
             </div>
         </div>

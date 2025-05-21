@@ -4,23 +4,6 @@
         <p class="text-gray-600 mt-2">{{ $assignment->date }}</p>
     </div>
     <div class="border-t border-gray-300 mt-6 pt-4">
-        @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-            {{-- Admin buttons as before --}}
-            <div class="flex justify-end gap-4">
-                <a href="/submissions/?assignmentId={{ $assignment->id }}">
-                    <button id="checkSubmissionsButton"
-                        class="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600">
-                        Check Submissions
-                    </button>
-                </a>
-
-                <button id="editAssignmentButton" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                    Edit Assignment
-                </button>
-            </div>
-            {{-- Edit Modal (unchanged) --}}
-            ...
-        @else
             {{-- For teachers --}}
 
             {{-- Show submission if exists --}}
@@ -129,7 +112,6 @@
                     </div>
                 </div>
             @endif
-        @endif
     </div>
 
     <script>
