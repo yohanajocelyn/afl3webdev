@@ -16,6 +16,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -70,6 +71,9 @@ class TeacherResource extends Resource
         ->actions([
             EditAction::make(),
             DeleteAction::make(),
+        ])
+        ->bulkActions([
+            DeleteBulkAction::make(),
         ]);
     }
 

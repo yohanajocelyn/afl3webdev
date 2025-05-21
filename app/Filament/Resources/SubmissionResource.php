@@ -24,6 +24,7 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -211,8 +212,16 @@ class SubmissionResource extends Resource
                 TextColumn::make('title')->searchable(),
 
                 TextColumn::make('url')->limit(30),
-                IconColumn::make('isApproved')
-                    ->boolean(),
+                BadgeColumn::make('status')
+                    ->label('Approval Status')
+                    ->state(fn ($record) => $record->status->value ?? 'N/A') // ensure it's a string
+                    ->colors([
+                        'success' => 'approved',
+                        'warning' => 'pending',
+                        'danger' => 'rejected',
+                    ])
+                    ->formatStateUsing(fn (string $state) => ucfirst($state)) // Optional: format label
+                    ->sortable()
             ])
             ->filters([
                 //
