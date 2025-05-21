@@ -1,5 +1,5 @@
-
-<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 
+<nav id="navbar"
+    class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 
     transition-all duration-1000 ease-in-out 
     bg-white bg-opacity-100 
     transform translate-y-0">
@@ -18,35 +18,42 @@
     <!-- Menu Section (Center) -->
     <div class="flex space-x-6">
         <a href="{{ route('home') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">Beranda</a>
-        <a href="{{ route('home') }}#workshops" class="text-gray-800 hover:text-blue-600 transition duration-300">Pelatihan</a>
+        <a href="{{ route('home') }}#workshops"
+            class="text-gray-800 hover:text-blue-600 transition duration-300">Pelatihan</a>
+        <a href="{{ route('my-courses')}}"
+            class="text-gray-800 hover:text-blue-600 transition duration-300">Aktivitas Saya</a>
+
     </div>
 
     <!-- Authentication Buttons (Right) -->
     <div class="flex space-x-4">
         @guest
             <button class="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 transition duration-300"
-            onclick="window.location.href = '/loginregister/?form=login'">
+                onclick="window.location.href = '/loginregister/?form=login'">
                 Masuk
             </button>
             <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
-            onclick="window.location.href = '/loginregister/?form=register'">
+                onclick="window.location.href = '/loginregister/?form=register'">
                 Daftar
             </button>
         @else
-        <div class="flex space-x-4">
-            @auth
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-300">
-                        Log Out
-                    </button>
-                </form>
-                <a href="/teacherprofile/?teacherId={{ auth()->user()->id }}" class="text-gray-800 hover:text-blue-600 transition duration-300 flex flex-row justify-center items-center">
-                    <img src="{{ asset(auth()->guard('teacher')->user()->pfpURL) }}" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2">
-                    <span>{{ auth()->user()->name }}</span>
-                </a>
-            @endauth
-        </div>
+            <div class="flex space-x-4">
+                @auth
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit"
+                            class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-300">
+                            Log Out
+                        </button>
+                    </form>
+                    <a href="/teacherprofile/?teacherId={{ auth()->user()->id }}"
+                        class="text-gray-800 hover:text-blue-600 transition duration-300 flex flex-row justify-center items-center">
+                        <img src="{{ asset(auth()->guard('teacher')->user()->pfpURL) }}" alt="Profile Picture"
+                            class="w-8 h-8 rounded-full mr-2">
+                        <span>{{ auth()->user()->name }}</span>
+                    </a>
+                @endauth
+            </div>
         @endguest
     </div>
 </nav>

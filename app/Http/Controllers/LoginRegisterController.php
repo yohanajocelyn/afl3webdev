@@ -82,7 +82,7 @@ class LoginRegisterController extends Controller
         Auth::guard('teacher')->login($teacher);
 
         return redirect($request['pageBefore']);
-    }
+    }       
 
     public function login(Request $request){
         $credentials = $request->validate([
