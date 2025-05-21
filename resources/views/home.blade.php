@@ -104,7 +104,7 @@
 
         <div>
             <section class="text-center mb-12">
-                <h2 class="text-2xl font-bold text-gray-800">Upcoming Events</h2>
+                <h2 class="text-2xl font-bold text-gray-800">Yang Akan Datang</h2>
             </section>
         </div>
     </main>

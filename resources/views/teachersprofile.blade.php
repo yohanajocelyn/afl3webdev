@@ -13,15 +13,15 @@
 
                 {{-- profile details --}}
                 <div class="flex-1">
-                    <h1 class="text-3xl font-bold mb-6">Teacher's Profile</h1>
+                    <h1 class="text-3xl font-bold mb-6">Profil Pengguna</h1>
                     <div class="space-y-4">
                         <div class="flex flex-col sm:flex-row sm:space-x-6">
                             <div class="flex-1">
-                                <label class="block text-sm font-medium text-gray-700">Name</label>
+                                <label class="block text-sm font-medium text-gray-700">Nama</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['name'] }}</p>
                             </div>
                             <div class="flex-1">
-                                <label class="block text-sm font-medium text-gray-700">Gender</label>
+                                <label class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['gender'] }}</p>
                             </div>
                         </div>
@@ -31,18 +31,18 @@
                                 <p class="mt-1 text-gray-900">{{ $teacher['email'] }}</p>
                             </div>
                             <div class="flex-1">
-                                <label class="block text-sm font-medium text-gray-700">Phone Number</label>
+                                <label class="block text-sm font-medium text-gray-700">No. Telepon</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['phone_number'] }}</p>
                             </div>
                         </div>
 
                         <div class="flex flex-col sm:flex-row sm:space-x-6">
                             <div class="flex-1">
-                                <label class="block text-sm font-medium text-gray-700">School</label>
+                                <label class="block text-sm font-medium text-gray-700">Instansi</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['school']['name'] }}</p>
                             </div>
                             <div class="flex-1">
-                                <label class="block text-sm font-medium text-gray-700">Subject Taught</label>
+                                <label class="block text-sm font-medium text-gray-700">Mata Pelajaran</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['subjectTaught'] }}</p>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                                 <p class="mt-1 text-gray-900">{{ $teacher['nuptk'] }}</p>
                             </div>
                             <div class="flex-1">
-                                <label class="block text-sm font-medium text-gray-700">Community</label>
+                                <label class="block text-sm font-medium text-gray-700">Komunitas</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['community'] }}</p>
                             </div>
                         </div>
@@ -66,22 +66,22 @@
                 <button id="workshopsButton"
                     class="border-2 border-blue-500 text-blue-500 px-6 py-2 rounded-full hover:bg-blue-500 hover:text-white"
                     onclick="toggleSection('workshops')">
-                    Workshops
+                    Pelatihan
                 </button>
                 <button id="assignmentsButton"
                     class="border-2 border-purple-500 text-purple-500 px-6 py-2 rounded-full hover:bg-purple-500 hover:text-white"
                     onclick="toggleSection('assignments')">
-                    Assignments
+                    Tugas
                 </button>
             </div>
 
             {{-- Workshop Section --}}
             <div id="workshopsSection" class="hidden">
-                <h2 class="text-2xl font-bold mb-6">Workshops</h2>
+                <h2 class="text-2xl font-bold mb-6">Pelatihan yang saya ikuti</h2>
                 <div class="flex space-x-4 mb-6">
                     <button onclick="showWorkshopCategory('joined')" id="joinedButton"
                         class="border-2 border-green-500 text-green-500 px-4 py-2 rounded-full hover:bg-green-500 hover:text-white">
-                        Joined
+                        Sedang Berjalan
                     </button>
                     <button onclick="showWorkshopCategory('pending')" id="pendingButton"
                         class="border-2 border-yellow-500 text-yellow-500 px-4 py-2 rounded-full hover:bg-yellow-500 hover:text-white">
@@ -89,10 +89,10 @@
                     </button>
                     <button onclick="showWorkshopCategory('history')" id="historyButton"
                         class="border-2 border-gray-500 text-gray-500 px-4 py-2 rounded-full hover:bg-gray-500 hover:text-white">
-                        History
+                        Berlalu
                     </button>
                 </div>
-                <p class="text-gray-700">Manage and explore your workshops here.</p>
+                {{-- <p class="text-gray-700">Lihat dan kelola pelatihan anda di sini</p> --}}
                 <div id="joinedWorkshops" class="hidden">
                     @foreach ($joinedWorkshops as $registration)
                         <div class="border rounded p-4 mb-2 bg-green-100">
@@ -102,7 +102,7 @@
                                     {{ $registration->workshop->title }}
                                 </a>
                             </strong><br>
-                            {{ $registration->workshop->description ?? 'No description.' }}
+                            {{ $registration->workshop->description ?? 'Tidak Ada Deskripsi' }}
                         </div>
                     @endforeach
                 </div>
@@ -136,19 +136,19 @@
 
             {{-- Assignments Section --}}
             <div id="assignmentsSection" class="hidden">
-                <h2 class="text-2xl font-bold mb-6">Assignments</h2>
+                <h2 class="text-2xl font-bold mb-6">Tugas yang Saya Miliki</h2>
                 <div class="flex space-x-4 mb-6">
                     <button onclick="showAssignmentCategory('ongoing')" id="ongoingButton"
                         class="border-2 border-purple-500 text-purple-500 px-4 py-2 rounded-full hover:bg-purple-500 hover:text-white">
-                        Ongoing
+                        Sedang Berjalan
                     </button>
                     <button onclick="showAssignmentCategory('done')" id="doneButton"
                         class="border-2 border-green-500 text-green-500 px-4 py-2 rounded-full hover:bg-green-500 hover:text-white">
-                        Done
+                        Selesai
                     </button>
                     <button onclick="showAssignmentCategory('approved')" id="approvedButton"
                         class="border-2 border-blue-500 text-blue-500 px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white">
-                        Approved
+                        Disetujui
                     </button>
                 </div>
                 <p class="text-gray-700">Track your ongoing assignments here.</p>
