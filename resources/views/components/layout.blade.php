@@ -31,35 +31,6 @@
     <!-- Footer -->
     <x-footer></x-footer>
 
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const navbar = document.getElementById('navbar');
-            
-            window.addEventListener('scroll', function() {
-                // Adjust opacity based on scroll position
-                const scrollPosition = window.scrollY;
-                const maxScroll = 200; // Adjust this value to control when full transparency occurs
-                
-                if (scrollPosition > 0) {
-                    // Calculate opacity
-                    const opacity = Math.max(0.3, 1 - (scrollPosition / maxScroll));
-                    
-                    navbar.style.backgroundColor = `rgba(255, 255, 255, ${opacity})`;
-                    navbar.style.backdropFilter = scrollPosition > 0 ? 'blur(5px)' : 'none';
-                    
-                    // Optional: Reduce shadow as we scroll
-                    navbar.classList.toggle('shadow-md', scrollPosition < 50);
-                    navbar.classList.toggle('shadow-sm', scrollPosition >= 50);
-                } else {
-                    // Reset to default when at top of page
-                    navbar.style.backgroundColor = 'rgba(255, 255, 255, 1)';
-                    navbar.style.backdropFilter = 'none';
-                    navbar.classList.add('shadow-md');
-                }
-            });
-        });
-    </script> --}}
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const navbar = document.getElementById('navbar');

@@ -111,20 +111,6 @@
                 ">
                 Tugas
             </button>
-            @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                
-                <a href="
-                    @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                        {{ route('workshop-progress', ['workshopId' => $workshop->id]) }}
-                    @endif
-                ">
-                    <button id="pesertaButton"
-                        class="border-2 border-green-500 text-green-500 px-4 py-2 rounded-full hover:bg-green-600 hover:text-white"
-                        onclick="">
-                        Status Tugas
-                    </button>
-                </a>
-            @endif
         </div>
 
 
@@ -132,9 +118,6 @@
         <div id="meetsSection" class="hidden px-4 md:px-10">
             <div class="flex flex-col md:flex-row justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-center md:text-left">Pertemuan</h2>
-                @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded-md", onclick="toggleAddMeetingPopUp(true)">Tambahkan Pertemuan</button>
-                @endif
             </div>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 @if ($workshop->meets->isEmpty())
@@ -145,49 +128,12 @@
                     </div>
                 @else
                     @foreach ($workshop->meets as $meet)
-                    <a href="
-                    @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-                        {{ route('mark-presence', ['meetId' => $meet->id]) }}
-                    @endif
-                    ">
                         <x-simple-card>
                             <x-slot:title>{{ $meet->title }}</x-slot:title>
                             <x-slot:date>{{ $meet->date }}</x-slot:date>
                         </x-simple-card>
-                    </a>
                     @endforeach
                 @endif
-            </div>
-        </div>
-
-        <!-- meeting popup -->
-        <div id="addMeetingPopUp" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
-            <div class="bg-white rounded-lg p-6 shadow-lg w-[90%] max-w-md">
-                <h2 class="text-lg font-bold mb-4">Tambah Pertemuan</h2>
-                <form action="{{ route('create-meet') }}" method="POST">
-                    @csrf
-                    <div class="mb-4">
-                        <label for="title" class="block text-gray-700 font-bold mb-2">Judul:</label>
-                        <input type="text" id="title" name="title" class="border rounded-lg px-3 py-2 w-full" placeholder="Masukkan judul" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="date" class="block text-gray-700 font-bold mb-2">Tanggal:</label>
-                        <input type="date" id="date" name="date" class="border rounded-lg px-3 py-2 w-full" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="description" class="block text-gray-700 font-bold mb-2">Deskripsi:</label>
-                        <input type="text" id="description" name="description" class="border rounded-lg px-3 py-2 w-full" placeholder="Masukkan deskripsi" required>
-                    </div>
-                    <input id="workshopId" name="workshopId" type="hidden" value="{{ $workshop->id }}">
-                    <div class="flex justify-end space-x-4">
-                        <button type="button" class="bg-gray-300 px-4 py-2 rounded-md" onclick="toggleAddMeetingPopUp(false)">
-                            Batal
-                        </button>
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">
-                            Simpan
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
 

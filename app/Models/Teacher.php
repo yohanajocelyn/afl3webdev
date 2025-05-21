@@ -12,7 +12,7 @@ use App\Enums\Role;
 class Teacher extends Authenticatable
 {
     use HasFactory;
-    protected $fillable = ['name', 'gender', 'phone_number', 'pfpURL', 'role', 'email', 'password', 'nuptk', 'community', 'subjectTaught', 'school_id'];
+    protected $fillable = ['name', 'gender', 'phone_number', 'pfpURL', 'email', 'password', 'nuptk', 'community', 'subjectTaught', 'school_id'];
 
     protected $casts = [
         'role' => Role::class,

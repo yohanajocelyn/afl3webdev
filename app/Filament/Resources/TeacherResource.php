@@ -21,6 +21,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherResource extends Resource
 {
@@ -77,8 +78,11 @@ class TeacherResource extends Resource
             TextInput::make('email')->email()->required(),
 
             TextInput::make('password')
-                ->password()
-                ->required(),
+            ->password()
+            ->required()
+            ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+            ->dehydrated(fn ($state) => filled($state)) // avoid overwriting with null on edit
+            ->label('Password'),
 
             Select::make('role')
                 ->options([
