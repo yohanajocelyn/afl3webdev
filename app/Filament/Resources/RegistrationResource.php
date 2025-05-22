@@ -84,7 +84,7 @@ class RegistrationResource extends Resource
                                             ->content(fn ($record) => new HtmlString(
                                                 $record && $record->paymentProof
                                                     ? '<img src="' . asset('storage/' . $record->paymentProof) . '" style="max-width: 200px; max-height: 150px;" />'
-                                                    : '<img src="' . asset('storage/registration_proofs/pelatihanGratis.jpg') . '" style="max-width: 200px; max-height: 150px;" />'
+                                                    : '<img src="' . asset('images/pelatihanGratis.jpg') . '" style="max-width: 200px; max-height: 150px;" />'
                                             )),
                                     ])->columnSpan(1),
                                 
