@@ -19,9 +19,9 @@ class TeacherSeeder extends Seeder
         // Teacher::factory(100)->create();
 
         Teacher::create([
-            'name' => 'Admin',
+            'name' => 'Guru1',
             'phone_number' => '12345678',
-            'email' => 'admin@email.com',
+            'email' => 'tesguru@email.com',
             'password' => bcrypt('123'),
             'nuptk' => '12345678',
             'community' => 'Komunitas',
