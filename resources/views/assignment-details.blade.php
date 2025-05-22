@@ -91,7 +91,7 @@
                                     class="border rounded-lg px-3 py-2 w-full" required
                                     value="{{ old('submissionLink', $userSubmission->url ?? '') }}">
                                 <label for="submissionFileEdit">File PDF:</label>
-                                <input id="submissionFileEdit" name="submissionFile" type="file"
+                                <input id="submissionFileEdit" name="submissionFile" type="file" accept="application/pdf"
                                     class="border rounded-lg px-3 py-2 w-full">
 
                                 @if ($userSubmission->path)
@@ -145,7 +145,7 @@
                             <label for="submissionFile" class="block text-gray-700 font-bold mb-2">
                                 PDF File (max 1MB)
                             </label>
-                            <input id="submissionFile" name="submissionFile" required type="file">
+                            <input id="submissionFile" name="submissionFile" required type="file" accept="application/pdf">
                         </div>
                         <div class="mb-4">
                             <label for="submissionNote" class="block text-gray-700 font-bold mb-2">Catatan:</label>
