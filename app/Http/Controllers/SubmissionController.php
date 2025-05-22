@@ -60,8 +60,8 @@ class SubmissionController extends Controller
                     Storage::disk('public')->delete(Str::after($submission->path, 'storage/'));
                 }
 
-                $workshopName = Str::slug($assignment->workshop->title, '');
-                $assignmentType = Str::slug($assignment->title, '');
+                $workshopName = Str::slug($assignment->workshop->title);
+                $assignmentType = Str::slug($assignment->title);
                 $path = "workshops/{$workshopName}/assignments/{$assignmentType}";
                 $submissionFile = $request->file('submissionFile')->store($path, 'public');
                 $submission->path = 'storage/' . $submissionFile;
@@ -72,8 +72,8 @@ class SubmissionController extends Controller
         } else {
             $workshop = $assignment->workshop;
 
-            $workshopName = Str::slug($workshop->title, '');
-            $assignmentType = Str::slug($assignment->title, '');
+            $workshopName = Str::slug($workshop->title);
+            $assignmentType = Str::slug($assignment->title);
 
             $path = "workshops/{$workshopName}/assignments/{$assignmentType}";
             $submissionFile = $request->file('submissionFile')->store($path, 'public');

@@ -33,23 +33,22 @@ class CreateWorkshop extends CreateRecord
         $disk->makeDirectory("{$basePath}/meets");
         $disk->makeDirectory("{$basePath}/assignments");
 
-        // Create assignment subfolders
-        for ($i = 1; $i <= $assignmentCount; $i++) {
-            $disk->makeDirectory("{$basePath}/assignments/microteaching{$i}");
-        }
-
         if ($assignmentCount > 0 && $dueDate) {
             for ($i = 1; $i <= $assignmentCount; $i++) {
                 $title = 'Microteaching ' . ($i);
+                $slug = Str::slug($title); // Create slug like "microteaching-1"
 
                 Log::info('Creating Assignment:', ['title' => $title, 'workshop_id' => $record->id]);
 
                 Assignment::create([
                     'workshop_id' => $record->id,
                     'title' => $title,
-                    'due_dateTime' => $dueDate,  // or 'due_date' if that is the correct field
-                    'description' => ""
+                    'due_dateTime' => $dueDate,
+                    'description' => ''
                 ]);
+
+                // Create the assignment folder using the slug
+                $disk->makeDirectory("{$basePath}/assignments/{$slug}");
             }
         }
     }

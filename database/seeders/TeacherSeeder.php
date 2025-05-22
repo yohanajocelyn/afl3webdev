@@ -20,15 +20,11 @@ class TeacherSeeder extends Seeder
 
         Teacher::create([
             'name' => 'Admin',
-            'gender' => 'female',
             'phone_number' => '12345678',
-            'pfpUrl' => 'defaultImg',
-            'role' => Role::Admin,
             'email' => 'admin@email.com',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('123'),
             'nuptk' => '12345678',
-            'community' => 'AdminCommunity',
-            'subjectTaught' => 'AdminSubject',
+            'community' => 'Komunitas',
             'school_id' => 1
         ]);
     }

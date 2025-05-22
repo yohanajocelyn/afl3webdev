@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\Workshop;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use PhpParser\Node\Expr\Assign;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +24,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             DefaultUserSeeder::class,
+            SchoolSeeder::class,
+            TeacherSeeder::class,
+            WorkshopSeeder::class,
+            AssignmentSeeder::class,
         ]);
     }
 }
