@@ -23,8 +23,10 @@
         <a href="{{ route('home') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">Beranda</a>
         <a href="{{ route('home') }}#workshops"
             class="text-gray-800 hover:text-blue-600 transition duration-300">Pelatihan</a>
+        @if(auth()->user())
         <a href="{{ route('my-courses') }}" class="text-gray-800 hover:text-blue-600 transition duration-300">Aktivitas
             Saya</a>
+        @endif
 
     </div>
 
