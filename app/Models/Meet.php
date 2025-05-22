@@ -12,7 +12,7 @@ class Meet extends Model
     use HasFactory;
     protected $fillable = [
         'title',
-        'date',
+        'dateTime',
         'description',
         'workshop_id',
     ];

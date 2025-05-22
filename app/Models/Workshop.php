@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Workshop extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'startDate', 'endDate', 'description', 'price', 'imageURL', 'isOpen'];
+    protected $fillable = ['title', 'startDate', 'endDate', 'description', 'price', 'imageURL', 'isOpen', 'certificateUrl'];
 
     protected $casts = [
         'startDate' => 'date',

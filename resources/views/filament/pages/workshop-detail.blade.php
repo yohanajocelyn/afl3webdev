@@ -3,7 +3,7 @@
         {{-- Workshop Overview --}}
         <x-filament::card class="bg-gray-800">
             @if ($workshop->imageURL)
-                <img src="{{ asset($workshop->imageURL) }}" alt="{{ $workshop->title }}" class="w-12 object-cover rounded-md mb-4">
+                <img src="{{ asset($workshop->imageURL) }}" alt="{{ $workshop->title }}" class="object-cover rounded-md mb-4" style="max-width: 200px">
             @endif
 
             <div class="flex justify-between items-center mb-4">
@@ -121,7 +121,7 @@
                     <x-filament::card class="bg-gray-700 border-0 rounded-none flex justify-between items-center">
                         <div>
                             <h3 class="font-bold text-white">Registration #{{ $registration->id }}</h3>
-                            <p class="text-sm text-gray-300">User: {{ $registration->user->name ?? 'N/A' }}</p>
+                            <p class=" text-gray-300">Nama guru: {{ $registration->teacher->name ?? 'N/A' }}</p>
                             <p class="text-gray-300 mt-1">Status: 
                                 <span class="font-semibold {{ $registration->isApproved ? 'text-green-400' : 'text-red-400' }}">
                                     {{ $registration->isApproved ? 'Approved' : 'Pending' }}

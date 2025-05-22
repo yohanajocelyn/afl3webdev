@@ -64,3 +64,8 @@ Route::post('approveSubmission/{submissionId}', [SubmissionController::class, 'u
 
 Route::post('/assignment-detail/{id}/submit', [SubmissionController::class, 'submitAssignment'])->name('submit-assignment');
 Route::delete('/submission/{id}', [SubmissionController::class, 'destroy'])->name('delete-submission');
+
+Route::get('/my-courses', [TeacherController::class, 'getCourses'])->middleware('auth:teacher')->name('my-courses');
+
+//edit profile
+Route::post('/teacherprofile/edit', [TeacherController::class, 'editProfile'])->name('edit-profile');

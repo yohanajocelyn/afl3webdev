@@ -20,10 +20,10 @@
                                 <label class="block text-sm font-medium text-gray-700">Nama</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['name'] }}</p>
                             </div>
-                            <div class="flex-1">
+                            {{-- <div class="flex-1">
                                 <label class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['gender'] }}</p>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="flex flex-col sm:flex-row sm:space-x-6">
                             <div class="flex-1">
@@ -41,10 +41,10 @@
                                 <label class="block text-sm font-medium text-gray-700">Instansi</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['school']['name'] }}</p>
                             </div>
-                            <div class="flex-1">
+                            {{-- <div class="flex-1">
                                 <label class="block text-sm font-medium text-gray-700">Mata Pelajaran</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['subjectTaught'] }}</p>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="flex flex-col sm:flex-row sm:space-x-6">
@@ -60,255 +60,80 @@
                     </div>
                 </div>
             </div>
+            {{-- Edit Profile Button --}}
+                <div class="flex justify-end">
+                    <button onclick="document.getElementById('editModal').classList.remove('hidden')"
+                        class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">
+                        Edit Profil
+                    </button>
+                </div>
+            {{-- Edit Profile Modal --}}
+            <div id="editModal"
+                class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden">
+                <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 relative">
+                    {{-- Close Button --}}
+                    <button onclick="document.getElementById('editModal').classList.add('hidden')"
+                        class="absolute top-2 right-2 text-gray-600 hover:text-gray-800 text-xl">&times;</button>
 
-            {{-- Workshop and Assignments buttons --}}
-            <div class="flex justify-start space-x-6 mb-6">
-                <button id="workshopsButton"
-                    class="border-2 border-blue-500 text-blue-500 px-6 py-2 rounded-full hover:bg-blue-500 hover:text-white"
-                    onclick="toggleSection('workshops')">
-                    Pelatihan
-                </button>
-                <button id="assignmentsButton"
-                    class="border-2 border-purple-500 text-purple-500 px-6 py-2 rounded-full hover:bg-purple-500 hover:text-white"
-                    onclick="toggleSection('assignments')">
-                    Tugas
-                </button>
-            </div>
+                    <h2 class="text-xl font-semibold mb-4">Edit Profil</h2>
 
-            {{-- Workshop Section --}}
-            <div id="workshopsSection" class="hidden">
-                <h2 class="text-2xl font-bold mb-6">Pelatihan yang saya ikuti</h2>
-                <div class="flex space-x-4 mb-6">
-                    <button onclick="showWorkshopCategory('joined')" id="joinedButton"
-                        class="border-2 border-green-500 text-green-500 px-4 py-2 rounded-full hover:bg-green-500 hover:text-white">
-                        Sedang Berjalan
-                    </button>
-                    <button onclick="showWorkshopCategory('pending')" id="pendingButton"
-                        class="border-2 border-yellow-500 text-yellow-500 px-4 py-2 rounded-full hover:bg-yellow-500 hover:text-white">
-                        Pending
-                    </button>
-                    <button onclick="showWorkshopCategory('history')" id="historyButton"
-                        class="border-2 border-gray-500 text-gray-500 px-4 py-2 rounded-full hover:bg-gray-500 hover:text-white">
-                        Berlalu
-                    </button>
-                </div>
-                {{-- <p class="text-gray-700">Lihat dan kelola pelatihan anda di sini</p> --}}
-                <div id="joinedWorkshops" class="hidden">
-                    @foreach ($joinedWorkshops as $registration)
-                        <div class="border rounded p-4 mb-2 bg-green-100">
-                            <strong>
-                                <a href="{{ route('workshop-detail', ['id' => $registration->workshop->id]) }}"
-                                    class="text-green-700 hover:text-green-900 hover:underline transition-colors duration-200">
-                                    {{ $registration->workshop->title }}
-                                </a>
-                            </strong><br>
-                            {{ $registration->workshop->description ?? 'Tidak Ada Deskripsi' }}
-                        </div>
-                    @endforeach
-                </div>
-                <div id="pendingWorkshops" class="hidden">
-                    @foreach ($pendingWorkshops as $registration)
-                        <div class="border rounded p-4 mb-2 bg-yellow-100">
-                            <strong>
-                                <a href="{{ route('workshop-detail', ['id' => $registration->workshop->id]) }}"
-                                    class="text-yellow-700 hover:text-yellow-900 hover:underline transition-colors duration-200">
-                                    {{ $registration->workshop->title }}
-                                </a>
-                            </strong><br>
-                            {{ $registration->workshop->description ?? 'No description.' }}
-                        </div>
-                    @endforeach
-                </div>
-                <div id="historyWorkshops" class="hidden">
-                    @foreach ($historyWorkshops as $registration)
-                        <div class="border rounded p-4 mb-2 bg-gray-100">
-                            <strong>
-                                <a href="{{ route('workshop-detail', ['id' => $registration->workshop->id]) }}"
-                                    class="text-gray-700 hover:text-gray-900 hover:underline transition-colors duration-200">
-                                    {{ $registration->workshop->title }}
-                                </a>
-                            </strong><br>
-                            {{ $registration->workshop->description ?? 'No description.' }}
-                        </div>
-                    @endforeach
-                </div>
-            </div>
+                    <form action="{{ route('edit-profile')}}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        {{-- @method('PUT') --}}
 
-            {{-- Assignments Section --}}
-            <div id="assignmentsSection" class="hidden">
-                <h2 class="text-2xl font-bold mb-6">Tugas yang Saya Miliki</h2>
-                <div class="flex space-x-4 mb-6">
-                    <button onclick="showAssignmentCategory('ongoing')" id="ongoingButton"
-                        class="border-2 border-purple-500 text-purple-500 px-4 py-2 rounded-full hover:bg-purple-500 hover:text-white">
-                        Sedang Berjalan
-                    </button>
-                    <button onclick="showAssignmentCategory('done')" id="doneButton"
-                        class="border-2 border-green-500 text-green-500 px-4 py-2 rounded-full hover:bg-green-500 hover:text-white">
-                        Selesai
-                    </button>
-                    <button onclick="showAssignmentCategory('approved')" id="approvedButton"
-                        class="border-2 border-blue-500 text-blue-500 px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white">
-                        Disetujui
-                    </button>
-                </div>
-                <p class="text-gray-700">Track your ongoing assignments here.</p>
-                <div id="ongoingAssignments" class="hidden">
-                    @foreach ($ongoingAssignments as $assignment)
-                        <div class="border rounded p-4 mb-2 bg-purple-100">
-                            <strong>
-                                <a href="{{ route('assignment-detail', ['assignmentId' => $assignment->id]) }}"
-                                    class="text-purple-700 hover:text-purple-900 hover:underline transition-colors duration-200">
-                                    {{ $assignment->title }}
-                                </a>
-                            </strong>
-                            <p>{{ $assignment->date }}</p>
-                            <br>
-                            {{ $assignment->description ?? 'No description.' }}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Nama</label>
+                                <input type="text" name="name" value="{{ $teacher['name'] }}"
+                                    class="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" />
+                            </div>
+                            {{-- <div>
+                                <label class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
+                                <select name="gender"
+                                    class="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200">
+                                    <option value="Laki-laki" @if ($teacher['gender'] == 'Laki-laki') selected @endif>
+                                        Laki-laki</option>
+                                    <option value="Perempuan" @if ($teacher['gender'] == 'Perempuan') selected @endif>
+                                        Perempuan</option>
+                                </select>
+                            </div> --}}
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" name="email" value="{{ $teacher['email'] }}"
+                                    class="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">No. Telepon</label>
+                                <input type="text" name="phone_number" value="{{ $teacher['phone_number'] }}"
+                                    class="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" />
+                            </div>
+                            {{-- <div>
+                                <label class="block text-sm font-medium text-gray-700">Mata Pelajaran</label>
+                                <input type="text" name="subject" value="{{ $teacher['subjectTaught'] }}"
+                                    class="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" />
+                            </div> --}}
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">NUPTK</label>
+                                <input type="text" name="nuptk" value="{{ $teacher['nuptk'] }}"
+                                    class="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Komunitas</label>
+                                <input type="text" name="community" value="{{ $teacher['community'] }}"
+                                    class="mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" />
+                            </div>
                         </div>
-                    @endforeach
-                </div>
 
-                <div id="doneAssignments" class="hidden">
-                    @foreach ($doneAssignments as $assignment)
-                        <div class="border rounded p-4 mb-2 bg-green-100">
-                            <strong>
-                                <a href="{{ route('assignment-detail', ['assignmentId' => $assignment->id]) }}"
-                                    class="text-green-700 hover:text-green-900 hover:underline transition-colors duration-200">
-                                    {{ $assignment->title }}
-                                </a>
-                            </strong>
-                            {{-- <p>{{ $assignment->submissions-> }}</p> --}}
-                            <br>
-                            {{ $assignment->description ?? 'No description.' }}
+                        <div class="mt-6 flex justify-end">
+                            <button type="submit"
+                                class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">
+                                Simpan Perubahan
+                            </button>
                         </div>
-                    @endforeach
-                </div>
-
-                <div id="approvedAssignments" class="hidden">
-                    @foreach ($approvedAssignments as $assignment)
-                        <div class="border rounded p-4 mb-2 bg-blue-100">
-                            <strong>
-                                <a href="{{ route('assignment-detail', ['assignmentId' => $assignment->id]) }}"
-                                    class="text-blue-700 hover:text-blue-900 hover:underline transition-colors duration-200">
-                                    {{ $assignment->title }}
-                                </a>
-                            </strong><br>
-                            {{ $assignment->description ?? 'No description.' }}
-                        </div>
-                    @endforeach
+                    </form>
                 </div>
             </div>
         </div>
     </section>
-
-    <script>
-        function toggleSection(section) {
-            // Hide both sections
-            document.getElementById('workshopsSection').classList.add('hidden');
-            document.getElementById('assignmentsSection').classList.add('hidden');
-
-            // Reset main section buttons
-            document.getElementById('workshopsButton').classList.remove('bg-blue-500', 'text-white');
-            document.getElementById('workshopsButton').classList.add('border-2', 'border-blue-500', 'text-blue-500');
-            document.getElementById('assignmentsButton').classList.remove('bg-purple-500', 'text-white');
-            document.getElementById('assignmentsButton').classList.add('border-2', 'border-purple-500', 'text-purple-500');
-
-            // Show selected section
-            if (section === 'workshops') {
-                document.getElementById('workshopsSection').classList.remove('hidden');
-                document.getElementById('workshopsButton').classList.add('bg-blue-500', 'text-white');
-                document.getElementById('workshopsButton').classList.remove('border-2', 'border-blue-500', 'text-blue-500');
-            } else if (section === 'assignments') {
-                document.getElementById('assignmentsSection').classList.remove('hidden');
-                document.getElementById('assignmentsButton').classList.add('bg-purple-500', 'text-white');
-                document.getElementById('assignmentsButton').classList.remove('border-2', 'border-purple-500',
-                    'text-purple-500');
-            }
-        }
-
-        function showWorkshopCategory(category) {
-            // Hide all category sections
-            const categories = ['joined', 'pending', 'history'];
-            categories.forEach(cat => {
-                const section = document.getElementById(cat + 'Workshops');
-                if (section) section.classList.add('hidden');
-
-                const button = document.getElementById(cat + 'Button');
-                if (button) {
-                    button.classList.remove('bg-' + getColor(cat) + '-500', 'text-white');
-                    button.classList.add('border-2', 'border-' + getColor(cat) + '-500', 'text-' + getColor(cat) +
-                        '-500');
-                }
-            });
-
-            // Show selected section and highlight button
-            const selectedSection = document.getElementById(category + 'Workshops');
-            if (selectedSection) selectedSection.classList.remove('hidden');
-
-            const selectedButton = document.getElementById(category + 'Button');
-            if (selectedButton) {
-                selectedButton.classList.add('bg-' + getColor(category) + '-500', 'text-white');
-                selectedButton.classList.remove('border-2', 'border-' + getColor(category) + '-500', 'text-' + getColor(
-                    category) + '-500');
-            }
-        }
-
-        function getColor(category) {
-            switch (category) {
-                case 'joined':
-                    return 'green';
-                case 'pending':
-                    return 'yellow';
-                case 'history':
-                    return 'gray';
-                default:
-                    return 'blue';
-            }
-        }
-
-        function showAssignmentCategory(category) {
-            const categories = ['ongoing', 'done', 'approved'];
-            categories.forEach(cat => {
-                const section = document.getElementById(cat + 'Assignments');
-                if (section) section.classList.add('hidden');
-
-                const button = document.getElementById(cat + 'Button');
-                if (button) {
-                    button.classList.remove('bg-' + getAssignmentColor(cat) + '-500', 'text-white');
-                    button.classList.add('border-2', 'border-' + getAssignmentColor(cat) + '-500', 'text-' +
-                        getAssignmentColor(cat) + '-500');
-                }
-            });
-
-            const selectedSection = document.getElementById(category + 'Assignments');
-            if (selectedSection) selectedSection.classList.remove('hidden');
-
-            const selectedButton = document.getElementById(category + 'Button');
-            if (selectedButton) {
-                selectedButton.classList.add('bg-' + getAssignmentColor(category) + '-500', 'text-white');
-                selectedButton.classList.remove('border-2', 'border-' + getAssignmentColor(category) + '-500', 'text-' +
-                    getAssignmentColor(category) + '-500');
-            }
-        }
-
-        function getAssignmentColor(category) {
-            switch (category) {
-                case 'ongoing':
-                    return 'purple';
-                case 'done':
-                    return 'green';
-                case 'approved':
-                    return 'blue';
-                default:
-                    return 'gray';
-            }
-        }
-
-        // Default load
-        document.addEventListener('DOMContentLoaded', function() {
-            toggleSection('workshops');
-            showWorkshopCategory('joined');
-            showAssignmentCategory('ongoing');
-        });
-    </script>
 </x-layout>

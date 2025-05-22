@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
-            $table->date('regDate');
-            $table->string('paymentProof');
-            $table->boolean('isApproved');
+            $table->string('paymentProof')->nullable();
+            $table->boolean('isApproved')->nullable()->default(false);
             $table->enum('courseStatus', ['assigned', 'finished']);
             $table->foreignId('teacher_id')->constrained(
                 table: 'teachers',

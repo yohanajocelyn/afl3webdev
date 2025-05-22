@@ -38,36 +38,9 @@ class PresenceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
-    {
-        $id = request()->query('meetId');
 
-    // Find the Meet by ID
-    $meet = Meet::find($id);
 
-    if (!$meet) {
-        return redirect()->route('workshops.index')->withErrors('Meet not found');
-    }
 
-    // Get the related workshop for the meet
-    $workshop = $meet->workshop;
-
-    // Get all registrations for the workshop
-    $registrations = Registration::where('workshop_id', $workshop->id)->where('isApproved', true)->get();
-
-    // Get all teacher IDs from the registrations
-    $teacherIds = $registrations->pluck('teacher_id')->toArray();
-
-    // Get all teachers based on the teacher IDs
-    $teachers = Teacher::whereIn('id', $teacherIds)->get();
-
-    return view('mark-presence', [
-        'teachers' => $teachers,
-        'workshop' => $workshop,
-        'registrations' => $registrations,
-        'meet' => $meet
-    ]);
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -80,22 +53,7 @@ class PresenceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($presenceId)
-    {
-        $presence = Presence::find($presenceId);
 
-        if (!$presence) {
-            return response()->json(['success' => false, 'message' => 'Presence not found'], 404);
-        }
-
-        $presence->isPresent = !$presence->isPresent;
-        $presence->save();
-
-        return response()->json([
-            'success' => true,
-            'isPresent' => $presence->isPresent
-        ]);
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -105,38 +63,5 @@ class PresenceController extends Controller
         //
     }
 
-    public function markAllPresent($meetId){
-        $meet = Meet::find($meetId);
-
-        if (!$meet) {
-            return response()->json(['success' => false, 'message' => 'Meet not found'], 404);
-        }
-
-        $presences = Presence::where('meet_id', $meet->id)->get();
-
-        if (!$presences) {
-            return response()->json(['success' => false, 'message' => 'No presences found'], 404);
-        }
-
-        $allPresent = $presences->every(function ($presence) {
-            return $presence->isPresent;
-        });
-
-        if (!$allPresent) {
-            foreach ($presences as $presence) {
-                $presence->isPresent = true;
-                $presence->save();
-            }
-        }else{
-            foreach ($presences as $presence) {
-                $presence->isPresent = false;
-                $presence->save();
-            }
-        }
-
-        return response()->json([
-            'success' => true,
-            'isPresent' => !$allPresent
-        ]);
-    }
+// nnti tambah buat peserta presensi
 }

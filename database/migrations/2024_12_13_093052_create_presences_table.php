@@ -21,8 +21,9 @@ return new class extends Migration
                 table: 'registrations',
                 indexName: 'registration_has_presences'
             );
-            $table->boolean('isPresent');
             $table->dateTime('dateTime');
+            $table->enum('status', ['approved', 'pending', 'rejected'])->nullable()->default('pending');
+            $table->string('proofUrl')->nullable();
             $table->timestamps();
         });
     }
