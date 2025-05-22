@@ -123,7 +123,7 @@ class WorkshopResource extends Resource
                                         ->dehydrated(false) // Don't save to workshops table
                                         ->afterStateHydrated(function (Set $set, $record) {
                                             if ($record && $record->assignments()->exists()) {
-                                                $dueDate = $record->assignments()->first()->due_date;
+                                                $dueDate = $record->assignments()->first()->due_dateTime;
 
                                                 $set('assignment_due_date', \Carbon\Carbon::parse($dueDate));
                                             }
