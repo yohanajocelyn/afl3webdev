@@ -29,8 +29,10 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
@@ -254,4 +256,16 @@ class SubmissionResource extends Resource
             'edit' => Pages\EditSubmission::route('/{record}/edit'),
         ];
     }
+
+    public static function saved(Model $record): void
+    {
+        if ($record->wasChanged('pdf_file')) {
+            $oldPath = $record->getOriginal('path');
+
+            if ($oldPath && Storage::disk('public')->exists($oldPath)) {
+                Storage::disk('public')->delete($oldPath);
+            }
+        }
+    }
+
 }
