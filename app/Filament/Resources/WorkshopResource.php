@@ -66,11 +66,11 @@ class WorkshopResource extends Resource
                                         ->label('Workshop Banner Preview')
                                         ->content(fn ($record) => new HtmlString(
                                             $record && $record->imageURL
-                                            ? '<img src="' . asset('storage/' . $record->imageURL) . '" style="max-width: 24px; max-height: 150px;" />'
-                                            : '<img src="' . asset('storage/workshop_banners/Poster-Bebras-CT-2025.jpeg') . '" style="max-width: 200px; max-height: 150px;" />'
+                                                ? '<img src="' . asset('storage/' . $record->imageURL) . '" style="max-width: 200px; max-height: 150px;" />'
+                                                : '<img src="' . asset('images/Poster-Bebras-CT-2025.jpeg') . '" style="max-width: 200px; max-height: 150px;" />'
                                         )),
                                 ])->columnSpan(1),
-                            
+
                             Card::make()
                                 ->schema([
                                     FileUpload::make('imageURL_file')
@@ -83,16 +83,17 @@ class WorkshopResource extends Resource
                                                 $set('imageURL', 'workshop_banners/' . $state);
                                             }
                                         }),
-                                    
+
                                     TextInput::make('imageURL')
                                         ->label('Image URL')
                                         ->disabled()
-                                        ->extraAttributes(['readonly' => 'readonly', 'style' => 'pointer-events: none; user-select: none;'])
+                                        ->extraAttributes([
+                                            'readonly' => 'readonly',
+                                            'style' => 'pointer-events: none; user-select: none;',
+                                        ])
                                         ->dehydrated(true)
-                                        ->default('workshop_banners/Poster-Bebras-CT-2025.jpeg')
-                                        ->dehydrateStateUsing(function ($state) {
-                                            return $state ?: 'workshop_banners/Poster-Bebras-CT-2025.jpeg';
-                                        }),
+                                        ->default('images/Poster-Bebras-CT-2025.jpeg')
+                                        ->dehydrateStateUsing(fn ($state) => $state ?: 'images/Poster-Bebras-CT-2025.jpeg'),
                                 ])->columnSpan(1),
                         ])->columns(2),
                 ]),
