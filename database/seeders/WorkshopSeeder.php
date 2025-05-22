@@ -22,6 +22,7 @@ class WorkshopSeeder extends Seeder
             'startDate' => Carbon::now(), // today
             'endDate' => Carbon::now()->addDays(3), // 3 days later
             'description' => 'Belajar desain grafis menggunakan Canva, cocok untuk pemula tanpa pengalaman desain.',
+            'imageUrl' => 'images/Poster-Bebras-CT-2025.jpeg',
             'price' => 0,
             'isOpen' => false,
         ]);
