@@ -52,7 +52,7 @@
 
                     <a href="/teacherprofile/?teacherId={{ auth()->user()->id }}"
                         class="text-gray-800 hover:text-blue-600 transition duration-300 flex flex-row justify-center items-center">
-                        <img src="{{ asset('storage/profile_pictures/defaultProfilePicture.jpg') }}" alt="Profile Picture"
+                        <img src="{{ asset('images/defaultProfilePicture.jpg') }}" alt="Profile Picture"
                             class="w-8 h-8 rounded-full mr-2">
                         <span>{{ Str::limit(auth()->user()->name, 5, '...') }}</span>
                     </a>
