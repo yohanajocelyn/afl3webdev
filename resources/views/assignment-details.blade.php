@@ -22,7 +22,7 @@
                 <p class="text-sm text-gray-500 mt-2">
                     <strong>File Terkumpul:</strong>
                     <a href="{{ asset($userSubmission->path) }}" target="_blank" class="text-blue-600 underline">
-                        Lihat PDF Pengumpulan
+                        Lihat PDF Terkumpul
                     </a>
                 </p>
                 <p><strong>Catatan:</strong> {{ $userSubmission->note ?? 'Tidak ada catatan' }}</p>
