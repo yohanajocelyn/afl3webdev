@@ -4,36 +4,49 @@
         <p class="text-gray-600 mt-2">{{ $assignment->date }}</p>
     </div>
     <div class="border-t border-gray-300 mt-6 pt-4">
-        @if (auth()->check() && auth()->user()->role === \App\Enums\Role::Admin)
-            {{-- Admin buttons as before --}}
-            <div class="flex justify-end gap-4">
-                <a href="/submissions/?assignmentId={{ $assignment->id }}">
-                    <button id="checkSubmissionsButton"
-                        class="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600">
-                        Check Submissions
-                    </button>
-                </a>
 
-                <button id="editAssignmentButton" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                    Edit Assignment
-                </button>
-            </div>
-            {{-- Edit Modal (unchanged) --}}
-            ...
-        @else
-            {{-- For teachers --}}
+        {{-- show users submission --}}
+        @if ($userSubmission)
+            <div class="mb-6 p-4 border rounded bg-white shadow">
+                <h3 class="text-xl font-semibold mb-2">Your Submission</h3>
 
-            {{-- Show submission if exists --}}
-            @if ($userSubmission)
-                <div class="mb-6 p-4 border rounded bg-white shadow">
-                    <h3 class="text-xl font-semibold mb-2">Your Submission</h3>
-                    <p><strong>Link:</strong> <a href="{{ $userSubmission->url }}" target="_blank"
-                            class="text-blue-600 underline">{{ $userSubmission->url }}</a></p>
-                    <p><strong>Note:</strong> {{ $userSubmission->note ?? 'No notes' }}</p>
-                    <p><strong>Status:</strong>
-                        <span class="{{ $userSubmission->isApproved ? 'text-green-500' : 'text-yellow-500'}}">
-                            {{ $userSubmission->isApproved ? 'Approved' : 'Pending Approval' }}
-                        </span>
+                <p><strong>Link:</strong>
+                    <a href="{{ $userSubmission->url }}" target="_blank" class="text-blue-600 underline">
+                        {{ $userSubmission->url }}
+                    </a>
+                </p>
+                <p class="text-sm text-gray-500 mt-2">
+                    <strong>Submitted File:</strong>
+                    <a href="{{ asset($userSubmission->path) }}" target="_blank" class="text-blue-600 underline">
+                        View Submission PDF
+                    </a>
+                </p>
+                <p><strong>Note:</strong> {{ $userSubmission->note ?? 'No notes' }}</p>
+
+                <p><strong>Status:</strong>
+                    @php
+                        $status = $userSubmission->status->value;
+                    @endphp
+                    <span
+                        class="@switch($status)
+                        @case('approved')
+                        text-green-500
+                        @break
+                        @case('pending')
+                        text-yellow-500
+                        @break
+                        @case('rejected')
+                        text-red-500
+                        @break
+                    @endswitch">
+                        {{ ucfirst($status) }}
+                    </span>
+                </p>
+                {{-- file and revision note shown when rejected --}}
+                @if ($userSubmission->status === 'rejected')
+                    <p class="text-sm text-red-600 mt-1">
+                        <strong>Revision Note:</strong>
+                        {{ $userSubmission->revisionNote ?? 'No revision notes provided.' }}
                     </p>
                 @endif
             </div>
@@ -117,31 +130,35 @@
                 <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
                     <h2 class="text-2xl font-bold mb-4">Kumpulkan Hasil Anda</h2>
 
-                        <form action="{{ route('submit-assignment', ['id' => $assignment['id']]) }}" method="POST">
-                            @csrf
-                            <div class="mb-4">
-                                <label for="submissionText" class="block text-gray-700 font-bold mb-2">Link Google
-                                    Drive:</label>
-                                <input id="submissionLink" name="submissionLink"
-                                    class="border rounded-lg px-3 py-2 w-full" required type="text">
-                            </div>
-                            <div class="mb-4">
-                                <label for="submissionNote" class="block text-gray-700 font-bold mb-2">Note:</label>
-                                <textarea id="submissionNote" name="submissionNote" class="border rounded-lg px-3 py-2 w-full">-</textarea>
-                            </div>
-                            <div class="flex justify-end">
-                                <button type="button" id="closeSubmitModalButton"
-                                    class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2">
-                                    Cancel
-                                </button>
-                                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md">
-                                    Submit
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                    <form action="{{ route('submit-assignment', ['id' => $assignment['id']]) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-4">
+                            <label for="submissionText" class="block text-gray-700 font-bold mb-2">Link Google
+                                Drive:</label>
+                            <input id="submissionLink" name="submissionLink" class="border rounded-lg px-3 py-2 w-full"
+                                required type="text">
+                            <label for="submissionFile" class="block text-gray-700 font-bold mb-2">
+                                PDF File (max ...)
+                            </label>
+                            <input id="submissionFile" name="submissionFile" required type="file">
+                        </div>
+                        <div class="mb-4">
+                            <label for="submissionNote" class="block text-gray-700 font-bold mb-2">Note:</label>
+                            <textarea id="submissionNote" name="submissionNote" class="border rounded-lg px-3 py-2 w-full">-</textarea>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="button" id="closeSubmitModalButton"
+                                class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2">
+                                Cancel
+                            </button>
+                            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            @endif
+            </div>
         @endif
     </div>
 
