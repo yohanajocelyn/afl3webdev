@@ -22,7 +22,7 @@
             <!-- workshop details -->
             <div class="flex flex-col ps-0 md:ps-16 py-3 w-full h-auto md:h-auto mt-6 md:mt-0">
                 <p class="font-bold text-3xl md:text-5xl text-center md:text-left">{{ $workshop->title }}</p>
-                <p class="text-gray-600 py-4 text-center md:text-left">{{ $workshop->description }}</p>
+                <p class="text-gray-600 py-4 text-center md:text-left">{!! nl2br(e($workshop->description)) !!}</p>
 
                 <div class="text-center pb-4 md:text-left flex flex-col md:flex-row">
                     <p class="">Tanggal Pelaksanaan: </p>
