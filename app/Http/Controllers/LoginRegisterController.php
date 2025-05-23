@@ -59,7 +59,7 @@ class LoginRegisterController extends Controller
         $existingTeacher = Teacher::where('email', $validatedData['email'])->first();
 
         if ($existingTeacher) {
-            return back()->withErrors(['email' => 'The email is already taken.'])->withInput();
+            return back()->withErrors(['email' => 'Email ini Sudah Terdaftar.'])->withInput();
         }
 
         $teacher = Teacher::create([
@@ -91,7 +91,7 @@ class LoginRegisterController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Email / Password yang Anda Masukkan Salah.',
         ])->onlyInput('email');
     }
 
