@@ -12,7 +12,8 @@
                     <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full font-medium">
                         Terdaftar
                     </div>
-                @elseif(auth()->check() && auth()->user()->registrations()->where('workshop_id', $workshop->id)->where('courseStatus', 'finished')->exists())
+                @elseif(auth()->check() &&
+                        auth()->user()->registrations()->where('workshop_id', $workshop->id)->where('courseStatus', 'finished')->exists())
                     <div class="absolute top-4 right-4 bg-blue-500 text-white px-3 py-1 rounded-full font-medium">
                         Selesai
                     </div>
@@ -44,8 +45,10 @@
                 </div>
 
                 <!-- daftar workshop -->
-                <div class="flex justify-center md:justify-start mb-4">
-                    @if (auth()->check())
+                <div class="flex flex-col items-center md:items-start mb-4 space-y-2">
+                    @if (\Carbon\Carbon::parse($workshop['endDate'])->isPast())
+                        <p class="text-red-600 font-medium">Workshop ini telah selesai.</p>
+                    @elseif (auth()->check())
                         @if (!auth()->user()->registrations()->where('workshop_id', $workshop->id)->exists())
                             <button class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md transition-all"
                                 onclick="togglePopUp(true)">
