@@ -41,20 +41,20 @@
                                 <label class="block text-sm font-medium text-gray-700">Instansi</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['school']['name'] }}</p>
                             </div>
-                            {{-- <div class="flex-1">
-                                <label class="block text-sm font-medium text-gray-700">Mata Pelajaran</label>
-                                <p class="mt-1 text-gray-900">{{ $teacher['subjectTaught'] }}</p>
-                            </div> --}}
-                        </div>
-
-                        <div class="flex flex-col sm:flex-row sm:space-x-6">
                             <div class="flex-1">
                                 <label class="block text-sm font-medium text-gray-700">NUPTK</label>
                                 <p class="mt-1 text-gray-900">{{ $teacher['nuptk'] }}</p>
                             </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row sm:space-x-6">
                             <div class="flex-1">
                                 <label class="block text-sm font-medium text-gray-700">Komunitas</label>
-                                <p class="mt-1 text-gray-900">{{ $teacher['community'] }}</p>
+                                <p class="mt-1 text-gray-900">{{ $teacher['community'] ?? '-'}}</p>
+                            </div>
+                            <div class="flex-1">
+                                <label class="block text-sm font-medium text-gray-700">Mentor</label>
+                                <p class="mt-1 text-gray-900">{{ $teacher['mentor']['name'] ?? '-'}}</p>
                             </div>
                         </div>
                     </div>

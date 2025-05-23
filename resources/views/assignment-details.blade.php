@@ -48,7 +48,7 @@
                     </span>
                 </p>
                 {{-- file and revision note shown when rejected --}}
-                @if ($userSubmission->status === 'rejected')
+                @if ($userSubmission->status->value === 'rejected')
                     <p class="text-sm text-red-600 mt-1">
                         <strong>Catatan Revisi:</strong>
                         {{ $userSubmission->revisionNote ?? 'No revision notes provided.' }}
