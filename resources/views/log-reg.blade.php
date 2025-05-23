@@ -119,11 +119,20 @@
     </section>
 
     <script>
-        // JavaScript to handle toggling of the new school input
         document.getElementById('addSchoolButton').addEventListener('click', function() {
             const newSchoolInput = document.getElementById('newSchoolInput');
+            const schoolSelect = document.getElementById('school');
+
+            // Toggle visibility
             newSchoolInput.classList.toggle('hidden');
-            newSchoolInput.focus();
+
+            // Clear the selected value in the dropdown
+            schoolSelect.selectedIndex = 0;
+
+            // Optionally: Set focus to first new school input
+            if (!newSchoolInput.classList.contains('hidden')) {
+                document.getElementById('newSchoolName').focus();
+            }
         });
     </script>
 </x-layout>
