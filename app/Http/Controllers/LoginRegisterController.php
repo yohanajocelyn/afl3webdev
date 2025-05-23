@@ -69,7 +69,8 @@ class LoginRegisterController extends Controller
             'password' => bcrypt($validatedData['password']), // Hash the password before storing
             'nuptk' => $validatedData['nuptk'],
             'community' => $validatedData['community'],
-            'school_id' => $school->id
+            'school_id' => $school->id,
+            'mentor_id' => $mentor->id
         ]);
 
         Auth::guard('teacher')->login($teacher);
