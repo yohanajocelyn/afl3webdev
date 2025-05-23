@@ -89,6 +89,20 @@
                             placeholder="Masukkan nama komunitas (bila ada)" />
                     </div>
 
+                    <div class="flex flex-col">
+                        <label for="mentor" class="text-sm font-medium text-gray-600">Mentor Anda</label>
+                        <div class="flex gap-2">
+                            <select id="mentor" name="mentor"
+                                class="border rounded-md p-2 w-full focus:outline-blue-400">
+                                <option value="" disabled selected required>Pilih Mentor</option>
+                                @foreach ($mentors as $mentor)
+                                    <option value="{{ $mentor->name }}">{{ $mentor->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+
                     <input id="pageBefore" name="pageBefore" type="hidden" value="{{ url()->previous() }}">
                     <button type="submit"
                         class="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600">Register</button>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\School;
+use App\Models\Mentor;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,8 @@ class LoginRegisterController extends Controller
     
         // If not authenticated, return the view with the schools data
         return view('log-reg', [
-            'schools' => School::all()
+            'schools' => School::all(),
+            'mentors' => Mentor::all()
         ]);
     }
 
@@ -34,7 +36,12 @@ class LoginRegisterController extends Controller
             'password' => 'required|string|min:8|max:255',
             'nuptk' => 'required|string|max:255',
             'community' => 'nullable|string|max:255',
+            'mentor' => 'required|string|max:255',
         ]);
+
+        if(isset ($validatedData['mentor'])) {
+            $mentor = Mentor::where('name', $validatedData['mentor'])->first();
+        }
 
         if (isset($validatedData['school'])) {
             $school = School::where('name', $validatedData['school'])->first();
