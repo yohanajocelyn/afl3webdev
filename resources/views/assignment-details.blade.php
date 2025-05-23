@@ -1,6 +1,7 @@
 <x-layout>
     <div class="mb-6 mt-6">
         <h1 class="text-3xl font-bold text-gray-800">{{ $assignment->title }}</h1>
+        <p class="text-gray-600 mt-4">Pelatihan : {{ $assignment->workshop['title']}}</p>
         <p class="text-gray-600 mt-2">Waktu Tenggat: {{ $assignment->due_dateTime }}</p>
         <p class="text-gray-600 mt-4">{{ $assignment->description }}</p>
         @if ($assignment->url)
@@ -91,8 +92,8 @@
                                     class="border rounded-lg px-3 py-2 w-full" required
                                     value="{{ old('submissionLink', $userSubmission->url ?? '') }}">
                                 <label for="submissionFileEdit">File PDF:</label>
-                                <input id="submissionFileEdit" name="submissionFile" type="file" accept="application/pdf"
-                                    class="border rounded-lg px-3 py-2 w-full">
+                                <input id="submissionFileEdit" name="submissionFile" type="file"
+                                    accept="application/pdf" class="border rounded-lg px-3 py-2 w-full">
 
                                 @if ($userSubmission->path)
                                     <p class="text-sm text-gray-500 mt-1">File Saat Ini:
@@ -104,7 +105,8 @@
                                 @endif
                             </div>
                             <div class="mb-4">
-                                <label for="submissionNoteEdit" class="block text-gray-700 font-bold mb-2">Catatan:</label>
+                                <label for="submissionNoteEdit"
+                                    class="block text-gray-700 font-bold mb-2">Catatan:</label>
                                 <textarea id="submissionNoteEdit" name="submissionNote" class="border rounded-lg px-3 py-2 w-full">{{ $userSubmission->note }}</textarea>
                             </div>
                             <div class="flex justify-end">
@@ -145,7 +147,8 @@
                             <label for="submissionFile" class="block text-gray-700 font-bold mb-2">
                                 PDF File (max 1MB)
                             </label>
-                            <input id="submissionFile" name="submissionFile" required type="file" accept="application/pdf">
+                            <input id="submissionFile" name="submissionFile" required type="file"
+                                accept="application/pdf">
                         </div>
                         <div class="mb-4">
                             <label for="submissionNote" class="block text-gray-700 font-bold mb-2">Catatan:</label>
