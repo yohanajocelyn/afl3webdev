@@ -5,7 +5,7 @@
         <p class="text-gray-600 mt-2">Waktu Tenggat: {{ $assignment->due_dateTime }}</p>
         <p class="text-gray-600 mt-4">{{ $assignment->description }}</p>
         @if ($assignment->url)
-            <p class="text-gray-600 mt-2">Link Template : <a href="{{ $assignment->url }}">{{ $assignment->url }}</a></p>
+            <p class="text-gray-600 mt-2">Link Template : </p><a href="{{ $assignment->url }}">{{ $assignment->url }}</a>
         @endif
     </div>
     <div class="border-t border-gray-300 mt-6 pt-4">
