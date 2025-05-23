@@ -38,7 +38,7 @@ class SubmissionController extends Controller
             ->first();
 
         $validated = $request->validate([
-            'submissionLink' => 'required|url',
+            'submissionLink' => 'nullable|string',
             'submissionNote'  => 'nullable|string',
             'submissionFile' => [
                 $submission ? 'nullable' : 'required', //karena bisa null kl update ngga ganti file
