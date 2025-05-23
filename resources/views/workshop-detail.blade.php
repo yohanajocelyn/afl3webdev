@@ -125,7 +125,10 @@
                                             <div class="p-6">
                                                 <h3 class="text-xl font-semibold mb-2 text-gray-800">{{ $meet->title }}
                                                 </h3>
-                                                <div class="flex items-center text-sm text-gray-500 mb-4">
+                                                <p class="text-gray-700 mb-2 leading-relaxed">
+                                                    {!! nl2br(e($meet->description)) !!}
+                                                </p>
+                                                <div class="flex items-center text-sm text-gray-500 mb-1">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1"
                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
