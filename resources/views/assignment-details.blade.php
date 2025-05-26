@@ -1,11 +1,12 @@
 <x-layout>
     <div class="mb-6 mt-6">
         <h1 class="text-3xl font-bold text-gray-800">{{ $assignment->title }}</h1>
-        <p class="text-gray-600 mt-4">Pelatihan : {{ $assignment->workshop['title']}}</p>
+        <p class="text-gray-600 mt-4">Pelatihan : {{ $assignment->workshop['title'] }}</p>
         <p class="text-gray-600 mt-2">Waktu Tenggat: {{ $assignment->due_dateTime }}</p>
         <p class="text-gray-600 mt-4">{{ $assignment->description }}</p>
         @if ($assignment->url)
-            <p class="text-gray-600 mt-2">Link Template : <a class="text-blue-500 underline" href="{{ $assignment->url }}">{{ $assignment->url }}</a></p>
+            <p class="text-gray-600 mt-2">Link Template : <a class="text-blue-500 underline"
+                    href="{{ $assignment->url }}">{{ $assignment->url }}</a></p>
         @endif
     </div>
     <div class="border-t border-gray-300 mt-6 pt-4">
@@ -88,12 +89,17 @@
                                 <label for="submissionLinkEdit" class="block text-gray-700 font-bold mb-2">Link
                                     Google
                                     Drive:</label>
-                                <input id="submissionLinkEdit" name="submissionLink" type="url"
-                                    class="border rounded-lg px-3 py-2 w-full" required
-                                    value="{{ old('submissionLink', $userSubmission->url ?? '') }}">
+                                <input id="submissionLinkEdit" name="submissionLink" type="url/string"
+                                    class="border rounded-lg px-3 py-2 w-full"
+                                    value="{{ old('submissionLink', $userSubmission->url ?? '') }}" required>
                                 <label for="submissionFileEdit">File PDF:</label>
                                 <input id="submissionFileEdit" name="submissionFile" type="file"
-                                    accept="application/pdf" class="border rounded-lg px-3 py-2 w-full">
+                                    accept="pdf" class="border rounded-lg px-3 py-2 w-full">
+
+                                {{-- Display file size error for edit form --}}
+                                @error('submissionFile')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
 
                                 @if ($userSubmission->path)
                                     <p class="text-sm text-gray-500 mt-1">File Saat Ini:
@@ -107,7 +113,7 @@
                             <div class="mb-4">
                                 <label for="submissionNoteEdit"
                                     class="block text-gray-700 font-bold mb-2">Catatan:</label>
-                                <textarea id="submissionNoteEdit" name="submissionNote" class="border rounded-lg px-3 py-2 w-full">{{ $userSubmission->note }}</textarea>
+                                <textarea id="submissionNoteEdit" name="submissionNote" class="border rounded-lg px-3 py-2 w-full">{{ old('submissionNote', $userSubmission->note ?? '') }}</textarea>
                             </div>
                             <div class="flex justify-end">
                                 <button type="button" id="closeEditSubmissionModalButton"
@@ -140,19 +146,24 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="mb-4">
-                            <label for="submissionText" class="block text-gray-700 font-bold mb-2">Link Google
+                            <label for="submissionLink" class="block text-gray-700 font-bold mb-2">Link Google
                                 Drive:</label>
                             <input id="submissionLink" name="submissionLink" class="border rounded-lg px-3 py-2 w-full"
-                                required type="text">
-                            <label for="submissionFile" class="block text-gray-700 font-bold mb-2">
+                                type="url/string" value="{{ old('submissionLink') }}" required> {{-- Added type="url" and old() --}}
+                            <label for="submissionFile" class="block text-gray-700 font-bold mb-2 mt-2">
+                                {{-- Added mt-2 for spacing --}}
                                 PDF File (max 1MB)
                             </label>
-                            <input id="submissionFile" name="submissionFile" required type="file"
-                                accept="application/pdf">
+                            <input id="submissionFile" name="submissionFile" type="file" accept="application/pdf" required>
+
+                            {{-- Display file size error for new submission form --}}
+                            @error('submissionFile')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="mb-4">
                             <label for="submissionNote" class="block text-gray-700 font-bold mb-2">Catatan:</label>
-                            <textarea id="submissionNote" name="submissionNote" class="border rounded-lg px-3 py-2 w-full">-</textarea>
+                            <textarea id="submissionNote" name="submissionNote" class="border rounded-lg px-3 py-2 w-full">{{ old('submissionNote', '-') }}</textarea> {{-- Added old() and default '-' --}}
                         </div>
                         <div class="flex justify-end">
                             <button type="button" id="closeSubmitModalButton"
