@@ -211,9 +211,11 @@ class SubmissionResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('title')->searchable(),
-
-                TextColumn::make('url')->limit(30),
+                TextColumn::make('registration.teacher.mentor.name')
+                    ->label('Mentor')
+                    ->searchable()
+                    ->sortable(),
+                    
                 BadgeColumn::make('status')
                     ->label('Approval Status')
                     ->state(fn ($record) => $record->status->value ?? 'N/A') // ensure it's a string
