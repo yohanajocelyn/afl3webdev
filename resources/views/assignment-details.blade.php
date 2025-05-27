@@ -1,14 +1,20 @@
 <x-layout>
     <div class="mb-6 mt-6">
         <h1 class="text-3xl font-bold text-gray-800">{{ $assignment->title }}</h1>
-        <p class="text-gray-600 mt-2">{{ $assignment->date }}</p>
+        <p class="text-gray-600 mt-4">Pelatihan : {{ $assignment->workshop['title'] }}</p>
+        <p class="text-gray-600 mt-2">Waktu Tenggat: {{ $assignment->due_dateTime }}</p>
+        <p class="text-gray-600 mt-4">{{ $assignment->description }}</p>
+        @if ($assignment->url)
+            <p class="text-gray-600 mt-2">Link Template : <a class="text-blue-500 underline"
+                    href="{{ $assignment->url }}">{{ $assignment->url }}</a></p>
+        @endif
     </div>
     <div class="border-t border-gray-300 mt-6 pt-4">
 
         {{-- show users submission --}}
         @if ($userSubmission)
             <div class="mb-6 p-4 border rounded bg-white shadow">
-                <h3 class="text-xl font-semibold mb-2">Your Submission</h3>
+                <h3 class="text-xl font-semibold mb-2">Pengumpulan Anda</h3>
 
                 <p><strong>Link:</strong>
                     <a href="{{ $userSubmission->url }}" target="_blank" class="text-blue-600 underline">
@@ -16,12 +22,12 @@
                     </a>
                 </p>
                 <p class="text-sm text-gray-500 mt-2">
-                    <strong>Submitted File:</strong>
+                    <strong>File Terkumpul:</strong>
                     <a href="{{ asset($userSubmission->path) }}" target="_blank" class="text-blue-600 underline">
-                        View Submission PDF
+                        Lihat PDF Terkumpul
                     </a>
                 </p>
-                <p><strong>Note:</strong> {{ $userSubmission->note ?? 'No notes' }}</p>
+                <p><strong>Catatan:</strong> {{ $userSubmission->note ?? 'Tidak ada catatan' }}</p>
 
                 <p><strong>Status:</strong>
                     @php
@@ -43,9 +49,9 @@
                     </span>
                 </p>
                 {{-- file and revision note shown when rejected --}}
-                @if ($userSubmission->status === 'rejected')
+                @if ($userSubmission->status->value === 'rejected')
                     <p class="text-sm text-red-600 mt-1">
-                        <strong>Revision Note:</strong>
+                        <strong>Catatan Revisi:</strong>
                         {{ $userSubmission->revisionNote ?? 'No revision notes provided.' }}
                     </p>
                 @endif
@@ -59,11 +65,11 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md">
-                            Remove Submission
+                            Hapus Pengumpulan
                         </button>
                     </form>
                     <button id="editSubmissionButton" class="bg-blue-500 text-white px-4 py-2 rounded-md">
-                        Edit Submission
+                        Edit Pengumpulan
                     </button>
                 </div>
             @endif
@@ -83,33 +89,39 @@
                                 <label for="submissionLinkEdit" class="block text-gray-700 font-bold mb-2">Link
                                     Google
                                     Drive:</label>
-                                <input id="submissionLinkEdit" name="submissionLink" type="url"
-                                    class="border rounded-lg px-3 py-2 w-full" required
-                                    value="{{ old('submissionLink', $userSubmission->url ?? '') }}">
+                                <input id="submissionLinkEdit" name="submissionLink" type="url/string"
+                                    class="border rounded-lg px-3 py-2 w-full"
+                                    value="{{ old('submissionLink', $userSubmission->url ?? '') }}" required>
                                 <label for="submissionFileEdit">File PDF:</label>
                                 <input id="submissionFileEdit" name="submissionFile" type="file"
-                                    class="border rounded-lg px-3 py-2 w-full">
+                                    accept="pdf" class="border rounded-lg px-3 py-2 w-full">
+
+                                {{-- Display file size error for edit form --}}
+                                @error('submissionFile')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
 
                                 @if ($userSubmission->path)
-                                    <p class="text-sm text-gray-500 mt-1">Current File:
+                                    <p class="text-sm text-gray-500 mt-1">File Saat Ini:
                                         <a href="{{ asset($userSubmission->path) }}" target="_blank"
                                             class="text-blue-600 underline">
-                                            View Submission PDF
+                                            Lihat PDF Terkumpul
                                         </a>
                                     </p>
                                 @endif
                             </div>
                             <div class="mb-4">
-                                <label for="submissionNoteEdit" class="block text-gray-700 font-bold mb-2">Note:</label>
-                                <textarea id="submissionNoteEdit" name="submissionNote" class="border rounded-lg px-3 py-2 w-full">{{ $userSubmission->note }}</textarea>
+                                <label for="submissionNoteEdit"
+                                    class="block text-gray-700 font-bold mb-2">Catatan:</label>
+                                <textarea id="submissionNoteEdit" name="submissionNote" class="border rounded-lg px-3 py-2 w-full">{{ old('submissionNote', $userSubmission->note ?? '') }}</textarea>
                             </div>
                             <div class="flex justify-end">
                                 <button type="button" id="closeEditSubmissionModalButton"
                                     class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2">
-                                    Cancel
+                                    Batal
                                 </button>
                                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">
-                                    Save Changes
+                                    Simpan Perubahan
                                 </button>
                             </div>
                         </form>
@@ -120,7 +132,7 @@
             {{-- No submission yet: Show Submit Work button --}}
             <div class="flex justify-end">
                 <button id="submitWorkButton" class="bg-green-500 text-white px-4 py-2 rounded-md">
-                    Submit Work
+                    Kumpulkan Tugas
                 </button>
             </div>
 
@@ -134,26 +146,32 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="mb-4">
-                            <label for="submissionText" class="block text-gray-700 font-bold mb-2">Link Google
+                            <label for="submissionLink" class="block text-gray-700 font-bold mb-2">Link Google
                                 Drive:</label>
                             <input id="submissionLink" name="submissionLink" class="border rounded-lg px-3 py-2 w-full"
-                                required type="text">
-                            <label for="submissionFile" class="block text-gray-700 font-bold mb-2">
-                                PDF File (max ...)
+                                type="url/string" value="{{ old('submissionLink') }}" required> {{-- Added type="url" and old() --}}
+                            <label for="submissionFile" class="block text-gray-700 font-bold mb-2 mt-2">
+                                {{-- Added mt-2 for spacing --}}
+                                PDF File (max 1MB)
                             </label>
-                            <input id="submissionFile" name="submissionFile" required type="file">
+                            <input id="submissionFile" name="submissionFile" type="file" accept="application/pdf" required>
+
+                            {{-- Display file size error for new submission form --}}
+                            @error('submissionFile')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="mb-4">
-                            <label for="submissionNote" class="block text-gray-700 font-bold mb-2">Note:</label>
-                            <textarea id="submissionNote" name="submissionNote" class="border rounded-lg px-3 py-2 w-full">-</textarea>
+                            <label for="submissionNote" class="block text-gray-700 font-bold mb-2">Catatan:</label>
+                            <textarea id="submissionNote" name="submissionNote" class="border rounded-lg px-3 py-2 w-full">{{ old('submissionNote', '-') }}</textarea> {{-- Added old() and default '-' --}}
                         </div>
                         <div class="flex justify-end">
                             <button type="button" id="closeSubmitModalButton"
                                 class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2">
-                                Cancel
+                                Batal
                             </button>
                             <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md">
-                                Submit
+                                Kumpulkan
                             </button>
                         </div>
                     </form>

@@ -158,15 +158,19 @@
                                         <div
                                             class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-200">
                                             <div
-                                                class="p-1 {{ $status === 'belum-dikerjakan' ? 'bg-purple-500' : 
-                                                            ($status === 'menunggu-persetujuan' ? 'bg-orange-500' : 
-                                                            ($status === 'perlu-revisi' ? 'bg-red-500' : 'bg-green-500')) }}">
+                                                class="p-1 {{ $status === 'belum-dikerjakan'
+                                                    ? 'bg-purple-500'
+                                                    : ($status === 'menunggu-persetujuan'
+                                                        ? 'bg-orange-500'
+                                                        : ($status === 'perlu-revisi'
+                                                            ? 'bg-red-500'
+                                                            : 'bg-green-500')) }}">
                                             </div>
                                             <div class="p-6">
                                                 <h3 class="text-xl font-semibold mb-2 text-gray-800">
                                                     {{ $assignment->title }}</h3>
                                                 <p class="text-gray-600 mb-4 line-clamp-2">
-                                                    {{ $assignment->description ?? 'Tidak ada deskripsi tersedia.' }}
+                                                    {{ $assignment->workshop['title'] }}
                                                 </p>
                                                 <div class="flex items-center text-sm text-gray-500 mb-4">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1"

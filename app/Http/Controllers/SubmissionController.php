@@ -38,7 +38,7 @@ class SubmissionController extends Controller
             ->first();
 
         $validated = $request->validate([
-            'submissionLink' => 'required|url',
+            'submissionLink' => 'nullable|string',
             'submissionNote'  => 'nullable|string',
             'submissionFile' => [
                 $submission ? 'nullable' : 'required', //karena bisa null kl update ngga ganti file
@@ -46,6 +46,11 @@ class SubmissionController extends Controller
                 'mimes:pdf',
                 'max:1024'
             ],
+        ],  [
+            // Custom messages start here
+            'submissionFile.max' => 'Ukuran file PDF tidak boleh lebih dari 1MB.',
+            'submissionFile.required' => 'File PDF wajib diunggah.',
+            'submissionFile.mimes' => 'File harus berbenrtuk PDF.',
         ]);
 
         if ($submission) {
