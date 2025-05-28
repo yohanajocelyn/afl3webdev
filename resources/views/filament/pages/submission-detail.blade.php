@@ -18,7 +18,7 @@
 
                 <!-- Assignment -->
                 <div class="space-y-1">
-                    <label class="text-sm font-medium text-gray-400">Title</label>
+                    <label class="text-sm font-medium text-gray-400">Assignment Title</label>
                     <div class="text-gray-200">{{ $submission->assignment->title }}</div>
                 </div>
 
