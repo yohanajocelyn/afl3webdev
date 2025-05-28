@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class Teacher extends Authenticatable
 {
+    use Notifiable;
+
     use HasFactory;
     protected $fillable = ['name', 'phone_number', 'email', 'password', 'nuptk', 'community', 'school_id', 'mentor_id'];
 

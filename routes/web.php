@@ -5,6 +5,8 @@ use App\Filament\Pages\MeetDetail;
 use App\Filament\Pages\SubmissionDetail;
 use App\Filament\Pages\WorkshopDetail;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Models\School;
 use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\PresenceController;
@@ -69,3 +71,11 @@ Route::get('/my-courses', [TeacherController::class, 'getCourses'])->middleware(
 
 //edit profile
 Route::post('/teacherprofile/edit', [TeacherController::class, 'editProfile'])->name('edit-profile');
+
+// Request reset link
+Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+// Reset password form
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
