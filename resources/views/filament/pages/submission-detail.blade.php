@@ -16,6 +16,12 @@
                     <div class="text-gray-200">{{ $submission->title }}</div>
                 </div>
 
+                <!-- Assignment -->
+                <div class="space-y-1">
+                    <label class="text-sm font-medium text-gray-400">Title</label>
+                    <div class="text-gray-200">{{ $submission->assignment->title }}</div>
+                </div>
+
                 <!-- Teacher & Workshop -->
                 <div class="space-y-1">
                     <label class="text-sm font-medium text-gray-400">Teacher - Workshop</label>
