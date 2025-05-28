@@ -58,12 +58,12 @@ class AssignmentDetail extends Page implements HasTable
                 ->label('Participant')
                 ->html()
                 ->formatStateUsing(function ($state, $record) {
-                $submission = $record->submissions->first();
-                if ($submission) {
-                    $url = route('admin-submissions.show', $submission->id);
-                    return "<a href=\"{$url}\" class=\"text-primary-600 hover:underline\">{$state}</a>";
-                }
-                return $state;
+                    $submission = $record->submissions->first(); // get the first submission for this assignment
+                    if ($submission) {
+                        $url = route('admin-submissions.show', $submission->id);
+                        return "<a href=\"{$url}\" class=\"text-primary-600 hover:underline\">{$state}</a>";
+                    }
+                    return $state; // plain text if no submission
                 }),
             
             BadgeColumn::make('submissions_status')
