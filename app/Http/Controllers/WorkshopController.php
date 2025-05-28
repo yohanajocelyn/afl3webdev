@@ -24,47 +24,73 @@ class WorkshopController extends Controller
         return view('filament.pages.workshop-detail', compact('workshop'));
     }
 
-    public function getAll() {
+    public function getAll()
+    {
         $workshops = Workshop::paginate(6);
-    
+
         $workshops->getCollection()->transform(function ($workshop) {
             $startDate = Carbon::parse($workshop->startDate);
             $endDate = Carbon::parse($workshop->endDate);
             // $startDate = $workshop->startDate->format('Y-m-d H:i');
             // $endDate = $workshop->endDate->format('Y-m-d H:i');
-    
+
             $durationInHours = $startDate->diffInHours($endDate);
             $workshop->duration = ceil($durationInHours / 24) + 1;
-    
+
             return $workshop;
         });
-    
+
         return view('home', [
             'workshops' => $workshops
         ]);
     }
 
-    public function getById ($id) {
+    // public function getById ($id) {
 
+    //     $workshop = Workshop::getById($id);
+    //     $registrations = Registration::with(['teacher', 'workshop'])
+    //     ->where('workshop_id', $id)
+    //     ->get();
+
+    //     return view('workshop-detail', [
+    //         'workshop' => $workshop,
+    //         'registrations' => $registrations
+    //     ]);
+    // }
+
+    public function getById($id)
+    {
         $workshop = Workshop::getById($id);
+
+        $workshop->load('assignments');
+
+        // get latest due_dateTime from assignments
+        $latestDueDate = $workshop->assignments->max('due_dateTime');
+
+        // compare with now
+        $hasPassedLastDueDate = $latestDueDate ? Carbon::now()->gt(Carbon::parse($latestDueDate)) : false;
+
         $registrations = Registration::with(['teacher', 'workshop'])
-        ->where('workshop_id', $id)
-        ->get();
-        
+            ->where('workshop_id', $id)
+            ->get();
+
         return view('workshop-detail', [
             'workshop' => $workshop,
-            'registrations' => $registrations
+            'registrations' => $registrations,
+            'hasPassedLastDueDate' => $hasPassedLastDueDate,
         ]);
     }
 
-    public function registerWorkshop(Request $request){
+
+    public function registerWorkshop(Request $request)
+    {
 
         $workshopId = $request->workshopId;
         $workshop = Workshop::findOrFail($workshopId);
-        if($workshop['price'] == 0){
+        if ($workshop['price'] == 0) {
             $paymentProof = 'null';
             $isApproved = 1;
-        }else{
+        } else {
             $paymentProof = $request->file('registrationProof')->store('registration_proofs', 'public');
             $paymentProof = 'storage/' . $paymentProof;
             $isApproved = 0;
@@ -77,7 +103,7 @@ class WorkshopController extends Controller
         $teacherId = auth('teacher')->user()->id;
 
         $registration = Registration::create([
-            'paymentProof' => $paymentProof, 
+            'paymentProof' => $paymentProof,
             'isApproved' => $isApproved,
             'courseStatus' => CourseStatus::Assigned,
             'teacher_id' => $teacherId,
@@ -85,8 +111,8 @@ class WorkshopController extends Controller
         ]);
 
         $meets = Meet::where('workshop_id', $workshopId)->get();
-        if($meets->count() > 0){
-            foreach($meets as $meet){
+        if ($meets->count() > 0) {
+            foreach ($meets as $meet) {
                 Presence::create([
                     'meet_id' => $meet['id'],
                     'registration_id' => $registration['id'],
@@ -97,8 +123,5 @@ class WorkshopController extends Controller
         }
 
         return redirect(url()->previous());
-
     }
-
-
 }

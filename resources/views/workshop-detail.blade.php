@@ -46,7 +46,7 @@
 
                 <!-- daftar workshop -->
                 <div class="flex flex-col items-center md:items-start mb-4 space-y-2">
-                    @if (!$workshop['isOpen'])
+                    @if (!$workshop['isOpen'] || $hasPassedLastDueDate)
                         <p class="text-red-600 font-medium">Workshop ini telah selesai.</p>
                     @elseif (auth()->check())
                         @if (!auth()->user()->registrations()->where('workshop_id', $workshop->id)->exists())
