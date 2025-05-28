@@ -35,7 +35,7 @@ class WorkshopController extends Controller
             // $endDate = $workshop->endDate->format('Y-m-d H:i');
 
             $durationInHours = $startDate->diffInHours($endDate);
-            $workshop->duration = ceil($durationInHours / 24) + 1;
+            $workshop->duration = ceil($durationInHours / 24);
 
             return $workshop;
         });
