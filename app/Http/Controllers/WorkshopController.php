@@ -30,6 +30,8 @@ class WorkshopController extends Controller
         $workshops->getCollection()->transform(function ($workshop) {
             $startDate = Carbon::parse($workshop->startDate);
             $endDate = Carbon::parse($workshop->endDate);
+            // $startDate = $workshop->startDate->format('Y-m-d H:i');
+            // $endDate = $workshop->endDate->format('Y-m-d H:i');
     
             $workshop->duration = $startDate->diffInDays($endDate) + 1; 
     
