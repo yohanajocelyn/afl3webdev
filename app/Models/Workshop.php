@@ -12,8 +12,8 @@ class Workshop extends Model
     protected $fillable = ['title', 'startDate', 'endDate', 'description', 'price', 'imageURL', 'isOpen', 'certificateUrl'];
 
     protected $casts = [
-        'startDate' => 'date',
-        'endDate' => 'date'
+        'startDate' => 'dateTime',
+        'endDate' => 'dateTime'
     ];
 
     public function registrations():HasMany {
