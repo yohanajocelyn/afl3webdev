@@ -44,4 +44,10 @@ class Teacher extends Authenticatable
         return $teachersFromSchool->where('school_id', $id);
         return Teacher::find($id);
     }
+
+    public function submittedAssignmentsCount()
+    {
+        return $this->assignments()->count(); // or however submissions are tracked
+    }
+
 }

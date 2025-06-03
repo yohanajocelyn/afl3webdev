@@ -163,56 +163,45 @@
             @endif
         </x-filament::card>
 
-        {{-- Teacher Submission Progress Table --}}
+        {{-- Teacher Submission Progress Section --}}
         <x-filament::card class="bg-gray-800 mt-8">
-            <h2 class="text-xl font-semibold text-white mb-4">Teacher Submission Progress</h2>
+            <div class="mb-4">
+                <h2 class="text-xl font-semibold text-white">Teacher Submission Progress</h2>
+                <p class="text-sm text-gray-300 mt-1">
+                    {{ $teachers->filter(fn($teacher) => $teacher->submittedAssignmentsCount() === $assignments->count())->count() }}
+                    out of {{ $teachers->count() }} teachers have submitted all assignments.
+                </p>
+            </div>
 
             <div class="overflow-x-auto">
-                <table class="min-w-full bg-gray-700 text-white rounded-lg overflow-hidden">
-                    <thead>
-                        <tr class="bg-gray-600 text-left">
-                            <th class="px-4 py-3">Teacher Name</th>
-                            <th class="px-4 py-3">Approved</th>
-                            <th class="px-4 py-3">Assignments Submitted</th>
-                            <th class="px-4 py-3">Total Assignments</th>
-                            <th class="px-4 py-3">Completion %</th>
+                <table class="min-w-full divide-y divide-gray-700 text-white text-sm">
+                    <thead class="bg-gray-700 text-left">
+                        <tr>
+                            <th class="px-4 py-2">Teacher</th>
+                            <th class="px-4 py-2">Assignments Submitted</th>
+                            <!-- Add more columns as needed -->
                         </tr>
                     </thead>
-                    <tbody>
-                        @forelse ($registrations as $registration)
-                            <tr class="border-t border-gray-600">
-                                <td class="px-4 py-2">{{ $registration->teacher->name ?? 'N/A' }}</td>
+                    <tbody class="bg-gray-800 divide-y divide-gray-700">
+                        @foreach ($teachers as $teacher)
+                            @php
+                                $submitted = $teacher->submittedAssignmentsCount();
+                                $total = $assignments->count();
+                            @endphp
+                            <tr>
+                                <td class="px-4 py-2">{{ $teacher->name }}</td>
                                 <td class="px-4 py-2">
-                                    <span class="{{ $registration->isApproved ? 'text-green-400' : 'text-red-400' }}">
-                                        {{ $registration->isApproved ? 'Yes' : 'No' }}
+                                    <span class="{{ $submitted === $total ? 'text-green-400 font-semibold' : 'text-red-400' }}">
+                                        {{ $submitted }} / {{ $total }}
                                     </span>
                                 </td>
-                                <td class="px-4 py-2">
-                                    {{ $registration->submissions->count() }}
-                                </td>
-                                <td class="px-4 py-2">
-                                    {{ $workshop->assignments->count() }}
-                                </td>
-                                <td class="px-4 py-2">
-                                    @php
-                                        $total = $workshop->assignments->count();
-                                        $submitted = $registration->submissions->count();
-                                        $percent = $total > 0 ? round(($submitted / $total) * 100) : 0;
-                                    @endphp
-                                    {{ $percent }}%
-                                </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-center text-gray-400 py-6">
-                                    No teachers have registered for this workshop yet.
-                                </td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </x-filament::card>
+
 
     </div>
 </x-filament-panels::page>
