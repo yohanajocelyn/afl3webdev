@@ -117,7 +117,7 @@
             </div>
 
             <div class="space-y-4">
-                @forelse ($registrations as $registration)
+                @forelse ($registrations->take($visibleRegistrations) as $registration)
                     <x-filament::card class="bg-gray-700 border-0 rounded-none flex justify-between items-center">
                         <div>
                             <h3 class="font-bold text-white">Registration #{{ $registration->id }}</h3>
@@ -145,6 +145,72 @@
                         <p class="text-sm text-gray-300">No users have registered for this workshop yet.</p>
                     </div>
                 @endforelse
+            </div>
+
+            {{-- Expand/Collapse buttons --}}
+            @if ($registrations->count() > $visibleRegistrations)
+                <div class="mt-4 text-center">
+                    <x-filament::button wire:click="showMoreRegistrations" color="gray" size="sm">
+                        Show More
+                    </x-filament::button>
+                </div>
+            @elseif ($registrations->count() > 3)
+                <div class="mt-4 text-center">
+                    <x-filament::button wire:click="showLessRegistrations" color="gray" size="sm">
+                        Show Less
+                    </x-filament::button>
+                </div>
+            @endif
+        </x-filament::card>
+
+        {{-- Teacher Submission Progress Table --}}
+        <x-filament::card class="bg-gray-800 mt-8">
+            <h2 class="text-xl font-semibold text-white mb-4">Teacher Submission Progress</h2>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-gray-700 text-white rounded-lg overflow-hidden">
+                    <thead>
+                        <tr class="bg-gray-600 text-left">
+                            <th class="px-4 py-3">Teacher Name</th>
+                            <th class="px-4 py-3">Approved</th>
+                            <th class="px-4 py-3">Assignments Submitted</th>
+                            <th class="px-4 py-3">Total Assignments</th>
+                            <th class="px-4 py-3">Completion %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($registrations as $registration)
+                            <tr class="border-t border-gray-600">
+                                <td class="px-4 py-2">{{ $registration->teacher->name ?? 'N/A' }}</td>
+                                <td class="px-4 py-2">
+                                    <span class="{{ $registration->isApproved ? 'text-green-400' : 'text-red-400' }}">
+                                        {{ $registration->isApproved ? 'Yes' : 'No' }}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-2">
+                                    {{ $registration->submissions->count() }}
+                                </td>
+                                <td class="px-4 py-2">
+                                    {{ $workshop->assignments->count() }}
+                                </td>
+                                <td class="px-4 py-2">
+                                    @php
+                                        $total = $workshop->assignments->count();
+                                        $submitted = $registration->submissions->count();
+                                        $percent = $total > 0 ? round(($submitted / $total) * 100) : 0;
+                                    @endphp
+                                    {{ $percent }}%
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center text-gray-400 py-6">
+                                    No teachers have registered for this workshop yet.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </x-filament::card>
 

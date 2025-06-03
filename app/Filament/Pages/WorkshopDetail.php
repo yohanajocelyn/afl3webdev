@@ -25,10 +25,13 @@ class WorkshopDetail extends Page
     protected function getViewData(): array
     {
         return [
-            'workshop' => $this->workshop,
-            'registrations' => $this->workshop->registrations()->get(), // eager load registrations
+            'workshop' => $this->workshop->load('assignments'),
+            'registrations' => $this->workshop->registrations()
+                ->with(['teacher', 'submissions'])
+                ->get(),
         ];
     }
+
 
     public function allRegistrationsApproved(): bool
     {
@@ -100,5 +103,17 @@ class WorkshopDetail extends Page
             ->send();
 
         $this->redirect(request()->header('Referer') ?? url()->current());
+    }
+
+    public int $visibleRegistrations = 3; // default number to show
+
+    public function showMoreRegistrations()
+    {
+        $this->visibleRegistrations += 5; // show 5 more each time
+    }
+
+    public function showLessRegistrations()
+    {
+        $this->visibleRegistrations = 3; // reset back
     }
 }
